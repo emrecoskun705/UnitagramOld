@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Unitagram.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:Unitagram.WebAPI.Controllers.v1.AccountController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Microsoft.AspNetCore.Identity.UserManager{Unitagram.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{Unitagram.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Unitagram.Core.Identity.ApplicationRole},Unitagram.Core.ServiceContracts.IJwtService)">
+            <summary>
+            
+            </summary>
+            <param name="userManager"></param>
+            <param name="signInManager"></param>
+            <param name="roleManager"></param>
+        </member>
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.PostRegister(Unitagram.Core.DTO.RegisterDTO)">
+            <summary>
+            Register user
+            </summary>
+            <param name="registerDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.IsEmailAlreadyRegistered(System.String)">
+            <summary>
+            Check if email is already registered
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.PostLogin(Unitagram.Core.DTO.LoginDTO)">
+            <summary>
+             Login user
+            </summary>
+            <param name="loginDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.GetLogout">
+            <summary>
+            Logout user removes token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.GenerateNewAccessToken(Unitagram.Core.DTO.TokenModel)">
+            <summary>
+            Generate new access token usin refresh token
+            </summary>
+            <param name="tokenModel"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
