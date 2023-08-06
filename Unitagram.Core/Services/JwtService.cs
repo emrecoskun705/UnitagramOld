@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ShuttleSolution.Core.Services
+namespace Unitagram.Core.Services
 {
   public class JwtService : IJwtService
   {

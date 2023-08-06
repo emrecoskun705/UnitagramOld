@@ -7,7 +7,7 @@ using Unitagram.Core.Identity;
 using Unitagram.Infrastructure.DatabaseContext;
 using Microsoft.IdentityModel.Tokens;
 using Unitagram.Core.ServiceContracts;
-using ShuttleSolution.Core.Services;
+using Unitagram.Core.Services;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
@@ -101,8 +101,10 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseHsts();
-app.UseHttpsRedirection();
+//app.UseHsts();
+//app.UseHttpsRedirection();
+
+app.UseDeveloperExceptionPage();
 
 if (builder.Environment.IsDevelopment())
 {
@@ -111,11 +113,11 @@ if (builder.Environment.IsDevelopment())
   {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "1.0");
     options.SwaggerEndpoint("/swagger/v2/swagger.json", "2.0");
-  }); 
+  });
 }
 
 app.UseRouting();
-app.UseCors();
+//app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();

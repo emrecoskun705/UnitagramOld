@@ -9,7 +9,7 @@
             
             </summary>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Microsoft.AspNetCore.Identity.UserManager{Unitagram.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{Unitagram.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Unitagram.Core.Identity.ApplicationRole},Unitagram.Core.ServiceContracts.IJwtService)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Microsoft.AspNetCore.Identity.UserManager{Unitagram.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{Unitagram.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Unitagram.Core.Identity.ApplicationRole},Unitagram.Core.ServiceContracts.IJwtService,Microsoft.Extensions.Logging.ILogger{Unitagram.WebAPI.Controllers.v1.AccountController})">
             <summary>
             
             </summary>

@@ -20,6 +20,7 @@ namespace Unitagram.WebAPI.Controllers.v1
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly IJwtService _jwtService;
+    private readonly ILogger<AccountController> _logger;
 
     /// <summary>
     /// 
@@ -27,12 +28,16 @@ namespace Unitagram.WebAPI.Controllers.v1
     /// <param name="userManager"></param>
     /// <param name="signInManager"></param>
     /// <param name="roleManager"></param>
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager, IJwtService jwtService)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager, IJwtService jwtService, ILogger<AccountController> logger)
     {
       _userManager = userManager;
       _signInManager = signInManager;
       _roleManager = roleManager;
       _jwtService = jwtService;
+      _logger = logger;
+
+      _logger.LogInformation("account info");
+
     }
 
     /// <summary>
@@ -107,6 +112,7 @@ namespace Unitagram.WebAPI.Controllers.v1
     [HttpPost("login")]
     public async Task<IActionResult> PostLogin(LoginDTO loginDTO)
     {
+
       //Validation
       if (ModelState.IsValid == false)
       {
