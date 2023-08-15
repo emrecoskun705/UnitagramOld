@@ -36,7 +36,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
 
-if (builder.Environment.IsDevelopment())
+if (builder.Environment.IsDevelopment() || builder.Environment.IsProduction())
 {
   // Add Swagger
   builder.Services.AddEndpointsApiExplorer(); // generates description for all endpoints
@@ -101,18 +101,23 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//app.UseHsts();
-//app.UseHttpsRedirection();
-
-app.UseDeveloperExceptionPage();
-
-if (builder.Environment.IsDevelopment())
+if(builder.Environment.IsProduction())
 {
+  app.UseHsts();
+  app.UseHttpsRedirection();
+}
+
+
+
+if (builder.Environment.IsDevelopment() || builder.Environment.IsProduction()) // TODO: remove production check later
+{
+  app.UseDeveloperExceptionPage();
   app.UseSwagger(); // creates endpoints for swagger.json
   app.UseSwaggerUI(options =>
   {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "1.0");
-    options.SwaggerEndpoint("/swagger/v2/swagger.json", "2.0");
+    string swaggerJsonBasePath = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "." : "..";
+    options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "1.0");
+    options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v2/swagger.json", "2.0");
   });
 }
 
