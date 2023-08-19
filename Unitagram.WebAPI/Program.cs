@@ -10,9 +10,17 @@ using Unitagram.Core.ServiceContracts;
 using Unitagram.Core.Services;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Serilog
+builder.Host.UseSerilog((context,  services,  loggerConfiguration) =>
+{
+  loggerConfiguration
+    .ReadFrom.Configuration(context.Configuration) // Read configuration settings from built-in IConfiguration(appsettings.json)
+    .ReadFrom.Services(services);// reads out current app's services and make them available to serilog
+});
 
 // Add services to the container.
 
@@ -100,8 +108,11 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
+
 // Configure the HTTP request pipeline.
-if(builder.Environment.IsProduction())
+if (builder.Environment.IsProduction())
 {
   app.UseHsts();
   app.UseHttpsRedirection();

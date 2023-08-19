@@ -6,6 +6,7 @@ using Unitagram.Core.DTO;
 using Unitagram.Core.Identity;
 using Unitagram.Core.ServiceContracts;
 using System.Security.Claims;
+using Serilog;
 
 namespace Unitagram.WebAPI.Controllers.v1
 {
@@ -21,6 +22,7 @@ namespace Unitagram.WebAPI.Controllers.v1
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly IJwtService _jwtService;
     private readonly ILogger<AccountController> _logger;
+    private readonly IDiagnosticContext _diagnosticContext;
 
     /// <summary>
     /// 
@@ -28,13 +30,14 @@ namespace Unitagram.WebAPI.Controllers.v1
     /// <param name="userManager"></param>
     /// <param name="signInManager"></param>
     /// <param name="roleManager"></param>
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager, IJwtService jwtService, ILogger<AccountController> logger)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager, IJwtService jwtService, ILogger<AccountController> logger, IDiagnosticContext diagnosticContext)
     {
       _userManager = userManager;
       _signInManager = signInManager;
       _roleManager = roleManager;
       _jwtService = jwtService;
       _logger = logger;
+      _diagnosticContext = diagnosticContext;
 
       _logger.LogInformation("account info");
 
@@ -76,6 +79,8 @@ namespace Unitagram.WebAPI.Controllers.v1
         user.RefreshToken = authenticationResponse.RefreshToken;
         user.RefreshTokenExpirationDateTime = authenticationResponse.RefreshTokenExpirationDateTime;
         await _userManager.UpdateAsync(user);
+
+        _diagnosticContext.Set("CreatedUser", authenticationResponse);
 
         return Ok(authenticationResponse);
       }
