@@ -9,7 +9,6 @@ namespace Unitagram.Core.DTO
 {
   public class RegisterDTO
   {
-    [Required(ErrorMessage = "Person Name can't be blank")]
     public string PersonName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Email can't be blank")]
@@ -17,7 +16,12 @@ namespace Unitagram.Core.DTO
     //[Remote(action: "IsEmailAlreadyRegister", controller: "Account", ErrorMessage = "Email already in use")]
     public string Email { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Phone number can't be blank")]
+    [Required(ErrorMessage = "Username can't be blank")]
+    [StringLength(15, MinimumLength = 4, ErrorMessage = "Username should be 4-15 chracters long")]
+    [RegularExpression("^(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$", ErrorMessage = "Invalid input, please change you username")]
+    public string UserName { get; set; } = string.Empty;
+
+
     [RegularExpression("^[0-9]*$", ErrorMessage = "Phone number should contain digits only")]
     public string PhoneNumber { get; set; } = string.Empty;
 

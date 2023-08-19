@@ -60,7 +60,7 @@ namespace Unitagram.WebAPI.Controllers.v1
       {
         Email = registerDTO.Email,
         PhoneNumber = registerDTO.PhoneNumber,
-        UserName = registerDTO.Email,
+        UserName = registerDTO.UserName,
         PersonName = registerDTO.PersonName,
       };
 
