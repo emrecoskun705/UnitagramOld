@@ -1,0 +1,1032 @@
+[
+    {
+        "province": "ADANA",
+        "name": "ADANA BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ",
+        "domain": "adanabtu.edu.tr"
+    },
+    {
+        "province": "ADANA",
+        "name": "ÇUKUROVA ÜNİVERSİTESİ",
+        "domain": "cu.edu.tr"
+    },
+    {
+        "province": "ADIYAMAN",
+        "name": "ADIYAMAN ÜNİVERSİTESİ",
+        "domain": "adiyaman.edu.tr"
+    },
+    {
+        "province": "AFYONKARAHİSAR",
+        "name": "AFYON KOCATEPE ÜNİVERSİTESİ",
+        "domain": "aku.edu.tr"
+    },
+    {
+        "province": "AFYONKARAHİSAR",
+        "name": "AFYONKARAHİSAR SAĞLIK BİLİMLERİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "AĞRI",
+        "name": "AĞRI İBRAHİM ÇEÇEN ÜNİVERSİTESİ",
+        "domain": "agri.edu.tr"
+    },
+    {
+        "province": "AMASYA",
+        "name": "AMASYA ÜNİVERSİTESİ",
+        "domain": "amasya.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "ANKA TEKNOLOJİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "ANKARA",
+        "name": "ANKARA HACI BAYRAM VELİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "ANKARA",
+        "name": "ANKARA MEDİPOL ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "ANKARA",
+        "name": "ANKARA MÜZİK VE GÜZEL SANATLAR ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "ANKARA",
+        "name": "ANKARA SOSYAL BİLİMLER ÜNİVERSİTESİ",
+        "domain": "asbu.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "ANKARA ÜNİVERSİTESİ",
+        "domain": "ankara.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "ANKARA YILDIRIM BEYAZIT ÜNİVERSİTESİ",
+        "domain": "ybu.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "ATILIM ÜNİVERSİTESİ",
+        "domain": "atilim.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "BAŞKENT ÜNİVERSİTESİ",
+        "domain": "baskent.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "ÇANKAYA ÜNİVERSİTESİ",
+        "domain": "cankaya.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "GAZİ ÜNİVERSİTESİ",
+        "domain": "gazi.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "HACETTEPE ÜNİVERSİTESİ",
+        "domain": "hacettepe.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "İHSAN DOĞRAMACI BİLKENT ÜNİVERSİTESİ",
+        "domain": "bilkent.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "LOKMAN HEKİM ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "ANKARA",
+        "name": "ORTA DOĞU TEKNİK ÜNİVERSİTESİ",
+        "domain": "metu.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "OSTİM TEKNİK ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "ANKARA",
+        "name": "TED ÜNİVERSİTESİ",
+        "domain": "tedu.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "TOBB EKONOMİ VE TEKNOLOJİ ÜNİVERSİTESİ",
+        "domain": "etu.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "TÜRK HAVA KURUMU ÜNİVERSİTESİ",
+        "domain": "thk.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "UFUK ÜNİVERSİTESİ",
+        "domain": "ufuk.edu.tr"
+    },
+    {
+        "province": "ANKARA",
+        "name": "YÜKSEK İHTİSAS ÜNİVERSİTESİ",
+        "domain": "yiu.edu.tr"
+    },
+    {
+        "province": "ANTALYA",
+        "name": "AKDENİZ ÜNİVERSİTESİ",
+        "domain": "akdeniz.edu.tr"
+    },
+    {
+        "province": "ANTALYA",
+        "name": "ALANYA ALAADDİN KEYKUBAT ÜNİVERSİTESİ",
+        "domain": "alanya.edu.tr"
+    },
+    {
+        "province": "ANTALYA",
+        "name": "ALANYA HAMDULLAH EMİN PAŞA ÜNİVERSİTESİ",
+        "domain": "ahep.edu.tr"
+    },
+    {
+        "province": "ANTALYA",
+        "name": "ANTALYA AKEV ÜNİVERSİTESİ",
+        "domain": "akev.edu.tr"
+    },
+    {
+        "province": "ANTALYA",
+        "name": "ANTALYA BİLİM ÜNİVERSİTESİ",
+        "domain": "antalya.edu.tr"
+    },
+    {
+        "province": "ARTVİN",
+        "name": "ARTVİN ÇORUH ÜNİVERSİTESİ",
+        "domain": "artvin.edu.tr"
+    },
+    {
+        "province": "AYDIN",
+        "name": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ",
+        "domain": "adu.edu.tr"
+    },
+    {
+        "province": "BALIKESİR",
+        "name": "BALIKESİR ÜNİVERSİTESİ",
+        "domain": "balikesir.edu.tr"
+    },
+    {
+        "province": "BALIKESİR",
+        "name": "BANDIRMA ONYEDİ EYLÜL ÜNİVERSİTESİ",
+        "domain": "bandirma.edu.tr"
+    },
+    {
+        "province": "BİLECİK",
+        "name": "BİLECİK ŞEYH EDEBALİ ÜNİVERSİTESİ",
+        "domain": "bilecik.edu.tr"
+    },
+    {
+        "province": "BİNGÖL",
+        "name": "BİNGÖL ÜNİVERSİTESİ",
+        "domain": "bingol.edu.tr"
+    },
+    {
+        "province": "BİTLİS",
+        "name": "BİTLİS EREN ÜNİVERSİTESİ",
+        "domain": "beu.edu.tr"
+    },
+    {
+        "province": "BOLU",
+        "name": "BOLU ABANT İZZET BAYSAL ÜNİVERSİTESİ",
+        "domain": "ibu.edu.tr"
+    },
+    {
+        "province": "BURDUR",
+        "name": "BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ",
+        "domain": "mehmetakif.edu.t r"
+    },
+    {
+        "province": "BURSA",
+        "name": "BURSA TEKNİK ÜNİVERSİTESİ",
+        "domain": "btu.edu.tr"
+    },
+    {
+        "province": "BURSA",
+        "name": "BURSA ULUDAĞ ÜNİVERSİTESİ",
+        "domain": "uludag.edu.tr"
+    },
+    {
+        "province": "BURSA",
+        "name": "FARUK SARAÇ TASARIM MESLEK YÜKSEKOKULU",
+        "domain": "faruksarac.edu.tr"
+    },
+    {
+        "province": "ÇANAKKALE",
+        "name": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ",
+        "domain": "comu.edu.tr"
+    },
+    {
+        "province": "ÇANKIRI",
+        "name": "ÇANKIRI KARATEKİN ÜNİVERSİTESİ",
+        "domain": "karatekin.edu.tr"
+    },
+    {
+        "province": "ÇORUM",
+        "name": "HİTİT ÜNİVERSİTESİ",
+        "domain": "hitit.edu.tr"
+    },
+    {
+        "province": "DENİZLİ",
+        "name": "PAMUKKALE ÜNİVERSİTESİ",
+        "domain": "pau.edu.tr"
+    },
+    {
+        "province": "DİYARBAKIR",
+        "name": "DİCLE ÜNİVERSİTESİ",
+        "domain": "dicle.edu.tr"
+    },
+    {
+        "province": "EDİRNE",
+        "name": "TRAKYA ÜNİVERSİTESİ",
+        "domain": "trakya.edu.tr"
+    },
+    {
+        "province": "ELAZIĞ",
+        "name": "FIRAT ÜNİVERSİTESİ",
+        "domain": "firat.edu.tr"
+    },
+    {
+        "province": "ERZİNCAN",
+        "name": "ERZİNCAN BİNALİ YILDIRIM ÜNİVERSİTESİ",
+        "domain": "erzincan.edu.tr"
+    },
+    {
+        "province": "ERZURUM",
+        "name": "ATATÜRK ÜNİVERSİTESİ",
+        "domain": "atauni.edu.tr"
+    },
+    {
+        "province": "ERZURUM",
+        "name": "ERZURUM TEKNİK ÜNİVERSİTESİ",
+        "domain": "erzurum.edu.tr"
+    },
+    {
+        "province": "ESKİŞEHİR",
+        "name": "ANADOLU ÜNİVERSİTESİ",
+        "domain": "anadolu.edu.tr"
+    },
+    {
+        "province": "ESKİŞEHİR",
+        "name": "ESKİŞEHİR OSMANGAZİ ÜNİVERSİTESİ",
+        "domain": "ogu.edu.tr"
+    },
+    {
+        "province": "ESKİŞEHİR",
+        "name": "ESKİŞEHİR TEKNİK ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "GAZİANTEP",
+        "name": "GAZİANTEP BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "GAZİANTEP",
+        "name": "GAZİANTEP ÜNİVERSİTESİ",
+        "domain": "gantep.edu.tr"
+    },
+    {
+        "province": "GAZİANTEP",
+        "name": "HASAN KALYONCU ÜNİVERSİTESİ",
+        "domain": "hku.edu.tr"
+    },
+    {
+        "province": "GAZİANTEP",
+        "name": "SANKO ÜNİVERSİTESİ",
+        "domain": "sanko.edu.tr"
+    },
+    {
+        "province": "GİRESUN",
+        "name": "GİRESUN ÜNİVERSİTESİ",
+        "domain": "giresun.edu.tr"
+    },
+    {
+        "province": "GÜMÜŞHANE",
+        "name": "GÜMÜŞHANE ÜNİVERSİTESİ",
+        "domain": "gumushane.edu.tr"
+    },
+    {
+        "province": "HAKKARİ",
+        "name": "HAKKARİ ÜNİVERSİTESİ",
+        "domain": "hakkari.edu.tr"
+    },
+    {
+        "province": "HATAY",
+        "name": "HATAY MUSTAFA KEMAL ÜNİVERSİTESİ",
+        "domain": "mku.edu.tr"
+    },
+    {
+        "province": "HATAY",
+        "name": "İSKENDERUN TEKNİK ÜNİVERSİTESİ",
+        "domain": "iste.edu.tr"
+    },
+    {
+        "province": "ISPARTA",
+        "name": "ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "ISPARTA",
+        "name": "SÜLEYMAN DEMİREL ÜNİVERSİTESİ",
+        "domain": "sdu.edu.tr"
+    },
+    {
+        "province": "MERSİN",
+        "name": "ÇAĞ ÜNİVERSİTESİ",
+        "domain": "cag.edu.tr"
+    },
+    {
+        "province": "MERSİN",
+        "name": "MERSİN ÜNİVERSİTESİ",
+        "domain": "mersin.edu.tr"
+    },
+    {
+        "province": "MERSİN",
+        "name": "TARSUS ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "MERSİN",
+        "name": "TOROS ÜNİVERSİTESİ",
+        "domain": "toros.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "ACIBADEM MEHMET ALİ AYDINLAR ÜNİVERSİTESİ",
+        "domain": "acibadem.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "ALTINBAŞ ÜNİVERSİTESİ",
+        "domain": "altinbas.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "ATAŞEHİR ADIGÜZEL MESLEK YÜKSEKOKULU",
+        "domain": "adiguzel.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "AVRUPA MESLEK YÜKSEKOKULU",
+        "domain": "avrupa.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "BAHÇEŞEHİR ÜNİVERSİTESİ",
+        "domain": "bahcesehir.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "BEYKENT ÜNİVERSİTESİ",
+        "domain": "beykent.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "BEYKOZ ÜNİVERSİTESİ",
+        "domain": "beykoz.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "BEZM-İ ÂLEM VAKIF ÜNİVERSİTESİ",
+        "domain": "bezmialem.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "BİRUNİ ÜNİVERSİTESİ",
+        "domain": "biruni.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "BOĞAZİÇİ ÜNİVERSİTESİ",
+        "domain": "boun.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "DOĞUŞ ÜNİVERSİTESİ",
+        "domain": "dogus.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "FATİH SULTAN MEHMET VAKIF ÜNİVERSİTESİ",
+        "domain": "fsm.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "FENERBAHÇE ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "GALATASARAY ÜNİVERSİTESİ",
+        "domain": "gsu.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "HALİÇ ÜNİVERSİTESİ",
+        "domain": "halic.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "IŞIK ÜNİVERSİTESİ",
+        "domain": "isikun.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İBN HALDUN ÜNİVERSİTESİ",
+        "domain": "ibnhaldun.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL AREL ÜNİVERSİTESİ",
+        "domain": "arel.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL ATLAS ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL AYDIN ÜNİVERSİTESİ",
+        "domain": "aydin.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL AYVANSARAY ÜNİVERSİTESİ",
+        "domain": "ayvansaray.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL BİLGİ ÜNİVERSİTESİ",
+        "domain": "bilgi.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL BİLİM ÜNİVERSİTESİ",
+        "domain": "istanbulbilim.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL ESENYURT ÜNİVERSİTESİ",
+        "domain": "esenyurt.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL GEDİK ÜNİVERSİTESİ",
+        "domain": "gedik.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL GELİŞİM ÜNİVERSİTESİ",
+        "domain": "gelisim.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL KENT ÜNİVERSİTESİ",
+        "domain": "kent.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL KÜLTÜR ÜNİVERSİTESİ",
+        "domain": "iku.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL MEDENİYET ÜNİVERSİTESİ",
+        "domain": "medeniyet.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL MEDİPOL ÜNİVERSİTESİ",
+        "domain": "medipol.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL OKAN ÜNİVERSİTESİ",
+        "domain": "okan.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL RUMELİ ÜNİVERSİTESİ",
+        "domain": "rumeli.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL SABAHATTİN ZAİM ÜNİVERSİTESİ",
+        "domain": "izu.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL ŞEHİR ÜNİVERSİTESİ",
+        "domain": "sehir.edu.tr - rektorluk"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL ŞİŞLİ MESLEK YÜKSEKOKULU",
+        "domain": "sisli.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL TEKNİK ÜNİVERSİTESİ",
+        "domain": "itu.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL TİCARET ÜNİVERSİTESİ",
+        "domain": "ticaret.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL ÜNİVERSİTESİ",
+        "domain": "istanbul.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL ÜNİVERSİTESİ - CERRAHPAŞA",
+        "domain": ""
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL YENİ YÜZYIL ÜNİVERSİTESİ",
+        "domain": "yeniyuzyil.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTANBUL 29 MAYIS ÜNİVERSİTESİ",
+        "domain": "29mayis.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İSTİNYE ÜNİVERSİTESİ",
+        "domain": "istinye.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "İZMİR KAVRAM MESLEK YÜKSEKOKULU",
+        "domain": "kavram.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "KADİR HAS ÜNİVERSİTESİ",
+        "domain": "khas.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "KOÇ ÜNİVERSİTESİ",
+        "domain": "ku.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "MALTEPE ÜNİVERSİTESİ",
+        "domain": "maltepe.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "MARMARA ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "MEF ÜNİVERSİTESİ",
+        "domain": "mef.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "MİMAR SİNAN GÜZEL SANATLAR ÜNİVERSİTESİ",
+        "domain": "msgsu.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "NİŞANTAŞI ÜNİVERSİTESİ",
+        "domain": "nisantasi. edu."
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "ÖZYEĞİN ÜNİVERSİTESİ",
+        "domain": "ozyegin.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "PİRİ REİS ÜNİVERSİTESİ",
+        "domain": "pirireis.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "SABANCI ÜNİVERSİTESİ",
+        "domain": "sabanciuniv.edu"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "SAĞLIK BİLİMLERİ ÜNİVERSİTESİ",
+        "domain": "sbu.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "SEMERKAND BİLİM VE MEDENİYET ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "TÜRK-ALMAN ÜNİVERSİTESİ",
+        "domain": "tau.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "TÜRKİYE ULUSLARARASI İSLAM, BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "TÜRK-JAPON BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "ÜSKÜDAR ÜNİVERSİTESİ",
+        "domain": "uskudar.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "YEDİTEPE ÜNİVERSİTESİ",
+        "domain": "yeditepe.edu.tr"
+    },
+    {
+        "province": "İSTANBUL",
+        "name": "YILDIZ TEKNİK ÜNİVERSİTESİ",
+        "domain": "yildiz.edu.tr"
+    },
+    {
+        "province": "İZMİR",
+        "name": "DOKUZ EYLÜL ÜNİVERSİTESİ",
+        "domain": "deu.edu.tr"
+    },
+    {
+        "province": "İZMİR",
+        "name": "EGE ÜNİVERSİTESİ",
+        "domain": "ege.edu.tr"
+    },
+    {
+        "province": "İZMİR",
+        "name": "İZMİR BAKIRÇAY ÜNİVERSİTESİ",
+        "domain": "bakircay.edu.tr"
+    },
+    {
+        "province": "İZMİR",
+        "name": "İZMİR DEMOKRASİ ÜNİVERSİTESİ",
+        "domain": "idu.edu.tr"
+    },
+    {
+        "province": "İZMİR",
+        "name": "İZMİR EKONOMİ ÜNİVERSİTESİ",
+        "domain": "ieu.edu.tr"
+    },
+    {
+        "province": "İZMİR",
+        "name": "İZMİR KATİP ÇELEBİ ÜNİVERSİTESİ",
+        "domain": "ikc.edu.tr"
+    },
+    {
+        "province": "İZMİR",
+        "name": "İZMİR TINAZTEPE ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "İZMİR",
+        "name": "İZMİR YÜKSEK TEKNOLOJİ ENSTİTÜSÜ",
+        "domain": "iyte.edu.tr"
+    },
+    {
+        "province": "İZMİR",
+        "name": "YAŞAR ÜNİVERSİTESİ",
+        "domain": "yasar.edu.tr"
+    },
+    {
+        "province": "KARS",
+        "name": "KAFKAS ÜNİVERSİTESİ",
+        "domain": "kafkas.edu.tr"
+    },
+    {
+        "province": "KASTAMONU",
+        "name": "KASTAMONU ÜNİVERSİTESİ",
+        "domain": "kastamonu.edu.tr"
+    },
+    {
+        "province": "KAYSERİ",
+        "name": "ABDULLAH GÜL ÜNİVERSİTESİ",
+        "domain": "agu.edu.tr"
+    },
+    {
+        "province": "KAYSERİ",
+        "name": "ERCİYES ÜNİVERSİTESİ",
+        "domain": "erciyes.edu.tr"
+    },
+    {
+        "province": "KAYSERİ",
+        "name": "KAYSERİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "KAYSERİ",
+        "name": "NUH NACİ YAZGAN ÜNİVERSİTESİ",
+        "domain": "nny.edu.tr"
+    },
+    {
+        "province": "KIRKLARELİ",
+        "name": "KIRKLARELİ ÜNİVERSİTESİ",
+        "domain": "klu.edu.tr"
+    },
+    {
+        "province": "KIRŞEHİR",
+        "name": "KIRŞEHİR AHİ EVRAN ÜNİVERSİTESİ",
+        "domain": "ahievran.edu.tr"
+    },
+    {
+        "province": "KOCAELİ",
+        "name": "GEBZE TEKNİK ÜNİVERSİTESİ",
+        "domain": "gtu.edu.tr"
+    },
+    {
+        "province": "KOCAELİ",
+        "name": "KOCAELİ ÜNİVERSİTESİ",
+        "domain": "kocaeli.edu.tr"
+    },
+    {
+        "province": "KONYA",
+        "name": "KONYA GIDA VE TARIM ÜNİVERSİTESİ",
+        "domain": "gidatarim.edu.tr"
+    },
+    {
+        "province": "KONYA",
+        "name": "KONYA TEKNİK ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "KONYA",
+        "name": "KTO KARATAY ÜNİVERSİTESİ",
+        "domain": "karatay.edu.tr"
+    },
+    {
+        "province": "KONYA",
+        "name": "NECMETTİN ERBAKAN ÜNİVERSİTESİ",
+        "domain": "konya.edu.tr"
+    },
+    {
+        "province": "KONYA",
+        "name": "SELÇUK ÜNİVERSİTESİ",
+        "domain": "selcuk.edu.tr"
+    },
+    {
+        "province": "KÜTAHYA",
+        "name": "KÜTAHYA DUMLUPINAR ÜNİVERSİTESİ",
+        "domain": "dpu.edu.tr"
+    },
+    {
+        "province": "KÜTAHYA",
+        "name": "KÜTAHYA SAĞLIK BİLİMLERİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "MALATYA",
+        "name": "İNÖNÜ ÜNİVERSİTESİ",
+        "domain": "inonu.edu.tr"
+    },
+    {
+        "province": "MALATYA",
+        "name": "MALATYA TURGUT ÖZAL ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "MANİSA",
+        "name": "MANİSA CELÂL BAYAR ÜNİVERSİTESİ",
+        "domain": "cbu.edu.tr"
+    },
+    {
+        "province": "KAHRAMANMARAŞ",
+        "name": "KAHRAMANMARAŞ İSTİKLAL ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "KAHRAMANMARAŞ",
+        "name": "KAHRAMANMARAŞ SÜTÇÜ İMAM ÜNİVERSİTESİ",
+        "domain": "ksu.edu.tr"
+    },
+    {
+        "province": "MARDİN",
+        "name": "MARDİN ARTUKLU ÜNİVERSİTESİ",
+        "domain": "artuklu.edu.tr"
+    },
+    {
+        "province": "MUĞLA",
+        "name": "MUĞLA SITKI KOÇMAN ÜNİVERSİTESİ",
+        "domain": "mu.edu.tr"
+    },
+    {
+        "province": "MUŞ",
+        "name": "MUŞ ALPARSLAN ÜNİVERSİTESİ",
+        "domain": "alparslan.edu.tr"
+    },
+    {
+        "province": "NEVŞEHİR",
+        "name": "KAPADOKYA ÜNİVERSİTESİ",
+        "domain": "kapadokya.edu.tr"
+    },
+    {
+        "province": "NEVŞEHİR",
+        "name": "NEVŞEHİR HACI BEKTAŞ VELİ ÜNİVERSİTESİ",
+        "domain": "nevsehir.edu.tr"
+    },
+    {
+        "province": "NİĞDE",
+        "name": "NİĞDE ÖMER HALİSDEMİR ÜNİVERSİTESİ",
+        "domain": "ohu.edu.tr"
+    },
+    {
+        "province": "ORDU",
+        "name": "ORDU ÜNİVERSİTESİ",
+        "domain": "odu.edu.tr"
+    },
+    {
+        "province": "RİZE",
+        "name": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ",
+        "domain": "erdogan.edu.tr"
+    },
+    {
+        "province": "RİZE",
+        "name": "SAMSUN ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "SAKARYA",
+        "name": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "SAKARYA",
+        "name": "SAKARYA ÜNİVERSİTESİ",
+        "domain": "sakarya.edu.tr"
+    },
+    {
+        "province": "SAMSUN",
+        "name": "ONDOKUZ MAYIS ÜNİVERSİTESİ",
+        "domain": "omu.edu.tr"
+    },
+    {
+        "province": "SİİRT",
+        "name": "SİİRT ÜNİVERSİTESİ",
+        "domain": "siirt.edu.tr"
+    },
+    {
+        "province": "SİNOP",
+        "name": "SİNOP ÜNİVERSİTESİ",
+        "domain": "sinop.edu.tr"
+    },
+    {
+        "province": "SİVAS",
+        "name": "SİVAS BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "SİVAS",
+        "name": "SİVAS CUMHURİYET ÜNİVERSİTESİ",
+        "domain": "cumhuriyet.edu.tr"
+    },
+    {
+        "province": "TEKİRDAĞ",
+        "name": "TEKİRDAĞ NAMIK KEMAL ÜNİVERSİTESİ",
+        "domain": "nku.edu.tr"
+    },
+    {
+        "province": "TOKAT",
+        "name": "TOKAT GAZİOSMANPAŞA ÜNİVERSİTESİ",
+        "domain": "gop.edu.tr"
+    },
+    {
+        "province": "TRABZON",
+        "name": "AVRASYA ÜNİVERSİTESİ",
+        "domain": "avrasya.edu.tr"
+    },
+    {
+        "province": "TRABZON",
+        "name": "KARADENİZ TEKNİK ÜNİVERSİTESİ",
+        "domain": "ktu.edu.tr"
+    },
+    {
+        "province": "TRABZON",
+        "name": "TRABZON ÜNİVERSİTESİ",
+        "domain": ""
+    },
+    {
+        "province": "TUNCELİ",
+        "name": "MUNZUR ÜNİVERSİTESİ",
+        "domain": "munzur.edu.tr"
+    },
+    {
+        "province": "ŞANLIURFA",
+        "name": "HARRAN ÜNİVERSİTESİ",
+        "domain": "harran.edu.tr"
+    },
+    {
+        "province": "UŞAK",
+        "name": "UŞAK ÜNİVERSİTESİ",
+        "domain": "usak.edu.tr"
+    },
+    {
+        "province": "VAN",
+        "name": "VAN YÜZÜNCÜ YIL ÜNİVERSİTESİ",
+        "domain": "yyu.edu.tr"
+    },
+    {
+        "province": "YOZGAT",
+        "name": "YOZGAT BOZOK ÜNİVERSİTESİ",
+        "domain": "bozok.edu.tr"
+    },
+    {
+        "province": "ZONGULDAK",
+        "name": "ZONGULDAK BÜLENT ECEVİT ÜNİVERSİTESİ",
+        "domain": "beun.edu.tr"
+    },
+    {
+        "province": "AKSARAY",
+        "name": "AKSARAY ÜNİVERSİTESİ",
+        "domain": "aksaray.edu.tr"
+    },
+    {
+        "province": "BAYBURT",
+        "name": "BAYBURT ÜNİVERSİTESİ",
+        "domain": "bayburt.edu.tr"
+    },
+    {
+        "province": "KARAMAN",
+        "name": "KARAMANOĞLU MEHMETBEY ÜNİVERSİTESİ",
+        "domain": "kmu.edu.tr"
+    },
+    {
+        "province": "KIRIKKALE",
+        "name": "KIRIKKALE ÜNİVERSİTESİ",
+        "domain": "kku.edu.tr"
+    },
+    {
+        "province": "BATMAN",
+        "name": "BATMAN ÜNİVERSİTESİ",
+        "domain": "batman.edu.tr"
+    },
+    {
+        "province": "ŞIRNAK",
+        "name": "ŞIRNAK ÜNİVERSİTESİ",
+        "domain": "sirnak.edu.tr"
+    },
+    {
+        "province": "BARTIN",
+        "name": "BARTIN ÜNİVERSİTESİ",
+        "domain": "bartin.edu.tr"
+    },
+    {
+        "province": "ARDAHAN",
+        "name": "ARDAHAN ÜNİVERSİTESİ",
+        "domain": "ardahan.edu.tr"
+    },
+    {
+        "province": "IĞDIR",
+        "name": "IĞDIR ÜNİVERSİTESİ",
+        "domain": "igdir.edu.tr"
+    },
+    {
+        "province": "YALOVA",
+        "name": "YALOVA ÜNİVERSİTESİ",
+        "domain": "yalova.edu.tr"
+    },
+    {
+        "province": "KARABÜK",
+        "name": "KARABÜK ÜNİVERSİTESİ",
+        "domain": "karabuk.edu.tr"
+    },
+    {
+        "province": "KİLİS",
+        "name": "KİLİS 7 ARALIK ÜNİVERSİTESİ",
+        "domain": "kilis.edu.tr"
+    },
+    {
+        "province": "OSMANİYE",
+        "name": "OSMANİYE KORKUT ATA ÜNİVERSİTESİ",
+        "domain": "osmaniye.edu.tr"
+    },
+    {
+        "province": "DÜZCE",
+        "name": "DÜZCE ÜNİVERSİTESİ",
+        "domain": "duzce.edu.tr"
+    }
+]

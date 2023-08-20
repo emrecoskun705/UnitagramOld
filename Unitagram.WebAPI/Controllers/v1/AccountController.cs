@@ -38,9 +38,6 @@ namespace Unitagram.WebAPI.Controllers.v1
       _jwtService = jwtService;
       _logger = logger;
       _diagnosticContext = diagnosticContext;
-
-      _logger.LogInformation("account info");
-
     }
 
     /// <summary>

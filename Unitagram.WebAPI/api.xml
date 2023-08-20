@@ -51,5 +51,10 @@
             <param name="tokenModel"></param>
             <returns></returns>
         </member>
+        <member name="T:Unitagram.WebAPI.Controllers.v1.UniversityController">
+            <summary>
+            
+            </summary>
+        </member>
     </members>
 </doc>
