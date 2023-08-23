@@ -49,6 +49,6 @@ namespace Unitagram.Infrastructure.DatabaseContext
         );
       }
     }
-
+     
   }
 }
