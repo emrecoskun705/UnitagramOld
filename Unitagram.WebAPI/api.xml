@@ -9,7 +9,7 @@
             
             </summary>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Microsoft.AspNetCore.Identity.UserManager{Unitagram.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{Unitagram.Core.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Unitagram.Core.Identity.ApplicationRole},Unitagram.Core.ServiceContracts.IJwtService,Microsoft.Extensions.Logging.ILogger{Unitagram.WebAPI.Controllers.v1.AccountController},Serilog.IDiagnosticContext)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Microsoft.AspNetCore.Identity.UserManager{Unitagram.Core.Domain.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{Unitagram.Core.Domain.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Unitagram.Core.Domain.Identity.ApplicationRole},Unitagram.Core.ServiceContracts.IJwtService,Microsoft.Extensions.Logging.ILogger{Unitagram.WebAPI.Controllers.v1.AccountController},Serilog.IDiagnosticContext)">
             <summary>
             
             </summary>
@@ -19,21 +19,25 @@
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.PostRegister(Unitagram.Core.DTO.RegisterDTO)">
             <summary>
-            Register user
+            This method handles user registration. It validates the provided registration data, creates a new user with the provided details, and attempts to create 
+            the user using the UserManager. If successful, the user is signed in, a JWT token is generated, and the response includes the authentication details. 
+            If registration fails, an error message is returned.
             </summary>
             <param name="registerDTO"></param>
             <returns></returns>
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.IsEmailAlreadyRegistered(System.String)">
             <summary>
-            Check if email is already registered
+            This method checks if an email address is already registered in the system. It uses the UserManager to find a user with the given email. 
+            If the user is found, the response indicates that the email is already registered; otherwise, it's considered available.
             </summary>
             <param name="email"></param>
             <returns></returns>
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.PostLogin(Unitagram.Core.DTO.LoginDTO)">
             <summary>
-             Login user
+             This method handles user login. It validates the provided login data and attempts to sign in the user using the SignInManager. If login is successful, 
+             a JWT token is generated, and the response includes the authentication details. If login fails, an error message is returned.
             </summary>
             <param name="loginDTO"></param>
             <returns></returns>

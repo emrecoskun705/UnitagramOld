@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Unitagram.Core.Identity;
 using Unitagram.Infrastructure.DatabaseContext;
 using Microsoft.IdentityModel.Tokens;
 using Unitagram.Core.ServiceContracts;
@@ -11,8 +10,12 @@ using Unitagram.Core.Services;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using Unitagram.Core.Domain.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Serilog
 builder.Host.UseSerilog((context,  services,  loggerConfiguration) =>

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Unitagram.Core.Identity
+namespace Unitagram.Core.Domain.Identity
 {
-  public class ApplicationRole : IdentityRole<Guid>
-  {
+    public class ApplicationRole : IdentityRole<Guid>
+    {
 
-  }
+    }
 }

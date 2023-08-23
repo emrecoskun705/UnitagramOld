@@ -1,54 +1,54 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Unitagram.Core.Identity;
-using Unitagram.Core.Entities;
-using Unitagram.Core.SeedData;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Unitagram.Core.Domain.Entities;
+using Unitagram.Core.Domain.Identity;
+using Unitagram.Core.Domain.SeedData;
 
 namespace Unitagram.Infrastructure.DatabaseContext
 {
-  public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
-  {
-    public ApplicationDbContext(DbContextOptions options) : base(options)
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-    }
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+        }
 
-    protected ApplicationDbContext()
-    {
-    }
+        protected ApplicationDbContext()
+        {
+        }
 
-    public virtual DbSet<University> University { get; set; }
+        public virtual DbSet<University> University { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-      base.OnModelCreating(builder);
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
-      CreateUniversitySeedData(builder);
-    }
+            CreateUniversitySeedData(builder);
+        }
 
-    private void CreateUniversitySeedData(ModelBuilder builder)
-    {
-      // Read JSON data from province_domains.json
-      string jsonFilePath = "province_domains.json";
-      string jsonData = File.ReadAllText(jsonFilePath);
-      List<UniversitySeedDataModel> seedData = JsonConvert.DeserializeObject<List<UniversitySeedDataModel>>(jsonData);
-      int i = 1;
-      foreach (var item in seedData)
-      {
-        builder.Entity<University>().HasData(
-            new University
+        private void CreateUniversitySeedData(ModelBuilder builder)
+        {
+            // Read JSON data from province_domains.json
+            string jsonFilePath = "province_domains.json";
+            string jsonData = File.ReadAllText(jsonFilePath);
+            List<UniversitySeedDataModel> seedData = JsonConvert.DeserializeObject<List<UniversitySeedDataModel>>(jsonData);
+            int i = 1;
+            foreach (var item in seedData)
             {
-              Id = i++,
-              Province = item.Province,
-              Name = item.Name,
-              Domain = item.Domain,
-              Inserted = DateTime.Now,
-              LastUpdated = DateTime.Now,
+                builder.Entity<University>().HasData(
+                    new University
+                    {
+                        Id = i++,
+                        Province = item.Province,
+                        Name = item.Name,
+                        Domain = item.Domain,
+                        Inserted = DateTime.Now,
+                        LastUpdated = DateTime.Now,
+                    }
+                );
             }
-        );
-      }
+        }
+
     }
-     
-  }
 }
