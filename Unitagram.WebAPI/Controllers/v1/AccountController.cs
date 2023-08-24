@@ -149,7 +149,7 @@ namespace Unitagram.WebAPI.Controllers.v1
         }
 
         /// <summary>
-        /// Logout user removes token
+        /// Logout
         /// </summary>
         /// <returns></returns>
         [HttpGet("logout")]
@@ -161,16 +161,15 @@ namespace Unitagram.WebAPI.Controllers.v1
         }
 
         /// <summary>
-        /// Generate new access token usin refresh token
+        /// Generates a new access token using a refresh token.
         /// </summary>
-        /// <param name="tokenModel"></param>
-        /// <returns></returns>
+        /// <param name="tokenModel">The token model containing the refresh token.</param>
+        /// <returns>Returns a new access token if the request is valid; otherwise, returns a BadRequest result.</returns>
         [HttpPost("generate-new-jwt-token")]
         public async Task<IActionResult> GenerateNewAccessToken(TokenModel tokenModel)
         {
             if (tokenModel == null)
                 return BadRequest("Invalid client request");
-
 
             ClaimsPrincipal? principal = _jwtService.GetPrincipleFromJwtToken(tokenModel.Token);
 

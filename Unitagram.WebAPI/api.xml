@@ -60,16 +60,24 @@
             
             </summary>
         </member>
-        <member name="T:Unitagram.WebAPI.Filters.InvalidTokenExceptionFilter">
+        <member name="T:Unitagram.WebAPI.StartupExtensions.ConfigureServiceExtension">
             <summary>
-            
+            Configure Startup(Program) services class
             </summary>
         </member>
-        <member name="M:Unitagram.WebAPI.Filters.InvalidTokenExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+        <member name="M:Unitagram.WebAPI.StartupExtensions.ConfigureServiceExtension.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
-            
+            Configures services for the application.
             </summary>
-            <param name="context"></param>
+            <param name="services">The collection of services to configure.</param>
+            <param name="configuration">The configuration data for the application.</param>
+            <param name="environment">The current web host environment.</param>
+            <returns>The configured services collection.</returns>
+        </member>
+        <member name="T:Program">
+            <summary>
+            make the auto-generated Program accessible programmatically
+            </summary>
         </member>
     </members>
 </doc>
