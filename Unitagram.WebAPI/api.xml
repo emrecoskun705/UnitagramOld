@@ -60,5 +60,16 @@
             
             </summary>
         </member>
+        <member name="T:Unitagram.WebAPI.Filters.InvalidTokenExceptionFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Unitagram.WebAPI.Filters.InvalidTokenExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
     </members>
 </doc>

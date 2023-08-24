@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Unitagram.Core.Domain.Entities;
@@ -19,7 +20,7 @@ namespace Unitagram.WebAPI.Controllers.v1
             _context = applicationDbContext;
         }
 
-
+        
         [HttpPost("create")]
         public async Task<IActionResult> PostUniversity()
         {

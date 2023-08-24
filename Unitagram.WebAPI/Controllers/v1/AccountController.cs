@@ -125,16 +125,14 @@ namespace Unitagram.WebAPI.Controllers.v1
 
                 return Problem(errorMessage);
             }
+            
+            ApplicationUser? user = await _userManager.FindByEmailAsync(loginDTO.Email);
+            if (user == null)
+                return Problem("Invalid email or password", statusCode: 400);
 
-            var result = await _signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password, isPersistent: false, lockoutOnFailure: false);
-
+            var result = await _signInManager.PasswordSignInAsync(user.UserName!, loginDTO.Password, isPersistent: false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                ApplicationUser? user = await _userManager.FindByEmailAsync(loginDTO.Email);
-
-                if (user == null)
-                    return NoContent();
-
                 var authenticationResponse = _jwtService.CreateJwtToken(user);
 
                 user.RefreshToken = authenticationResponse.RefreshToken;
@@ -145,7 +143,7 @@ namespace Unitagram.WebAPI.Controllers.v1
             }
             else
             {
-                return Problem("Invalid email or address");
+                return Problem("Invalid email or password", statusCode: 400);
             }
 
         }

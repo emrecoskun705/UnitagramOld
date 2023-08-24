@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Serilog
 builder.Host.UseSerilog((context,  services,  loggerConfiguration) =>
 {
@@ -27,7 +26,15 @@ builder.Host.UseSerilog((context,  services,  loggerConfiguration) =>
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    //Authorization policy
+    var policy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme) // If you do not add AuthenticationScheme you will get an error for invalid JWT tokens
+    .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
 
 // Add JWT Service
 builder.Services.AddTransient<IJwtService, JwtService>();
@@ -108,6 +115,8 @@ builder.Services.AddAuthentication(options =>
       IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
     };
   });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
