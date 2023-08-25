@@ -44,16 +44,16 @@
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.GetLogout">
             <summary>
-            Logout user removes token
+            Logout
             </summary>
             <returns></returns>
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.GenerateNewAccessToken(Unitagram.Core.DTO.TokenModel)">
             <summary>
-            Generate new access token usin refresh token
+            Generates a new access token using a refresh token.
             </summary>
-            <param name="tokenModel"></param>
-            <returns></returns>
+            <param name="tokenModel">The token model containing the refresh token.</param>
+            <returns>Returns a new access token if the request is valid; otherwise, returns a BadRequest result.</returns>
         </member>
         <member name="T:Unitagram.WebAPI.Controllers.v1.UniversityController">
             <summary>
