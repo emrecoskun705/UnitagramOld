@@ -24,16 +24,7 @@ namespace Unitagram.WebAPI.Controllers.v1
         [HttpPost("create")]
         public async Task<IActionResult> PostUniversity()
         {
-            University test = new University()
-            {
-                Domain = "dsafds",
-                Name = "sdfsd",
-                Province = "dsfsdfds",
-            };
 
-            _context.University.Add(test);
-
-            _context.SaveChanges();
             return Ok();
         }
     }
