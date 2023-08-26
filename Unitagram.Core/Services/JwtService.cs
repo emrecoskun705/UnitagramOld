@@ -37,7 +37,7 @@ namespace Unitagram.Core.Services
                  new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), //Subject (user id)
                  new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), //JWT unique ID
                  new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()), //Issued at (date and time of token generation)
-                 new Claim(ClaimTypes.NameIdentifier, user.UserName), //Unique name identifier of the user (Email)
+                 new Claim(ClaimTypes.NameIdentifier, user.UserName), //Unique name identifier of the user (UserName)
                  new Claim(ClaimTypes.Name, user.UserName), //Name of the user
                  new Claim(ClaimTypes.Email, user.Email)
             };
@@ -67,6 +67,7 @@ namespace Unitagram.Core.Services
                 Token = token,
                 Email = user.Email,
                 PersonName = user.PersonName,
+                UserName = user.UserName,
                 Expiration = expiration,
                 RefreshToken = GenerateRefreshToken(),
                 RefreshTokenExpirationDateTime = DateTime.Now.AddMinutes(Convert.ToInt32(_configuration["RefreshToken:EXPIRATION_MINUTES"]))

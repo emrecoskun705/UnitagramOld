@@ -16,6 +16,9 @@
             <param name="userManager"></param>
             <param name="signInManager"></param>
             <param name="roleManager"></param>
+            <param name="jwtService"></param>
+            <param name="logger"></param>
+            <param name="diagnosticContext"></param>
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.PostRegister(Unitagram.Core.DTO.RegisterDTO)">
             <summary>

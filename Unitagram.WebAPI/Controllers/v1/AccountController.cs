@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Unitagram.Core.DTO;
@@ -30,6 +29,9 @@ namespace Unitagram.WebAPI.Controllers.v1
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="roleManager"></param>
+        /// <param name="jwtService"></param>
+        /// <param name="logger"></param>
+        /// <param name="diagnosticContext"></param>
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager, IJwtService jwtService, ILogger<AccountController> logger, IDiagnosticContext diagnosticContext)
         {
             _userManager = userManager;
