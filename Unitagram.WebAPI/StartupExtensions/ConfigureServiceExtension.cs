@@ -12,6 +12,8 @@ using Unitagram.Core.Services;
 using Unitagram.Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Unitagram.Core.Domain.RepositoryContracts;
+using Unitagram.Infrastructure.Repositories;
 
 namespace Unitagram.WebAPI.StartupExtensions
 {
@@ -41,6 +43,10 @@ namespace Unitagram.WebAPI.StartupExtensions
 
             // Add JWT Service
             services.AddTransient<IJwtService, JwtService>();
+
+            // Add Services to IoC container
+            services.AddScoped<IUniversityRepository, UniversityRepository>();
+            services.AddScoped<IUniversityGetterService, UniversityGetterService>();
 
             // Enable API versioning
             services.AddApiVersioning(config =>
