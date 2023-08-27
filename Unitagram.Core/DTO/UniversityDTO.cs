@@ -3,14 +3,14 @@
 namespace Unitagram.Core.DTO
 {
     /// <summary>
-    /// DTO class that is ued for
+    /// DTO class that is used for map entity to DTO
     /// </summary>
     public class UniversityDTO
     {
         public int? UniversityID { get; set; }
         public string? Province { get; set; }
         public string? UniversityName { get; set; }
-        public string? Domain { get; set; }
+        public List<UniversityDomainDTO> Domains { get; set; } = new List<UniversityDomainDTO>();
 
         public override bool Equals(object? obj)
         {
@@ -27,8 +27,7 @@ namespace Unitagram.Core.DTO
 
             return UniversityID == university_to_compare.UniversityID
                 && Province == university_to_compare.Province
-                && UniversityName == university_to_compare.UniversityName
-                && Domain == university_to_compare.Domain;
+                && UniversityName == university_to_compare.UniversityName;
         }
 
         public override int GetHashCode()
@@ -41,7 +40,7 @@ namespace Unitagram.Core.DTO
                 hash = hash * 23 + (UniversityID?.GetHashCode() ?? 0);
                 hash = hash * 23 + (Province?.GetHashCode() ?? 0);
                 hash = hash * 23 + (UniversityName?.GetHashCode() ?? 0);
-                hash = hash * 23 + (Domain?.GetHashCode() ?? 0);
+                hash = hash * 23 + (Domains?.GetHashCode() ?? 0);
 
                 return hash;
             }
@@ -57,6 +56,9 @@ namespace Unitagram.Core.DTO
                 UniversityID = university.UniversityId,
                 Province = university.Province,
                 UniversityName = university.Name,
+                Domains = university.UniversityDomains
+                        .Select(t => t.ToUniversityDomainDTO())
+                        .ToList(),
             };
         }
     }

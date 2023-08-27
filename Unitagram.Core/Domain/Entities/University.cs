@@ -27,7 +27,7 @@ namespace Unitagram.Core.Domain.Entities
         [DefaultValue(false)]
         public bool IsDeleted { get; set; }
 
-        public virtual ICollection<UniversityDomain> UniversityDomains { get; set; } = new List<UniversityDomain>();
+        public ICollection<UniversityDomain> UniversityDomains { get; set; } = new List<UniversityDomain>();
 
     }
 }

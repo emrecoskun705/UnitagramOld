@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Unitagram.Core.Domain.Entities;
 using Unitagram.Core.Domain.RepositoryContracts;
 using Unitagram.Infrastructure.DatabaseContext;
@@ -18,11 +19,18 @@ namespace Unitagram.Infrastructure.Repositories
 
         public async Task<University?> GetUniversityByDomainAsync(string domain)
         {
-            //var university = await _db.University
-            //    .Where(u => u. == domain && !u.IsDeleted && u.IsActive)
-            //    .FirstOrDefaultAsync();
-            //return university;
-            return null;
+            var universityDomain = (await _db.UniversityDomain
+                .Where(ud => ud.Name == domain)
+                .Include(ud => ud.University)
+                .AsNoTracking()
+                .FirstOrDefaultAsync());
+
+            if (universityDomain == null)
+                return null;
+
+            var university = universityDomain.University;
+
+            return university;
         }
     }
 }

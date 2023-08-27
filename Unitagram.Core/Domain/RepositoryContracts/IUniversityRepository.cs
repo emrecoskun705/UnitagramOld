@@ -5,9 +5,9 @@ namespace Unitagram.Core.Domain.RepositoryContracts
     public interface IUniversityRepository
     {
         /// <summary>
-        /// Gets university by universityName parameter
+        /// Get university using domain name of that university
         /// </summary>
-        /// <param name="universityName">Name of the univeristy</param>
+        /// <param name="domain"></param>
         /// <returns></returns>
         Task<University?> GetUniversityByDomainAsync(string domain);
     }

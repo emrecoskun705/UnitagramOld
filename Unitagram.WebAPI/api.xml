@@ -63,6 +63,12 @@
             
             </summary>
         </member>
+        <member name="M:Unitagram.WebAPI.Controllers.v1.UniversityController.#ctor(Unitagram.Core.ServiceContracts.IUniversityGetterService)">
+            <summary>
+            
+            </summary>
+            <param name="universityGetterService"></param>
+        </member>
         <member name="T:Unitagram.WebAPI.StartupExtensions.ConfigureServiceExtension">
             <summary>
             Configure Startup(Program) services class

@@ -27,6 +27,7 @@ namespace Unitagram.Infrastructure.DatabaseContext
                 .HasForeignKey(d => d.UniversityId)
                 .IsRequired();
 
+
             base.OnModelCreating(builder);
         }
 

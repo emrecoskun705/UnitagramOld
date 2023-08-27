@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using Unitagram.Core.ServiceContracts;
 using Unitagram.Infrastructure.DatabaseContext;
+using System.Text.Encodings.Web;
 
 namespace Unitagram.WebAPI.Controllers.v1
 {
@@ -9,19 +14,26 @@ namespace Unitagram.WebAPI.Controllers.v1
     [ApiVersion("1.0")]
     public class UniversityController : CustomControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUniversityGetterService _universityGetterService;
 
-        public UniversityController(ApplicationDbContext applicationDbContext)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="universityGetterService"></param>
+        public UniversityController(IUniversityGetterService universityGetterService)
         {
-            _context = applicationDbContext;
+            _universityGetterService = universityGetterService;
         }
 
         
-        [HttpPost("create")]
-        public async Task<IActionResult> PostUniversity()
+        [HttpGet("get")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUniversity(string email)
         {
 
-            return Ok();
+            var university = await _universityGetterService.GetUniversityByEmail(email);
+
+            return Ok(university);
         }
     }
 }
