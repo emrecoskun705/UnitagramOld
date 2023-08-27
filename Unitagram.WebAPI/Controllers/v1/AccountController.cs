@@ -88,7 +88,7 @@ namespace Unitagram.WebAPI.Controllers.v1
             {
                 string errorMessage = string.Join(" | ", result.Errors.Select(e => e.Description));
 
-                return Problem(errorMessage);
+                return Problem(errorMessage, statusCode: 400);
             }
 
         }

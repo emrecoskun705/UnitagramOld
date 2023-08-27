@@ -30,6 +30,7 @@ namespace Unitagram.Infrastructure
             //add identity
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
