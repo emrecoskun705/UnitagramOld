@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using Unitagram.Core.Domain.Entities;
 using Unitagram.Core.Domain.Identity;
 using Unitagram.Core.Domain.SeedData;
@@ -18,37 +19,24 @@ namespace Unitagram.Infrastructure.DatabaseContext
         {
         }
 
-        public virtual DbSet<University> University { get; set; }
+        public DbSet<University> University { get; set; }
+        public DbSet<UniversityDomain> UniversityDomains { get; set; }
+        public DbSet<Domain> Domain { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Domain>()
+                .HasIndex(d => d.Name)
+            .IsUnique();
+
+
+            builder.Entity<UniversityDomain>()
+            .HasKey(ud => new { ud.UniversityId, ud.DomainId });
+
+
             base.OnModelCreating(builder);
-
-            CreateUniversitySeedData(builder);
         }
 
-        private void CreateUniversitySeedData(ModelBuilder builder)
-        {
-            // Read JSON data from province_domains.json
-            string jsonFilePath = "province_domains.json";
-            string jsonData = File.ReadAllText(jsonFilePath);
-            List<UniversitySeedDataModel> seedData = JsonConvert.DeserializeObject<List<UniversitySeedDataModel>>(jsonData);
-            int i = 1;
-            foreach (var item in seedData)
-            {
-                builder.Entity<University>().HasData(
-                    new University
-                    {
-                        Id = i++,
-                        Province = item.Province,
-                        Name = item.Name,
-                        Domain = item.Domain,
-                        Inserted = DateTime.Now,
-                        LastUpdated = DateTime.Now,
-                    }
-                );
-            }
-        }
 
     }
 }

@@ -12,7 +12,7 @@ using Unitagram.Infrastructure.DatabaseContext;
 namespace Unitagram.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230806082020_Initial")]
+    [Migration("20230827120206_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Unitagram.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -128,7 +128,78 @@ namespace Unitagram.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Unitagram.Core.Identity.ApplicationRole", b =>
+            modelBuilder.Entity("Unitagram.Core.Domain.Entities.Domain", b =>
+                {
+                    b.Property<int>("DomainId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DomainId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("DomainId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Domain");
+                });
+
+            modelBuilder.Entity("Unitagram.Core.Domain.Entities.University", b =>
+                {
+                    b.Property<int>("UniversityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UniversityId"));
+
+                    b.Property<DateTime?>("Inserted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("UniversityId");
+
+                    b.ToTable("University");
+                });
+
+            modelBuilder.Entity("Unitagram.Core.Domain.Entities.UniversityDomain", b =>
+                {
+                    b.Property<int>("UniversityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DomainId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UniversityId", "DomainId");
+
+                    b.HasIndex("DomainId");
+
+                    b.ToTable("UniversityDomains");
+                });
+
+            modelBuilder.Entity("Unitagram.Core.Domain.Identity.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -156,7 +227,7 @@ namespace Unitagram.Infrastructure.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Unitagram.Core.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("Unitagram.Core.Domain.Identity.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -234,7 +305,7 @@ namespace Unitagram.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Unitagram.Core.Identity.ApplicationRole", null)
+                    b.HasOne("Unitagram.Core.Domain.Identity.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -243,7 +314,7 @@ namespace Unitagram.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Unitagram.Core.Identity.ApplicationUser", null)
+                    b.HasOne("Unitagram.Core.Domain.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -252,7 +323,7 @@ namespace Unitagram.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Unitagram.Core.Identity.ApplicationUser", null)
+                    b.HasOne("Unitagram.Core.Domain.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -261,13 +332,13 @@ namespace Unitagram.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Unitagram.Core.Identity.ApplicationRole", null)
+                    b.HasOne("Unitagram.Core.Domain.Identity.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Unitagram.Core.Identity.ApplicationUser", null)
+                    b.HasOne("Unitagram.Core.Domain.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -276,11 +347,40 @@ namespace Unitagram.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Unitagram.Core.Identity.ApplicationUser", null)
+                    b.HasOne("Unitagram.Core.Domain.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Unitagram.Core.Domain.Entities.UniversityDomain", b =>
+                {
+                    b.HasOne("Unitagram.Core.Domain.Entities.Domain", "Domain")
+                        .WithMany("UniversityDomains")
+                        .HasForeignKey("DomainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Unitagram.Core.Domain.Entities.University", "University")
+                        .WithMany("UniversityDomains")
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Domain");
+
+                    b.Navigation("University");
+                });
+
+            modelBuilder.Entity("Unitagram.Core.Domain.Entities.Domain", b =>
+                {
+                    b.Navigation("UniversityDomains");
+                });
+
+            modelBuilder.Entity("Unitagram.Core.Domain.Entities.University", b =>
+                {
+                    b.Navigation("UniversityDomains");
                 });
 #pragma warning restore 612, 618
         }

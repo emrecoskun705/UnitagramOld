@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unitagram.Core.Domain.Entities;
+﻿using Unitagram.Core.Domain.Entities;
 
 namespace Unitagram.Core.DTO
 {
@@ -59,9 +54,8 @@ namespace Unitagram.Core.DTO
         {
             return new UniversityDTO()
             {
-                UniversityID = university.Id,
+                UniversityID = university.UniversityId,
                 Province = university.Province,
-                Domain = university.Domain,
                 UniversityName = university.Name,
             };
         }

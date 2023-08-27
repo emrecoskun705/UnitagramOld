@@ -54,6 +54,37 @@ namespace Unitagram.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Domain",
+                columns: table => new
+                {
+                    DomainId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Domain", x => x.DomainId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "University",
+                columns: table => new
+                {
+                    UniversityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Province = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Inserted = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_University", x => x.UniversityId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -159,6 +190,30 @@ namespace Unitagram.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UniversityDomains",
+                columns: table => new
+                {
+                    UniversityId = table.Column<int>(type: "int", nullable: false),
+                    DomainId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UniversityDomains", x => new { x.UniversityId, x.DomainId });
+                    table.ForeignKey(
+                        name: "FK_UniversityDomains_Domain_DomainId",
+                        column: x => x.DomainId,
+                        principalTable: "Domain",
+                        principalColumn: "DomainId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UniversityDomains_University_UniversityId",
+                        column: x => x.UniversityId,
+                        principalTable: "University",
+                        principalColumn: "UniversityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -197,6 +252,17 @@ namespace Unitagram.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Domain_Name",
+                table: "Domain",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UniversityDomains_DomainId",
+                table: "UniversityDomains",
+                column: "DomainId");
         }
 
         /// <inheritdoc />
@@ -218,10 +284,19 @@ namespace Unitagram.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "UniversityDomains");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Domain");
+
+            migrationBuilder.DropTable(
+                name: "University");
         }
     }
 }

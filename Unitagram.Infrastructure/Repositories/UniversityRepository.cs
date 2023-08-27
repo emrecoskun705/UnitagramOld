@@ -24,10 +24,11 @@ namespace Unitagram.Infrastructure.Repositories
 
         public async Task<University?> GetUniversityByDomainAsync(string domain)
         {
-            var university = await _db.University
-                .Where(u => u.Domain == domain && !u.IsDeleted && u.IsActive)
-                .FirstOrDefaultAsync();
-            return university;
+            //var university = await _db.University
+            //    .Where(u => u. == domain && !u.IsDeleted && u.IsActive)
+            //    .FirstOrDefaultAsync();
+            //return university;
+            return null;
         }
     }
 }
