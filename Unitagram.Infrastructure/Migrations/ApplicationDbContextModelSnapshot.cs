@@ -125,27 +125,6 @@ namespace Unitagram.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Unitagram.Core.Domain.Entities.Domain", b =>
-                {
-                    b.Property<int>("DomainId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DomainId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("DomainId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Domain");
-                });
-
             modelBuilder.Entity("Unitagram.Core.Domain.Entities.University", b =>
                 {
                     b.Property<int>("UniversityId")
@@ -183,17 +162,28 @@ namespace Unitagram.Infrastructure.Migrations
 
             modelBuilder.Entity("Unitagram.Core.Domain.Entities.UniversityDomain", b =>
                 {
+                    b.Property<int>("DomainId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DomainId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("UniversityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DomainId")
-                        .HasColumnType("int");
+                    b.HasKey("DomainId");
 
-                    b.HasKey("UniversityId", "DomainId");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
-                    b.HasIndex("DomainId");
+                    b.HasIndex("UniversityId");
 
-                    b.ToTable("UniversityDomains");
+                    b.ToTable("UniversityDomain");
                 });
 
             modelBuilder.Entity("Unitagram.Core.Domain.Identity.ApplicationRole", b =>
@@ -353,26 +343,13 @@ namespace Unitagram.Infrastructure.Migrations
 
             modelBuilder.Entity("Unitagram.Core.Domain.Entities.UniversityDomain", b =>
                 {
-                    b.HasOne("Unitagram.Core.Domain.Entities.Domain", "Domain")
-                        .WithMany("UniversityDomains")
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Unitagram.Core.Domain.Entities.University", "University")
                         .WithMany("UniversityDomains")
                         .HasForeignKey("UniversityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Domain");
-
                     b.Navigation("University");
-                });
-
-            modelBuilder.Entity("Unitagram.Core.Domain.Entities.Domain", b =>
-                {
-                    b.Navigation("UniversityDomains");
                 });
 
             modelBuilder.Entity("Unitagram.Core.Domain.Entities.University", b =>

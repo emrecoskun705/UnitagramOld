@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using Unitagram.Core.Domain.Entities;
 using Unitagram.Core.Domain.Identity;
 
@@ -16,19 +17,15 @@ namespace Unitagram.Infrastructure.DatabaseContext
         }
 
         public DbSet<University> University { get; set; }
-        public DbSet<UniversityDomain> UniversityDomains { get; set; }
-        public DbSet<Domain> Domain { get; set; }
+        public DbSet<UniversityDomain> UniversityDomain { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Domain>()
-                .HasIndex(d => d.Name)
-            .IsUnique();
-
-
             builder.Entity<UniversityDomain>()
-            .HasKey(ud => new { ud.UniversityId, ud.DomainId });
-
+                .HasOne(d => d.University)
+                .WithMany(u => u.UniversityDomains)
+                .HasForeignKey(d => d.UniversityId)
+                .IsRequired();
 
             base.OnModelCreating(builder);
         }

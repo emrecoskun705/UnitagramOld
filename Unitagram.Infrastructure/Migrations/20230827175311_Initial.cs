@@ -54,19 +54,6 @@ namespace Unitagram.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Domain",
-                columns: table => new
-                {
-                    DomainId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Domain", x => x.DomainId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "University",
                 columns: table => new
                 {
@@ -191,23 +178,19 @@ namespace Unitagram.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UniversityDomains",
+                name: "UniversityDomain",
                 columns: table => new
                 {
-                    UniversityId = table.Column<int>(type: "int", nullable: false),
                     DomainId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UniversityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UniversityDomains", x => new { x.UniversityId, x.DomainId });
+                    table.PrimaryKey("PK_UniversityDomain", x => x.DomainId);
                     table.ForeignKey(
-                        name: "FK_UniversityDomains_Domain_DomainId",
-                        column: x => x.DomainId,
-                        principalTable: "Domain",
-                        principalColumn: "DomainId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UniversityDomains_University_UniversityId",
+                        name: "FK_UniversityDomain_University_UniversityId",
                         column: x => x.UniversityId,
                         principalTable: "University",
                         principalColumn: "UniversityId",
@@ -254,15 +237,15 @@ namespace Unitagram.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Domain_Name",
-                table: "Domain",
+                name: "IX_UniversityDomain_Name",
+                table: "UniversityDomain",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UniversityDomains_DomainId",
-                table: "UniversityDomains",
-                column: "DomainId");
+                name: "IX_UniversityDomain_UniversityId",
+                table: "UniversityDomain",
+                column: "UniversityId");
         }
 
         /// <inheritdoc />
@@ -284,16 +267,13 @@ namespace Unitagram.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "UniversityDomains");
+                name: "UniversityDomain");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Domain");
 
             migrationBuilder.DropTable(
                 name: "University");
