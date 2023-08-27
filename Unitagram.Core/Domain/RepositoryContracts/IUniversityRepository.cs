@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unitagram.Core.Domain.Entities;
+﻿using Unitagram.Core.Domain.Entities;
 
 namespace Unitagram.Core.Domain.RepositoryContracts
 {

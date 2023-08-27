@@ -1,5 +1,4 @@
-﻿using System;
-using Unitagram.Core.DTO;
+﻿using Unitagram.Core.DTO;
 
 namespace Unitagram.Core.ServiceContracts
 {

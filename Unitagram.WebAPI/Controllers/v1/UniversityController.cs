@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Unitagram.Core.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using Unitagram.Infrastructure.DatabaseContext;
 
 namespace Unitagram.WebAPI.Controllers.v1

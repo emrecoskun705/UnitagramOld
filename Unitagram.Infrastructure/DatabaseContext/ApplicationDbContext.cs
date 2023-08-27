@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 using Unitagram.Core.Domain.Entities;
 using Unitagram.Core.Domain.Identity;
-using Unitagram.Core.Domain.SeedData;
 
 namespace Unitagram.Infrastructure.DatabaseContext
 {
