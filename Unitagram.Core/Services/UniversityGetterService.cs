@@ -37,7 +37,6 @@ namespace Unitagram.Core.Services
 
             if (getUniversity == null)
                 return null;
-
             return getUniversity.ToUniversityDTO();
         }
     }

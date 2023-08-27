@@ -14,6 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Unitagram.Core.Domain.RepositoryContracts;
 using Unitagram.Infrastructure.Repositories;
+using Unitagram.Core;
+using Unitagram.Infrastructure;
+using Unitagram.Common.General;
 
 namespace Unitagram.WebAPI.StartupExtensions
 {
@@ -31,6 +34,9 @@ namespace Unitagram.WebAPI.StartupExtensions
         /// <returns>The configured services collection.</returns>
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
+            // load configuration settings
+            services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+
             services.AddControllers(options =>
             {
                 //Authorization policy
@@ -41,13 +47,6 @@ namespace Unitagram.WebAPI.StartupExtensions
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
 
-            // Add JWT Service
-            services.AddTransient<IJwtService, JwtService>();
-
-            // Add Services to IoC container
-            services.AddScoped<IUniversityRepository, UniversityRepository>();
-            services.AddScoped<IUniversityGetterService, UniversityGetterService>();
-
             // Enable API versioning
             services.AddApiVersioning(config =>
             {
@@ -55,12 +54,6 @@ namespace Unitagram.WebAPI.StartupExtensions
 
                 config.DefaultApiVersion = new ApiVersion(1, 0);
                 config.AssumeDefaultVersionWhenUnspecified = true;
-            });
-
-            // Add Default database connection
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("Default"));
             });
 
             if (environment.IsDevelopment() || environment.IsProduction())
@@ -91,19 +84,11 @@ namespace Unitagram.WebAPI.StartupExtensions
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
+            // INFTASTRUCTURE PROJECT
+            services.AddInfrastructure(configuration);
 
-            //add identity
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-            {
-                options.Password.RequiredLength = 8;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
-            })
-              .AddEntityFrameworkStores<ApplicationDbContext>()
-              .AddDefaultTokenProviders()
-              .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
-              .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
-
+            // CORE PROJECT
+            services.AddCore(configuration);
 
             // Add JWT
             services.AddAuthentication(options =>
@@ -113,15 +98,17 @@ namespace Unitagram.WebAPI.StartupExtensions
             })
               .AddJwtBearer(options =>
               {
+                  var jwtConfig = configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>()!;
+
                   options.TokenValidationParameters = new TokenValidationParameters()
                   {
                       ValidateAudience = true,
-                      ValidAudience = configuration["Jwt:Audience"],
+                      ValidAudience = jwtConfig.Audience,
                       ValidateIssuer = true,
-                      ValidIssuer = configuration["Jwt:Issuer"],
+                      ValidIssuer = jwtConfig.Issuer,
                       ValidateLifetime = true,
                       ValidateIssuerSigningKey = true,
-                      IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                      IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtConfig.Key)),
                   };
               });
 

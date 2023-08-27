@@ -15,4 +15,8 @@
     <PackageReference Include="SerilogTimings" Version="3.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Unitagram.Common\Unitagram.Common.csproj" />
+  </ItemGroup>
+
 </Project>

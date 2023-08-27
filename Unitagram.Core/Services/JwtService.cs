@@ -2,12 +2,12 @@
 using Unitagram.Core.ServiceContracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Unitagram.Core.Domain.Identity;
+using Unitagram.Common.General;
 
 namespace Unitagram.Core.Services
 {
@@ -28,8 +28,10 @@ namespace Unitagram.Core.Services
         /// <returns>AuthenticationResponse that includes token</returns>
         public AuthenticationResponse CreateJwtToken(ApplicationUser user)
         {
+            var jwtConfig = _configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>()!;
+
             // Create a DateTime object representing the token expiration time by adding the number of minutes specified in the configuration to the current UTC time.
-            DateTime expiration = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:EXPIRATION_MINUTES"]));
+            DateTime expiration = DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtConfig.ExpirationMinutes));
 
             // Create an array of Claim objects representing the user's claims, such as their ID, name, email, etc.
             Claim[] claims = new Claim[]
@@ -43,15 +45,15 @@ namespace Unitagram.Core.Services
             };
 
             // Create a SymmetricSecurityKey object using the key specified in the configuration.
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key));
 
             // Create a SigningCredentials object with the security key and the HMACSHA256 algorithm.
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             // Create a JwtSecurityToken object with the given issuer, audience, claims, expiration, and signing credentials.
             JwtSecurityToken tokenGenerator = new JwtSecurityToken(
-            _configuration["Jwt:Issuer"],
-            _configuration["Jwt:Audience"],
+            jwtConfig.Issuer,
+            jwtConfig.Audience,
             claims,
             expires: expiration,
             signingCredentials: signingCredentials
@@ -70,7 +72,7 @@ namespace Unitagram.Core.Services
                 UserName = user.UserName,
                 Expiration = expiration,
                 RefreshToken = GenerateRefreshToken(),
-                RefreshTokenExpirationDateTime = DateTime.Now.AddMinutes(Convert.ToInt32(_configuration["RefreshToken:EXPIRATION_MINUTES"]))
+                RefreshTokenExpirationDateTime = DateTime.Now.AddDays(jwtConfig.RefreshTokenValidityInDays)
             };
         }
 

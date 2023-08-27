@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Unitagram.Common\Unitagram.Common.csproj" />
     <ProjectReference Include="..\Unitagram.Core\Unitagram.Core.csproj" />
     <ProjectReference Include="..\Unitagram.Infrastructure\Unitagram.Infrastructure.csproj" />
   </ItemGroup>

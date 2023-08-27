@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Unitagram.Core\Unitagram.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+  </ItemGroup>
+
 </Project>
