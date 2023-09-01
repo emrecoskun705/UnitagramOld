@@ -24,12 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -42,9 +40,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Unitagram.Application\Unitagram.Application.csproj" />
     <ProjectReference Include="..\Unitagram.Common\Unitagram.Common.csproj" />
     <ProjectReference Include="..\Unitagram.Core\Unitagram.Core.csproj" />
+    <ProjectReference Include="..\Unitagram.Identity\Unitagram.Identity.csproj" />
     <ProjectReference Include="..\Unitagram.Infrastructure\Unitagram.Infrastructure.csproj" />
+    <ProjectReference Include="..\Unitagram.Persistence\Unitagram.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

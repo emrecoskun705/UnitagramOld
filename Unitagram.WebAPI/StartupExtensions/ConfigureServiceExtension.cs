@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Unitagram.Core;
-using Unitagram.Infrastructure;
-using Unitagram.Common.General;
+using Unitagram.Identity;
+using Unitagram.Persistence;
 
 namespace Unitagram.WebAPI.StartupExtensions
 {
@@ -26,8 +25,6 @@ namespace Unitagram.WebAPI.StartupExtensions
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
             // load configuration settings
-            services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
-
             services.AddControllers(options =>
             {
                 //Authorization policy
@@ -75,36 +72,10 @@ namespace Unitagram.WebAPI.StartupExtensions
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
-            // INFTASTRUCTURE PROJECT
-            services.AddInfrastructure(configuration);
-
-            // CORE PROJECT
-            services.AddCore(configuration);
-
-            // Add JWT
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-              .AddJwtBearer(options =>
-              {
-                  var jwtConfig = configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>()!;
-
-                  options.TokenValidationParameters = new TokenValidationParameters()
-                  {
-                      ValidateAudience = true,
-                      ValidAudience = jwtConfig.Audience,
-                      ValidateIssuer = true,
-                      ValidIssuer = jwtConfig.Issuer,
-                      ValidateLifetime = true,
-                      ValidateIssuerSigningKey = true,
-                      IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtConfig.Key)),
-                  };
-              });
-
-            services.AddAuthorization();
-
+            
+            services.AddPersistenceServices(configuration);
+            services.AddIdentityServices(configuration);
+            
             return services;
         }
     }

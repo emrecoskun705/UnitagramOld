@@ -4,70 +4,47 @@
         <name>Unitagram.WebAPI</name>
     </assembly>
     <members>
+        <member name="T:Unitagram.WebAPI.Controllers.CustomControllerBase">
+            <summary>
+            Custom Controller base for API
+            </summary>
+        </member>
         <member name="T:Unitagram.WebAPI.Controllers.v1.AccountController">
             <summary>
             
             </summary>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Microsoft.AspNetCore.Identity.UserManager{Unitagram.Core.Domain.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{Unitagram.Core.Domain.Identity.ApplicationUser},Microsoft.AspNetCore.Identity.RoleManager{Unitagram.Core.Domain.Identity.ApplicationRole},Unitagram.Core.ServiceContracts.IJwtService,Microsoft.Extensions.Logging.ILogger{Unitagram.WebAPI.Controllers.v1.AccountController},Serilog.IDiagnosticContext)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Unitagram.Application.Contracts.Identity.IAuthService)">
             <summary>
             
             </summary>
-            <param name="userManager"></param>
-            <param name="signInManager"></param>
-            <param name="roleManager"></param>
-            <param name="jwtService"></param>
-            <param name="logger"></param>
-            <param name="diagnosticContext"></param>
+            <param name="authService"></param>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.PostRegister(Unitagram.Core.DTO.RegisterDTO)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.Login(Unitagram.Application.Models.Identity.AuthRequest)">
             <summary>
-            This method handles user registration. It validates the provided registration data, creates a new user with the provided details, and attempts to create 
-            the user using the UserManager. If successful, the user is signed in, a JWT token is generated, and the response includes the authentication details. 
-            If registration fails, an error message is returned.
+            Login Test
             </summary>
-            <param name="registerDTO"></param>
+            <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.IsEmailAlreadyRegistered(System.String)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.Register(Unitagram.Application.Models.Identity.RegisterRequest)">
             <summary>
-            This method checks if an email address is already registered in the system. It uses the UserManager to find a user with the given email. 
-            If the user is found, the response indicates that the email is already registered; otherwise, it's considered available.
+            Register Request
             </summary>
-            <param name="email"></param>
+            <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.PostLogin(Unitagram.Core.DTO.LoginDTO)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.RefreshToken(Unitagram.Application.Models.Identity.RefreshRequest)">
             <summary>
-             This method handles user login. It validates the provided login data and attempts to sign in the user using the SignInManager. If login is successful, 
-             a JWT token is generated, and the response includes the authentication details. If login fails, an error message is returned.
+            Refresh Token test
             </summary>
-            <param name="loginDTO"></param>
+            <param name="request"></param>
             <returns></returns>
-        </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.GetLogout">
-            <summary>
-            Logout
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.GenerateNewAccessToken(Unitagram.Core.DTO.TokenModel)">
-            <summary>
-            Generates a new access token using a refresh token.
-            </summary>
-            <param name="tokenModel">The token model containing the refresh token.</param>
-            <returns>Returns a new access token if the request is valid; otherwise, returns a BadRequest result.</returns>
         </member>
         <member name="T:Unitagram.WebAPI.Controllers.v1.UniversityController">
             <summary>
             
             </summary>
-        </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.UniversityController.#ctor(Unitagram.Core.ServiceContracts.IUniversityGetterService)">
-            <summary>
-            
-            </summary>
-            <param name="universityGetterService"></param>
         </member>
         <member name="T:Unitagram.WebAPI.StartupExtensions.ConfigureServiceExtension">
             <summary>
