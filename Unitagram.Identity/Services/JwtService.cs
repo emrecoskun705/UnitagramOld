@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Models.Identity;
+using Unitagram.Application.Models.Identity.Jwt;
 
 namespace Unitagram.Identity.Services;
 

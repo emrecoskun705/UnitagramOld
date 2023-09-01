@@ -1,4 +1,4 @@
-namespace Unitagram.Application.Models.Identity;
+namespace Unitagram.Application.Models.Identity.Authentication;
 
 public class AuthRequest
 {

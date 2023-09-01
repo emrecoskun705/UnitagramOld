@@ -4,6 +4,9 @@ using Microsoft.Extensions.Options;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity;
+using Unitagram.Application.Models.Identity.Authentication;
+using Unitagram.Application.Models.Identity.Jwt;
+using Unitagram.Application.Models.Identity.Register;
 using Unitagram.Identity.Models;
 
 namespace Unitagram.Identity.Services;
@@ -31,6 +34,14 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponse> Login(AuthRequest request)
     {
+        var validator = new AuthRequestValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (validationResult.Errors.Any())
+        {
+            throw new BadRequestException(string.Empty, validationResult);
+        }
+        
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user == null)
@@ -56,6 +67,14 @@ public class AuthService : IAuthService
 
     public async Task<RegisterResponse> Register(RegisterRequest request)
     {
+        var validator = new RegisterRequestValidator();
+        var validationResult = await validator.ValidateAsync(request);
+        
+        if (validationResult.Errors.Any())
+        {
+            throw new BadRequestException(string.Empty, validationResult);
+        }
+        
         //Create user
         ApplicationUser user = new ApplicationUser()
         {

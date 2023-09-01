@@ -1,4 +1,5 @@
 using Serilog;
+using Unitagram.WebAPI.Middleware;
 using Unitagram.WebAPI.StartupExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
@@ -26,7 +29,7 @@ if (builder.Environment.IsProduction())
 
 if (builder.Environment.IsDevelopment() || builder.Environment.IsProduction()) // TODO: remove production check later
 {
-  app.UseDeveloperExceptionPage();
+  // app.UseDeveloperExceptionPage();
   app.UseSwagger(); // creates endpoints for swagger.json
   app.UseSwaggerUI(options =>
   {
@@ -37,7 +40,7 @@ if (builder.Environment.IsDevelopment() || builder.Environment.IsProduction()) /
 }
 
 app.UseRouting();
-//app.UseCors();
+app.UseCors("all");
 
 app.UseAuthentication();
 app.UseAuthorization();

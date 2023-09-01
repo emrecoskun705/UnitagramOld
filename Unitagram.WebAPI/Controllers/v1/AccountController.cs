@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Unitagram.Application.Contracts.Identity;
+using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity;
+using Unitagram.Application.Models.Identity.Authentication;
+using Unitagram.Application.Models.Identity.Jwt;
+using Unitagram.Application.Models.Identity.Register;
 
 namespace Unitagram.WebAPI.Controllers.v1;
 
@@ -28,7 +32,7 @@ public class AccountController : CustomControllerBase
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login(AuthRequest request)
     {
         return Ok(await _authService.Login(request));

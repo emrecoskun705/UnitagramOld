@@ -1,6 +1,6 @@
-namespace Unitagram.Application.Models.Identity;
+namespace Unitagram.Application.Models.Identity.Register;
 
-public class AuthResponse
+public class RegisterResponse
 {
     public string Id { get; set; } = string.Empty;
     public string UserName { get; set; } = string.Empty;

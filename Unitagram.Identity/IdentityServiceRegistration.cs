@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Models.Identity;
+using Unitagram.Application.Models.Identity.Jwt;
 using Unitagram.Identity.DbContext;
 using Unitagram.Identity.Models;
 using Unitagram.Identity.Services;

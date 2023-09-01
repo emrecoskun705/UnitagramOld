@@ -20,21 +20,21 @@
             </summary>
             <param name="authService"></param>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.Login(Unitagram.Application.Models.Identity.AuthRequest)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.Login(Unitagram.Application.Models.Identity.Authentication.AuthRequest)">
             <summary>
             Login Test
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.Register(Unitagram.Application.Models.Identity.RegisterRequest)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.Register(Unitagram.Application.Models.Identity.Register.RegisterRequest)">
             <summary>
             Register Request
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.RefreshToken(Unitagram.Application.Models.Identity.RefreshRequest)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.RefreshToken(Unitagram.Application.Models.Identity.Jwt.RefreshRequest)">
             <summary>
             Refresh Token test
             </summary>
@@ -44,6 +44,16 @@
         <member name="T:Unitagram.WebAPI.Controllers.v1.UniversityController">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:Unitagram.WebAPI.Models.CustomProblemDetails">
+            <summary>
+            Custom Validation problem details
+            </summary>
+        </member>
+        <member name="P:Unitagram.WebAPI.Models.CustomProblemDetails.Errors">
+            <summary>
+            Stores errors
             </summary>
         </member>
         <member name="T:Unitagram.WebAPI.StartupExtensions.ConfigureServiceExtension">
