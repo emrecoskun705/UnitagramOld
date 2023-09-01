@@ -1,3 +1,4 @@
+using LanguageExt.Common;
 using Unitagram.Application.Models.Identity;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
@@ -7,8 +8,8 @@ namespace Unitagram.Application.Contracts.Identity;
 
 public interface IAuthService
 {
-    Task<AuthResponse> Login(AuthRequest request);
-    Task<RegisterResponse> Register(RegisterRequest request);
+    Task<Result<AuthResponse>> Login(AuthRequest request);
+    Task<Result<RegisterResponse>> Register(RegisterRequest request);
     
-    Task<AuthResponse> RefreshToken(RefreshRequest request);
+    Task<Result<AuthResponse>> RefreshToken(RefreshRequest request);
 }

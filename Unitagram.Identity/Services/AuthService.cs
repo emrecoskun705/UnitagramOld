@@ -1,9 +1,10 @@
 using System.Security.Claims;
+using LanguageExt.Common;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Exceptions;
-using Unitagram.Application.Models.Identity;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
 using Unitagram.Application.Models.Identity.Register;
@@ -17,43 +18,44 @@ public class AuthService : IAuthService
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly IJwtService _jwtService;
-    private readonly JwtSettings _jwtSettings;
-
+    private readonly IDiagnosticContext _diagnosticContext;
     public AuthService(UserManager<ApplicationUser> userManager, 
         SignInManager<ApplicationUser> signInManager, 
         RoleManager<ApplicationRole> roleManager, 
-        IJwtService jwtService,
-        IOptions<JwtSettings> jwtSettings)
+        IJwtService jwtService, 
+        ILogger<AuthService> logger, 
+        IDiagnosticContext diagnosticContext)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _roleManager = roleManager;
         _jwtService = jwtService;
-        _jwtSettings = jwtSettings.Value;
+        _diagnosticContext = diagnosticContext;
     }
 
-    public async Task<AuthResponse> Login(AuthRequest request)
+    public async Task<Result<AuthResponse>> Login(AuthRequest request)
     {
         var validator = new AuthRequestValidator();
         var validationResult = await validator.ValidateAsync(request);
-
-        if (validationResult.Errors.Any())
-        {
-            throw new BadRequestException(string.Empty, validationResult);
+        if (validationResult.Errors.Any()) {
+            var validationException = new ValidationException(validationResult);
+            return new Result<AuthResponse>(validationException);
         }
         
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user == null)
         {
-            throw new NotFoundException($"User with {request.Email} not found.", request.Email);
+            var notFoundException = new NotFoundException("User", request.Email);
+            return new Result<AuthResponse>(notFoundException); 
         }
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (result.Succeeded == false)
         {
-            throw new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
+            var badRequestException = new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
+            return new Result<AuthResponse>(badRequestException);  
         }
         
         JwtResponse jwtResponse = _jwtService.CreateJwtToken(await UserToJwtRequest(user));
@@ -65,14 +67,15 @@ public class AuthService : IAuthService
         return jwtResponse.ToAuthResponse();
     }
 
-    public async Task<RegisterResponse> Register(RegisterRequest request)
+    public async Task<Result<RegisterResponse>> Register(RegisterRequest request)
     {
         var validator = new RegisterRequestValidator();
         var validationResult = await validator.ValidateAsync(request);
         
         if (validationResult.Errors.Any())
         {
-            throw new BadRequestException(string.Empty, validationResult);
+            var exception = new ValidationException(validationResult);
+            return new Result<RegisterResponse>(exception);
         }
         
         //Create user
@@ -88,10 +91,11 @@ public class AuthService : IAuthService
         if (!result.Succeeded)
         {
             string errorMessage = string.Join(" | ", result.Errors.Select(e => e.Description));
-            throw new BadRequestException(errorMessage);
+            var exception =  new BadRequestException(errorMessage);
+            return new Result<RegisterResponse>(exception);
         }
         
-        var roles = await _userManager.GetRolesAsync(user);
+        _diagnosticContext.Set("CreatedUser", user.UserName);
         
         JwtResponse jwtResponse = _jwtService.CreateJwtToken(await UserToJwtRequest(user));
 
@@ -102,10 +106,13 @@ public class AuthService : IAuthService
         return jwtResponse.ToRegisterResponse();
     }
 
-    public async Task<AuthResponse> RefreshToken(RefreshRequest request)
+    public async Task<Result<AuthResponse>> RefreshToken(RefreshRequest request)
     {
         if (request == null)
-            throw  new BadRequestException("Invalid client request");
+        {
+            var exception = new BadRequestException("Invalid client request");
+            return new Result<AuthResponse>(exception);
+        }
         
         ClaimsPrincipal? principal = _jwtService.GetPrincipleFromJwtToken(request.Token);
         
@@ -117,7 +124,8 @@ public class AuthService : IAuthService
         
         if (user == null || user.RefreshToken != request.RefreshToken || user.RefreshTokenExpirationDateTime <= DateTime.Now)
         {
-            throw  new BadRequestException("Invalid refresh token");
+            var exception = new BadRequestException("Invalid refresh token");
+            return new Result<AuthResponse>(exception);
         }
         
         var jwtResponse = _jwtService.CreateJwtToken(await UserToJwtRequest(user));

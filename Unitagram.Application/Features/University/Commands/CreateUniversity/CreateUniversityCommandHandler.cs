@@ -19,7 +19,7 @@ public class CreateUniversityCommandHandler : IRequestHandler<CreateUniversityCo
         var validationResult = await validator.ValidateAsync(request);
 
         if (validationResult.Errors.Any())
-            throw new BadRequestException("Invalid University create request", validationResult);
+            throw new ValidationException(validationResult);
 
         await _universityRepository.CreateAsync(request.ToUniversity());
 

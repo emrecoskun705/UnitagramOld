@@ -4,6 +4,11 @@
         <name>Unitagram.WebAPI</name>
     </assembly>
     <members>
+        <member name="T:Unitagram.WebAPI.Controllers.ControllerExtensions">
+            <summary>
+            Controller extension
+            </summary>
+        </member>
         <member name="T:Unitagram.WebAPI.Controllers.CustomControllerBase">
             <summary>
             Custom Controller base for API
@@ -44,16 +49,6 @@
         <member name="T:Unitagram.WebAPI.Controllers.v1.UniversityController">
             <summary>
             
-            </summary>
-        </member>
-        <member name="T:Unitagram.WebAPI.Models.CustomProblemDetails">
-            <summary>
-            Custom Validation problem details
-            </summary>
-        </member>
-        <member name="P:Unitagram.WebAPI.Models.CustomProblemDetails.Errors">
-            <summary>
-            Stores errors
             </summary>
         </member>
         <member name="T:Unitagram.WebAPI.StartupExtensions.ConfigureServiceExtension">

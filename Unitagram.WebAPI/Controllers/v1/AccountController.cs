@@ -35,7 +35,9 @@ public class AccountController : CustomControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login(AuthRequest request)
     {
-        return Ok(await _authService.Login(request));
+        var result = await _authService.Login(request);
+
+        return result.ToOk(HttpContext);
     }
     
     /// <summary>
@@ -46,7 +48,8 @@ public class AccountController : CustomControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<RegisterResponse>> Register(RegisterRequest request)
     {
-        return Ok(await _authService.Register(request));
+        var result = await _authService.Register(request); 
+        return result.ToOk(HttpContext);
     }
     
     /// <summary>
@@ -55,8 +58,9 @@ public class AccountController : CustomControllerBase
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpPost("refresh-token")]
-    public async Task<ActionResult<RegisterResponse>> RefreshToken(RefreshRequest request)
+    public async Task<ActionResult<AuthResponse>> RefreshToken(RefreshRequest request)
     {
-        return Ok(await _authService.RefreshToken(request));
+        var result = await _authService.RefreshToken(request);
+        return result.ToOk(HttpContext);
     }
 }

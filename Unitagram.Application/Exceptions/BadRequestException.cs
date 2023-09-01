@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using FluentValidation.Results;
+using Unitagram.Application.Helpers;
 
 namespace Unitagram.Application.Exceptions;
 
@@ -7,13 +8,10 @@ public class BadRequestException : Exception
 {
     public BadRequestException(string message) : base(message)
     {
-        ValidationErrors = ImmutableDictionary<string, string[]>.Empty;
     }
 
-    public BadRequestException(string message, ValidationResult validationResult) : base(message)
+    public BadRequestException(ValidationResult validationResult) : base(validationResult.ToFormattedString())
     {
-        ValidationErrors = validationResult.ToDictionary();
     }
-
-    public IDictionary<string, string[]> ValidationErrors { get; set; }
+    
 }
