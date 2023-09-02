@@ -36,7 +36,6 @@ public class AccountController : CustomControllerBase
     public async Task<ActionResult<AuthResponse>> Login(AuthRequest request)
     {
         var result = await _authService.Login(request);
-
         return result.ToOk(HttpContext);
     }
     

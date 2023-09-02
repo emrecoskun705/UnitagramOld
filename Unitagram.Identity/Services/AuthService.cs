@@ -90,7 +90,7 @@ public class AuthService : IAuthService
         
         if (!result.Succeeded)
         {
-            string errorMessage = string.Join(" | ", result.Errors.Select(e => e.Description));
+            string errorMessage = string.Join("|", result.Errors.Select(e => e.Description));
             var exception =  new BadRequestException(errorMessage);
             return new Result<RegisterResponse>(exception);
         }
