@@ -114,7 +114,7 @@ public class AuthService : IAuthService
             return new Result<AuthResponse>(exception);
         }
         
-        ClaimsPrincipal? principal = _jwtService.GetPrincipleFromJwtToken(request.Token);
+        ClaimsPrincipal principal = _jwtService.GetPrincipleFromJwtToken(request.Token);
         
         if (principal == null)
             throw  new BadRequestException("Invalid access token");

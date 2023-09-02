@@ -65,7 +65,7 @@ public class JwtService : IJwtService
         };
     }
 
-    public ClaimsPrincipal? GetPrincipleFromJwtToken(string? token)
+    public ClaimsPrincipal GetPrincipleFromJwtToken(string? token)
     {
         var tokenValidationParameters = new TokenValidationParameters()
         {

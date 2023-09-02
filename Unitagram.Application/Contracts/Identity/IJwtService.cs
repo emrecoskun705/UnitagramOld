@@ -8,5 +8,5 @@ public interface IJwtService
 {
     JwtResponse CreateJwtToken(JwtRequest user);
 
-    ClaimsPrincipal? GetPrincipleFromJwtToken(string? token);
+    ClaimsPrincipal GetPrincipleFromJwtToken(string? token);
 }
