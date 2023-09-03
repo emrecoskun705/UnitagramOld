@@ -5,7 +5,6 @@ namespace Unitagram.Application.Models.Identity.Jwt;
 
 public class JwtResponse
 {
-    public string Id { get; set; } = string.Empty;
     public string UserName { get; set; } = string.Empty;
     public string Token { get; set; } = string.Empty;
     public string RefreshToken { get; set; } = string.Empty;
@@ -16,7 +15,6 @@ public class JwtResponse
     {
         return new()
         {
-            Id = Id,
             UserName = UserName,
             Token = Token,
             RefreshToken = RefreshToken,
@@ -27,7 +25,6 @@ public class JwtResponse
     {
         return new()
         {
-            Id = Id,
             UserName = UserName,
             Token = Token,
             RefreshToken = RefreshToken,

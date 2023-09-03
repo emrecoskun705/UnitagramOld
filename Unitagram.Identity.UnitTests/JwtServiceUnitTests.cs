@@ -46,7 +46,6 @@ public class JwtServiceUnitTests
         //Assert
         jwtResponse.Should().BeOfType<JwtResponse>();
         jwtResponse.Token.Should().NotBeNullOrEmpty();
-        jwtResponse.Id.Should().BeEquivalentTo(jwtRequest.Id.ToString());
     }
 
     #endregion

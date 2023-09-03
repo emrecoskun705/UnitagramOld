@@ -55,7 +55,6 @@ public class JwtService : IJwtService
         // Create and return an AuthenticationResponse object containing the token, user email, user name, and token expiration time.
         return new JwtResponse()
         {
-            Id = user.Id.ToString(),
             Token = token,
             UserName = user.UserName,
             Expiration = expiration,
