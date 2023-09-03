@@ -32,7 +32,6 @@ public class JwtService : IJwtService
             new Claim(JwtRegisteredClaimNames.Iat,
                 DateTime.UtcNow.ToString()), //Issued at (date and time of token generation)
             new Claim(ClaimTypes.NameIdentifier, user.UserName), //Unique name identifier of the user (UserName)
-            new Claim(ClaimTypes.Name, user.UserName), //Name of the user
         }
         // .Union(userClaims)
         .Union(roleClaims);

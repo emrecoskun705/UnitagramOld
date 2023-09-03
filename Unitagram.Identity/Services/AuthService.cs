@@ -19,6 +19,8 @@ public class AuthService : IAuthService
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly IJwtService _jwtService;
     private readonly IDiagnosticContext _diagnosticContext;
+    private readonly ILogger<AuthService> _logger;
+    
     public AuthService(UserManager<ApplicationUser> userManager, 
         SignInManager<ApplicationUser> signInManager, 
         RoleManager<ApplicationRole> roleManager, 
@@ -30,6 +32,7 @@ public class AuthService : IAuthService
         _signInManager = signInManager;
         _roleManager = roleManager;
         _jwtService = jwtService;
+        _logger = logger;
         _diagnosticContext = diagnosticContext;
     }
 
@@ -108,28 +111,43 @@ public class AuthService : IAuthService
 
     public async Task<Result<AuthResponse>> RefreshToken(RefreshRequest request)
     {
-        if (request == null)
+        var validator = new RefreshRequestValidator();
+        var validationResult = await validator.ValidateAsync(request);
+        if (validationResult.Errors.Any())
         {
-            var exception = new BadRequestException("Invalid client request");
+            var exception = new ValidationException(validationResult);
             return new Result<AuthResponse>(exception);
         }
         
         ClaimsPrincipal principal = _jwtService.GetPrincipleFromJwtToken(request.Token);
         
-        if (principal == null)
-            throw  new BadRequestException("Invalid access token");
+        // if (principal == null) // This should never happen if it throws that exception, catch it from exception middleware and log it
+        //     throw new BadRequestException("Invalid access token");
         
-        string? email = principal.FindFirstValue(ClaimTypes.Email);
-        ApplicationUser? user = await _userManager.FindByEmailAsync(email);
+        string? username = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (username == null)
+        {
+            var exception = new BadRequestException("Invalid access token");
+            return new Result<AuthResponse>(exception);
+        }
+        ApplicationUser? user = await _userManager.FindByNameAsync(username);
+
+        if (user is null)
+        {
+            var exception = new NotFoundException("User", username);
+            return new Result<AuthResponse>(exception);
+        }
         
-        if (user == null || user.RefreshToken != request.RefreshToken || user.RefreshTokenExpirationDateTime <= DateTime.Now)
+        bool isValidRefreshToken = user.RefreshToken != request.RefreshToken ||
+                                   user.RefreshTokenExpirationDateTime <= DateTime.Now;
+        if (isValidRefreshToken)
         {
             var exception = new BadRequestException("Invalid refresh token");
             return new Result<AuthResponse>(exception);
         }
         
         var jwtResponse = _jwtService.CreateJwtToken(await UserToJwtRequest(user));
-        
+        // Update Refresh Token for user in DB
         user.RefreshToken = jwtResponse.RefreshToken;
         user.RefreshTokenExpirationDateTime = jwtResponse.RefreshTokenExpirationDateTime;
 
@@ -145,7 +163,6 @@ public class AuthService : IAuthService
         var jwtRequest = new JwtRequest()
         {
             Id = user.Id,
-            Email = user.Email,
             UserName = user.UserName,
             Roles = roles,
         };

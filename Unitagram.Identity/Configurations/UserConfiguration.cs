@@ -15,8 +15,10 @@ public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
             {
                 Id = Guid.Parse("DBDD8D97-1685-4383-80A0-39D4C3BB7E08"),
                 Email = "admin@unitagram.com",
+                NormalizedEmail = "ADMIN@UNITAGRAM.COM",
                 PersonName = "System",
                 UserName = "admin",
+                NormalizedUserName = "ADMIN",
                 PasswordHash = hasher.HashPassword(null, "P@ssword1"),
                 EmailConfirmed = true
             }

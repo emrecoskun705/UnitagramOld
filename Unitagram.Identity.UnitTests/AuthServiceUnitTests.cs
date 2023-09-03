@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Security.Claims;
 using AutoFixture;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication;
@@ -26,12 +28,20 @@ public class AuthServiceUnitTests
     private readonly Mock<IDiagnosticContext> _diagnosticContextMock;
     private readonly IFixture _fixture;
 
+    private const string ValidJwtTokenWithoutTime =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+    private const string ValidRefreshToken =
+        "sj3ms9zKrGIXT1sBiYxSyBa8jt3JRaqGulDDYSCJeDrgswypOUAnoq5caZBTDJh0DSnt/Lla9/N0vC2q+YZJgA==";
+
+    private const string ValidUserName = "emrecoskun";
+    
     public AuthServiceUnitTests()
     {
         _fixture = new Fixture();
         // Initialize and set up your mocks here
-        _userManager = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null, null, null,
-            null, null, null, null, null);
+        _userManager = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null!, null!, null!,
+            null!, null!, null!, null!, null!);
 
         // Create mock objects for dependencies of SignInManager
         var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
@@ -54,7 +64,7 @@ public class AuthServiceUnitTests
         );
 
         _roleManager =
-            new Mock<RoleManager<ApplicationRole>>(Mock.Of<IRoleStore<ApplicationRole>>(), null, null, null, null);
+            new Mock<RoleManager<ApplicationRole>>(Mock.Of<IRoleStore<ApplicationRole>>(), null!, null!, null!, null!);
         _jwtService = new Mock<IJwtService>();
     }
     
@@ -129,7 +139,6 @@ public class AuthServiceUnitTests
             Email = "test",
             Password = "randomPassword",
         };
-        var user = new ApplicationUser { Email = authRequest.Email };
 
         // Act
         var result = await authService.Login(authRequest);
@@ -205,11 +214,11 @@ public class AuthServiceUnitTests
     }
 
     [Theory]
-    [InlineData("invalidemail", "validusername", "1234567890", "password123", "password123")] // Invalid email
-    [InlineData("validemail@example.com", "validusername", "1234567890", "pass",  "password123")] // Invalid password
+    [InlineData("invalidEmail", "validUsername", "1234567890", "password123", "password123")] // Invalid email
+    [InlineData("validemail@example.com", "validUsername", "1234567890", "pass",  "password123")] // Invalid password
     [InlineData("validemail@example.com", "abc", "1234567890", "password123", "password123")] // invalid username
-    [InlineData("validemail@example.com", "validusername", "invalidphone", "password123", "password123")] // invalid phone
-    [InlineData("validemail@example.com", "validusername", "1234567890", "password123", "password456")] // password do not match
+    [InlineData("validemail@example.com", "validUsername", "invalidPhone", "password123", "password123")] // invalid phone
+    [InlineData("validemail@example.com", "validUsername", "1234567890", "password123", "password456")] // password do not match
     public async Task Register_InvalidCredentials_ReturnsValidationException(string email, string userName, string phoneNumber, string password, string confirmPassword)
     {
         //Arrange
@@ -258,6 +267,171 @@ public class AuthServiceUnitTests
         // Assert
         result.IsFaulted.Should().BeTrue();
         result.IfFail(e => e.Should().BeOfType<BadRequestException>());
+    }
+
+    #endregion
+
+    #region RefreshToken
+
+    [Fact]
+    public async Task RefreshToken_TokenNull_ReturnsValidationException()
+    {
+        //Arrange
+        var authService = CreateAuthService();
+        var refreshRequest = new RefreshRequest()
+        {
+            Token = string.Empty,
+            RefreshToken = string.Empty,
+        }; 
+        
+        // Act
+        var result = await authService.RefreshToken(refreshRequest);
+        
+        // Assert
+        result.IsFaulted.Should().BeTrue();
+        result.IfFail(e => e.Should().BeOfType<ValidationException>());
+    }
+    
+    [Fact]
+    public async Task RefreshToken_UserNameNull_ClaimsPrincipal_ReturnsBadRequestException()
+    {
+        //Arrange
+        var authService = CreateAuthService();
+        var refreshRequest = new RefreshRequest()
+        {
+            Token = ValidJwtTokenWithoutTime,
+            RefreshToken = ValidRefreshToken,
+        };
+
+        var identity = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.Expiration, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture))
+        }, "your-authentication-type"); 
+        var claimsPrincipalWithUserNameNull = new ClaimsPrincipal(identity);
+
+        _jwtService.Setup(p => p.GetPrincipleFromJwtToken(refreshRequest.Token))
+            .Returns(claimsPrincipalWithUserNameNull);
+        
+        // Act
+        var result = await authService.RefreshToken(refreshRequest);
+        
+        // Assert
+        result.IsFaulted.Should().BeTrue();
+        result.IfFail(e => e.Should().BeOfType<BadRequestException>());
+    }
+    
+    [Fact]
+    public async Task RefreshToken_UserNull_ReturnsNotFoundException()
+    {
+        //Arrange
+        var authService = CreateAuthService();
+        var refreshRequest = new RefreshRequest()
+        {
+            Token = ValidJwtTokenWithoutTime,
+            RefreshToken = ValidRefreshToken,
+        };
+
+        var identity = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, ValidUserName)
+        }, "your-authentication-type");
+        var claimsPrincipalValid = new ClaimsPrincipal(identity);
+        
+        // Mock
+        _jwtService.Setup(p => p.GetPrincipleFromJwtToken(refreshRequest.Token))
+            .Returns(claimsPrincipalValid);
+
+        _userManager.Setup(p => p.FindByNameAsync(It.IsAny<string>()))
+            .ReturnsAsync(null as ApplicationUser);
+        
+        // Act
+        var result = await authService.RefreshToken(refreshRequest);
+        
+        // Assert
+        result.IsFaulted.Should().BeTrue();
+        result.IfFail(e => e.Should().BeOfType<NotFoundException>());
+    }
+    
+    [Fact]
+    public async Task RefreshToken_InvalidRefreshToken_ReturnsBadException()
+    {
+        //Arrange
+        var authService = CreateAuthService();
+        var refreshRequest = new RefreshRequest()
+        {
+            Token = ValidJwtTokenWithoutTime,
+            RefreshToken = ValidRefreshToken,
+        };
+
+        var identity = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, ValidUserName)
+        }, "your-authentication-type"); 
+        var claimsPrincipalValid = new ClaimsPrincipal(identity);
+
+        var applicationUserRefreshTokenNotEqual = _fixture
+            .Build<ApplicationUser>()
+            .With(p => p.RefreshToken, "notSameRefreshTokenWithValidRefreshToken")
+            .With(p => p.RefreshTokenExpirationDateTime, DateTime.Now)
+            .Create();
+        
+        // Mock
+        _jwtService.Setup(p => p.GetPrincipleFromJwtToken(refreshRequest.Token))
+            .Returns(claimsPrincipalValid);
+
+        _userManager.Setup(p => p.FindByNameAsync(It.IsAny<string>()))
+            .ReturnsAsync(applicationUserRefreshTokenNotEqual);
+        
+        // Act
+        var result = await authService.RefreshToken(refreshRequest);
+        
+        // Assert
+        result.IsFaulted.Should().BeTrue();
+        result.IfFail(e => e.Should().BeOfType<BadRequestException>());
+        result.IfFail(e => e.Message.Should().Be("Invalid refresh token"));
+    }
+    
+    [Fact]
+    public async Task RefreshToken_ValidRefreshRequest_ReturnsAuthResponse()
+    {
+        //Arrange
+        var authService = CreateAuthService();
+        var refreshRequest = new RefreshRequest()
+        {
+            Token = ValidJwtTokenWithoutTime,
+            RefreshToken = ValidRefreshToken,
+        };
+
+        var identity = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, ValidUserName)
+        }, "your-authentication-type"); 
+        var claimsPrincipalValid = new ClaimsPrincipal(identity);
+
+        var applicationUserRefreshTokenNotEqual = _fixture
+            .Build<ApplicationUser>()
+            .With(p => p.RefreshToken, refreshRequest.RefreshToken)
+            .With(p => p.RefreshTokenExpirationDateTime, DateTime.Now.AddDays(2))
+            .Create();
+        
+        // Mock
+        _jwtService.Setup(p => p.GetPrincipleFromJwtToken(refreshRequest.Token))
+            .Returns(claimsPrincipalValid);
+
+        _userManager.Setup(p => p.FindByNameAsync(It.IsAny<string>()))
+            .ReturnsAsync(applicationUserRefreshTokenNotEqual);
+
+        _jwtService.Setup(p => p.CreateJwtToken(It.IsAny<JwtRequest>()))
+            .Returns(_fixture.Build<JwtResponse>().Create());
+
+        _userManager.Setup(p => p.UpdateAsync(It.IsAny<ApplicationUser>()));
+        
+        // Act
+        var result = await authService.RefreshToken(refreshRequest);
+        
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.IfFail(e => e.Should().BeOfType<JwtResponse>());
     }
 
     #endregion
