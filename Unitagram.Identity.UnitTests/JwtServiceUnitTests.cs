@@ -21,7 +21,7 @@ public class JwtServiceUnitTests
         {
             Issuer = "http://localhost:7164",
             Audience = "http://localhost:4200",
-            ExpirationMinutes = 1,
+            ExpirationDays = 1,
             Key = "this is secret key for jwt",
             RefreshTokenValidityInDays = 7,
         };

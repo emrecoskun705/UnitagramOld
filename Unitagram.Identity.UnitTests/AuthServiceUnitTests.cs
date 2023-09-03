@@ -83,13 +83,13 @@ public class AuthServiceUnitTests
         var authService = CreateAuthService();
         var authRequest = new AuthRequest
         {
-            Email = "test@example.com",
+            UserName = "emrecoskun",
             Password = "password123",
         };
-        var user = new ApplicationUser { Email = authRequest.Email };
+        var user = new ApplicationUser { UserName = authRequest.UserName };
 
         // Set up mock behavior
-        _userManager.Setup(u => u.FindByEmailAsync(authRequest.Email)).ReturnsAsync(user);
+        _userManager.Setup(u => u.FindByNameAsync(authRequest.UserName)).ReturnsAsync(user);
         _signInManager.Setup(s => s.CheckPasswordSignInAsync(user, authRequest.Password, false))
             .ReturnsAsync(SignInResult.Success);
         // just return some JWT response values for test to work
@@ -111,13 +111,13 @@ public class AuthServiceUnitTests
         var authService = CreateAuthService();
         var authRequest = new AuthRequest
         {
-            Email = "test@example.com",
+            UserName = "emrecoskun",
             Password = "randomPassword",
         };
-        var user = new ApplicationUser { Email = authRequest.Email };
+        var user = new ApplicationUser { UserName = authRequest.UserName };
 
         // Set up mock behavior
-        _userManager.Setup(u => u.FindByEmailAsync(authRequest.Email)).ReturnsAsync(user);
+        _userManager.Setup(u => u.FindByNameAsync(authRequest.UserName)).ReturnsAsync(user);
         _signInManager.Setup(s => s.CheckPasswordSignInAsync(user, authRequest.Password, false))
             .ReturnsAsync(SignInResult.Failed);
 
@@ -136,7 +136,7 @@ public class AuthServiceUnitTests
         var authService = CreateAuthService();
         var authRequest = new AuthRequest
         {
-            Email = "test",
+            UserName = "",
             Password = "randomPassword",
         };
 
@@ -155,11 +155,11 @@ public class AuthServiceUnitTests
         var authService = CreateAuthService();
         var authRequest = new AuthRequest
         {
-            Email = "emre@emre.com",
+            UserName = "emre@emre.com",
             Password = "randomPassword",
         };
         // Set up mock behavior
-        _userManager.Setup(u => u.FindByEmailAsync(authRequest.Email)).ReturnsAsync(null as ApplicationUser);
+        _userManager.Setup(u => u.FindByEmailAsync(authRequest.UserName)).ReturnsAsync(null as ApplicationUser);
 
         // Act
         var result = await authService.Login(authRequest);

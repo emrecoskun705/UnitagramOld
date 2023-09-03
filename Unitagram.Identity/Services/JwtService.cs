@@ -23,15 +23,14 @@ public class JwtService : IJwtService
     {
         var roleClaims = user.Roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
 
-        DateTime expiration = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_jwtSettings.ExpirationMinutes));
+        DateTime expiration = DateTime.UtcNow.AddDays(Convert.ToDouble(_jwtSettings.ExpirationDays));
 
         // Create an array of Claim objects representing the user's claims, such as their ID, name, email, etc.
         var claims = new[] {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), //Subject (user id)
+            new Claim(JwtRegisteredClaimNames.Sub, user.UserName), //Subject (user id)
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), //JWT unique ID
             new Claim(JwtRegisteredClaimNames.Iat,
                 DateTime.UtcNow.ToString()), //Issued at (date and time of token generation)
-            new Claim(ClaimTypes.NameIdentifier, user.UserName), //Unique name identifier of the user (UserName)
         }
         // .Union(userClaims)
         .Union(roleClaims);

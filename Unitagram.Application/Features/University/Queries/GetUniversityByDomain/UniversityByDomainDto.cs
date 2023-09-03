@@ -1,13 +1,13 @@
 namespace Unitagram.Application.Features.University.Queries.GetUniversityByDomain;
 
-public class UniversityByDomainDto
+public record UniversityByDomainDto
 {
-    public int Id { get; set; }
-    public string Domain { get; set; } = string.Empty;
-    public string Province { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public DateTime? DateCreated { get; set; }
-    public DateTime? DateModified { get; set; }
+    public int Id { get; init; }
+    public string Domain { get; init; } = string.Empty;
+    public string Province { get; init; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
+    public DateTime? DateCreated { get; init; }
+    public DateTime? DateModified { get; init; }
 }
 
 public static class UniversityByDomainDtoExtensions

@@ -6,8 +6,7 @@ public class AuthRequestValidator : AbstractValidator<AuthRequest>
 {
     public AuthRequestValidator()
     {
-        RuleFor(a => a.Email)
-            .EmailAddress().WithMessage("{PropertyName} is not valid")
+        RuleFor(a => a.UserName)
             .NotEmpty().WithMessage("{PropertyName} shouldn't be empty")
             .NotNull()
             .MaximumLength(100).WithMessage("{PropertyName} should maximum of 100 characters");

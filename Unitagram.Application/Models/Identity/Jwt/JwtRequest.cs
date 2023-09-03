@@ -1,8 +1,8 @@
 namespace Unitagram.Application.Models.Identity.Jwt;
 
-public class JwtRequest
+public record JwtRequest
 {
-    public Guid Id { get; set; }
-    public string UserName { get; set; } = string.Empty;
-    public IList<string> Roles { get; set; } = new List<string>();
+    public Guid Id { get; init; }
+    public string UserName { get; init; } = string.Empty;
+    public IList<string> Roles { get; init; } = new List<string>();
 }

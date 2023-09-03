@@ -3,13 +3,13 @@ using Unitagram.Application.Models.Identity.Register;
 
 namespace Unitagram.Application.Models.Identity.Jwt;
 
-public class JwtResponse
+public record JwtResponse
 {
-    public string UserName { get; set; } = string.Empty;
-    public string Token { get; set; } = string.Empty;
-    public string RefreshToken { get; set; } = string.Empty;
-    public DateTime Expiration { get; set; }
-    public DateTime RefreshTokenExpirationDateTime { get; set; }
+    public string UserName { get; init; } = string.Empty;
+    public string Token { get; init; } = string.Empty;
+    public string RefreshToken { get; init; } = string.Empty;
+    public DateTime Expiration { get; init; }
+    public DateTime RefreshTokenExpirationDateTime { get; init; }
 
     public AuthResponse ToAuthResponse()
     {

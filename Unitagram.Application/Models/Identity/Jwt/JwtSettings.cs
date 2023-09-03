@@ -1,10 +1,10 @@
 ﻿namespace Unitagram.Application.Models.Identity.Jwt;
 
-public class JwtSettings
+public record JwtSettings
 {
-    public string Key { get; set; } = string.Empty;
-    public string Issuer { get; set; } = string.Empty;
-    public string Audience { get; set; } = string.Empty;
-    public int ExpirationMinutes { get; set; }
-    public int RefreshTokenValidityInDays { get; set; }
+    public string Key { get; init; } = string.Empty;
+    public string Issuer { get; init; } = string.Empty;
+    public string Audience { get; init; } = string.Empty;
+    public int ExpirationDays { get; init; }
+    public int RefreshTokenValidityInDays { get; init; }
 }

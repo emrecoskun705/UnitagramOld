@@ -2,6 +2,7 @@ using System.Security.Claims;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Serilog;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Exceptions;
@@ -45,11 +46,11 @@ public class AuthService : IAuthService
             return new Result<AuthResponse>(validationException);
         }
         
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        var user = await _userManager.FindByNameAsync(request.UserName);
 
         if (user == null)
         {
-            var notFoundException = new NotFoundException("User", request.Email);
+            var notFoundException = new NotFoundException("User", request.UserName);
             return new Result<AuthResponse>(notFoundException); 
         }
 
@@ -57,7 +58,7 @@ public class AuthService : IAuthService
 
         if (result.Succeeded == false)
         {
-            var badRequestException = new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
+            var badRequestException = new BadRequestException($"Credentials for '{request.UserName} aren't valid'.");
             return new Result<AuthResponse>(badRequestException);  
         }
         
@@ -123,7 +124,6 @@ public class AuthService : IAuthService
         
         // if (principal == null) // This should never happen if it throws that exception, catch it from exception middleware and log it
         //     throw new BadRequestException("Invalid access token");
-        
         string? username = principal.FindFirstValue(ClaimTypes.NameIdentifier);
         if (username == null)
         {
