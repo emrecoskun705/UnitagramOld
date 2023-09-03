@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Unitagram.Core\Unitagram.Core.csproj" />
   </ItemGroup>
 
 

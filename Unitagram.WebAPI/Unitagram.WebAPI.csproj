@@ -41,8 +41,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Unitagram.Application\Unitagram.Application.csproj" />
-    <ProjectReference Include="..\Unitagram.Common\Unitagram.Common.csproj" />
-    <ProjectReference Include="..\Unitagram.Core\Unitagram.Core.csproj" />
     <ProjectReference Include="..\Unitagram.Identity\Unitagram.Identity.csproj" />
     <ProjectReference Include="..\Unitagram.Infrastructure\Unitagram.Infrastructure.csproj" />
     <ProjectReference Include="..\Unitagram.Persistence\Unitagram.Persistence.csproj" />
