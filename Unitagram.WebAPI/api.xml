@@ -9,6 +9,15 @@
             Controller extension
             </summary>
         </member>
+        <member name="M:Unitagram.WebAPI.Controllers.ControllerExtensions.ToOk``1(LanguageExt.Common.Result{``0},Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Return OkObjectResult if result is succeeded
+            </summary>
+            <param name="result">Success or exception result parameter</param>
+            <param name="context">HttpContext for getting requestUrl</param>
+            <typeparam name="TResult">Return type of Action and request type</typeparam>
+            <returns>Returns ActionResult</returns>
+        </member>
         <member name="T:Unitagram.WebAPI.Controllers.CustomControllerBase">
             <summary>
             Custom Controller base for API
@@ -16,35 +25,35 @@
         </member>
         <member name="T:Unitagram.WebAPI.Controllers.v1.AccountController">
             <summary>
-            
+            Controller responsible for user account-related actions.
             </summary>
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Unitagram.Application.Contracts.Identity.IAuthService)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:Unitagram.WebAPI.Controllers.v1.AccountController"/> class.
             </summary>
-            <param name="authService"></param>
+            <param name="authService">The authentication service to handle user account operations.</param>
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.Login(Unitagram.Application.Models.Identity.Authentication.AuthRequest)">
             <summary>
-            Login Test
+            Processes a login request, authenticating the user and returning an authentication response.
             </summary>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="request">The authentication request containing user credentials.</param>
+            <returns>An <see cref="T:Microsoft.AspNetCore.Mvc.ActionResult`1"/> containing an <see cref="T:Unitagram.Application.Models.Identity.Authentication.AuthResponse"/>.</returns>
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.Register(Unitagram.Application.Models.Identity.Register.RegisterRequest)">
             <summary>
-            Register Request
+            Processes a registration request, creating a new user account and returning a registration response.
             </summary>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="request">The registration request containing user information.</param>
+            <returns>An <see cref="T:Microsoft.AspNetCore.Mvc.ActionResult`1"/> containing a <see cref="T:Unitagram.Application.Models.Identity.Register.RegisterResponse"/>.</returns>
         </member>
         <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.RefreshToken(Unitagram.Application.Models.Identity.Jwt.RefreshRequest)">
             <summary>
-            Refresh Token test
+            Refreshes an authentication token using a refresh token and returns an updated authentication response.
             </summary>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="request">The refresh token request containing a refresh token.</param>
+            <returns>An <see cref="T:Microsoft.AspNetCore.Mvc.ActionResult`1"/> containing an <see cref="T:Unitagram.Application.Models.Identity.Authentication.AuthResponse"/>.</returns>
         </member>
         <member name="T:Unitagram.WebAPI.Controllers.v1.UniversityController">
             <summary>
