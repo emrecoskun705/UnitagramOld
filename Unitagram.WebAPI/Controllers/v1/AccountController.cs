@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Unitagram.Application.Contracts.Identity;
-using Unitagram.Application.Exceptions;
-using Unitagram.Application.Models.Identity;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
 using Unitagram.Application.Models.Identity.Register;

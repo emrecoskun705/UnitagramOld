@@ -1,8 +1,6 @@
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Mvc;
 using Unitagram.Application.Exceptions;
-using Unitagram.Application.Models.Identity.Authentication;
-using Unitagram.WebAPI.Models;
 
 namespace Unitagram.WebAPI.Controllers;
 
@@ -11,6 +9,13 @@ namespace Unitagram.WebAPI.Controllers;
 /// </summary>
 public static class ControllerExtensions
 {
+    /// <summary>
+    /// Return OkObjectResult if result is succeeded
+    /// </summary>
+    /// <param name="result">Success or exception result parameter</param>
+    /// <param name="context">HttpContext for getting requestUrl</param>
+    /// <typeparam name="TResult">Return type of Action and request type</typeparam>
+    /// <returns>Returns ActionResult</returns>
     public static ActionResult<TResult> ToOk<TResult>(this Result<TResult> result, HttpContext context)
     {
         var request = context.Request;
@@ -24,13 +29,16 @@ public static class ControllerExtensions
     
     private static ActionResult<TResult> HandleException<TResult>(Exception exception, string requestUrl)
     {
-        var statusCode = exception switch
+        // Define a dictionary to map exception types to status codes
+        var statusCodeMap = new Dictionary<Type, int>
         {
-            ValidationException validationException => 400,
-            BadRequestException badRequestException => 400,
-            NotFoundException notFoundException => 404,
-            _ => 500
+            { typeof(ValidationException), 400 },
+            { typeof(BadRequestException), 400 },
+            { typeof(NotFoundException), 404 }
         };
+
+        // Get the status code from the dictionary, defaulting to 500 if not found
+        var statusCode = statusCodeMap.TryGetValue(exception.GetType(), out var code) ? code : 500;
 
         var problemDetails = new ProblemDetails
         {
@@ -40,6 +48,7 @@ public static class ControllerExtensions
             Instance = requestUrl
         };
 
+        // Use a single switch statement to determine the result
         return exception switch
         {
             ValidationException or BadRequestException => new BadRequestObjectResult(problemDetails),
