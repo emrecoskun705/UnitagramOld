@@ -60,6 +60,23 @@
             
             </summary>
         </member>
+        <member name="T:Unitagram.WebAPI.Middleware.ExceptionMiddleware">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Unitagram.WebAPI.Middleware.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="next"></param>
+        </member>
+        <member name="M:Unitagram.WebAPI.Middleware.ExceptionMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="httpContext"></param>
+        </member>
         <member name="T:Unitagram.WebAPI.StartupExtensions.ConfigureServiceExtension">
             <summary>
             Configure Startup(Program) services class

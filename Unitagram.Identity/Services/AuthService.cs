@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Unitagram.Application.Contracts.Identity;
+using Unitagram.Application.Contracts.Logging;
 using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
@@ -19,13 +20,13 @@ public class AuthService : IAuthService
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly IJwtService _jwtService;
     private readonly IDiagnosticContext _diagnosticContext;
-    private readonly ILogger<AuthService> _logger;
+    private readonly IAppLogger<AuthService> _logger;
     
     public AuthService(UserManager<ApplicationUser> userManager, 
         SignInManager<ApplicationUser> signInManager, 
         RoleManager<ApplicationRole> roleManager, 
         IJwtService jwtService, 
-        ILogger<AuthService> logger, 
+        IAppLogger<AuthService> logger, 
         IDiagnosticContext diagnosticContext)
     {
         _userManager = userManager;

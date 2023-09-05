@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Serilog;
 using Unitagram.Application.Contracts.Identity;
+using Unitagram.Application.Contracts.Logging;
 using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
@@ -71,7 +72,7 @@ public class AuthServiceUnitTests
     private AuthService CreateAuthService()
     {
         return new AuthService(_userManager.Object, _signInManager.Object, _roleManager.Object,
-            _jwtService.Object, Mock.Of<ILogger<AuthService>>(), _diagnosticContextMock.Object);
+            _jwtService.Object, Mock.Of<IAppLogger<AuthService>>(), _diagnosticContextMock.Object);
     }
 
     #region Login
