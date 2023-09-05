@@ -58,7 +58,6 @@ public class AccountController : CustomControllerBase
     [HttpPost("refresh-token")]
     public async Task<ActionResult<AuthResponse>> RefreshToken(RefreshRequest request)
     {
-        throw new ConnectionAbortedException("aborted connection");
         var result = await _authService.RefreshToken(request);
         return result.ToOk(HttpContext);
     }
