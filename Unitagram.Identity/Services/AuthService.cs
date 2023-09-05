@@ -2,7 +2,6 @@ using System.Security.Claims;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Serilog;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Exceptions;

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Models.Identity.Authentication;
