@@ -173,7 +173,7 @@ namespace Unitagram.Identity.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PersonName", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpirationDateTime", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("dbdd8d97-1685-4383-80a0-39d4c3bb7e08"), 0, "632a374e-2e50-4664-830f-7ff0397bf49e", "admin@unitagram.com", true, false, null, null, null, "AQAAAAIAAYagAAAAEDBXDiy9KaXczqHV02/t+JDkpiTGdTzW+ldZ8TfRnfkO/dzORlnjakyI+meh0g5H/g==", "System", null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "admin" });
+                values: new object[] { new Guid("dbdd8d97-1685-4383-80a0-39d4c3bb7e08"), 0, "8a6eea8e-c95d-4c86-8ef3-98b3924e3b1d", "admin@unitagram.com", true, false, null, "ADMIN@UNITAGRAM.COM", "ADMIN", "AQAAAAIAAYagAAAAEMqHFcyG7UdLdXX414mBgI4LthfTSAAkh6UFDCCSYiPfJ2fGXy2RZdve8865zzKsrQ==", "System", null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

@@ -12,6 +12,10 @@ public class UniversityConfiguration : IEntityTypeConfiguration<University>
             .IsRequired()
             .HasMaxLength(100);
 
+        builder.Property(u => u.Domain)
+            .IsRequired()
+            .HasMaxLength(150);
+
         builder.Property(u => u.Province)
             .IsRequired()
             .HasMaxLength(50);

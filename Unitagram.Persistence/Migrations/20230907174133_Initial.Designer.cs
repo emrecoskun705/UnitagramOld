@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unitagram.Persistence.DatabaseContext;
 
@@ -11,9 +12,11 @@ using Unitagram.Persistence.DatabaseContext;
 namespace Unitagram.Persistence.Migrations
 {
     [DbContext(typeof(UnitagramDatabaseContext))]
-    partial class UnitagramDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230907174133_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,8 +36,7 @@ namespace Unitagram.Persistence.Migrations
 
                     b.Property<string>("Domain")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("datetime2");
@@ -52,23 +54,6 @@ namespace Unitagram.Persistence.Migrations
                     b.HasKey("UniversityId");
 
                     b.ToTable("University");
-                });
-
-            modelBuilder.Entity("Unitagram.Domain.UniversityUser", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UniversityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("UniversityId")
-                        .HasDatabaseName("IX_UniversityUser_UniversityId");
-
-                    b.ToTable("UniversityUser");
                 });
 #pragma warning restore 612, 618
         }

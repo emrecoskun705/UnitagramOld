@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EfCoreDialogsState">
+    <option name="keyValueStorage">
+      <map>
+        <entry key="Common:92f29964-97b1-45b1-a77c-3580f1e8a8b4:dbContext" value="Unitagram.Persistence.DatabaseContext.UnitagramDatabaseContext" />
+        <entry key="Common:98e1523b-92a4-4672-86d0-b2c1524c9b39:dbContext" value="Unitagram.Identity.DbContext.UnitagramIdentityDbContext" />
+        <entry key="Common:buildConfiguration" value="Debug" />
+        <entry key="Common:cf23ee9a-1cc2-4b9a-9c3b-78e47d05f987:dbContext" value="Unitagram.Identity.DbContext.UnitagramIdentityDbContext" />
+        <entry key="Common:noBuild" value="false" />
+        <entry key="Common:outputFolder" value="Migrations" />
+        <entry key="Common:useDefaultConnection" value="true" />
+      </map>
+    </option>
+  </component>
+</project>

@@ -2,7 +2,7 @@ namespace Unitagram.Application.Features.University.Queries.GetUniversityByDomai
 
 public record UniversityByDomainDto
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     public string Domain { get; init; } = string.Empty;
     public string Province { get; init; } = string.Empty;
     public string Name { get; init; } = string.Empty;
@@ -16,12 +16,12 @@ public static class UniversityByDomainDtoExtensions
     {
         return new UniversityByDomainDto()
         {
-            Id = university.Id,
+            Id = university.UniversityId,
             Domain = university.Domain,
             Province = university.Province,
             Name = university.Name,
-            DateCreated = university.DateCreated,
-            DateModified = university.DateModified,
+            DateCreated = university.CreatedOnUtc,
+            DateModified = university.ModifiedOnUtc,
         };
     }
 }

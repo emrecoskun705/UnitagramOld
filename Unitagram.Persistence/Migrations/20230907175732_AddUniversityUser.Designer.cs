@@ -12,8 +12,8 @@ using Unitagram.Persistence.DatabaseContext;
 namespace Unitagram.Persistence.Migrations
 {
     [DbContext(typeof(UnitagramDatabaseContext))]
-    [Migration("20230901071352_Initial")]
-    partial class Initial
+    [Migration("20230907175732_AddUniversityUser")]
+    partial class AddUniversityUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,30 +27,20 @@ namespace Unitagram.Persistence.Migrations
 
             modelBuilder.Entity("Unitagram.Domain.University", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("UniversityId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateModified")
+                    b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Domain")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -62,9 +52,26 @@ namespace Unitagram.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UniversityId");
 
                     b.ToTable("University");
+                });
+
+            modelBuilder.Entity("Unitagram.Domain.UniversityUser", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UniversityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("UniversityId")
+                        .HasDatabaseName("IX_UniversityUser_UniversityId");
+
+                    b.ToTable("UniversityUser");
                 });
 #pragma warning restore 612, 618
         }
