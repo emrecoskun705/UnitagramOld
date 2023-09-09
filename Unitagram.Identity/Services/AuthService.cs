@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Serilog;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Contracts.Persistence;
@@ -63,6 +62,12 @@ public class AuthService : IAuthService
             return new Result<AuthResponse>(notFoundException);
         }
 
+        if (!user.EmailConfirmed)
+        {
+            var badRequestException = new BadRequestException($"Email is not confirmed for '{request.UserName}'.");
+            return new Result<AuthResponse>(badRequestException);
+        }
+        
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (result.Succeeded == false)
