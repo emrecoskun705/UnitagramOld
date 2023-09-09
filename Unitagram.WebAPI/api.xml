@@ -28,7 +28,7 @@
             Controller responsible for user account-related actions.
             </summary>
         </member>
-        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Unitagram.Application.Contracts.Identity.IAuthService)">
+        <member name="M:Unitagram.WebAPI.Controllers.v1.AccountController.#ctor(Unitagram.Application.Contracts.Identity.IAuthService,Unitagram.Application.Contracts.Email.IEmailSender)">
             <summary>
             Initializes a new instance of the <see cref="T:Unitagram.WebAPI.Controllers.v1.AccountController"/> class.
             </summary>
