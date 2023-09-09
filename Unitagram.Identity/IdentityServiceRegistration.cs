@@ -13,6 +13,7 @@ using Unitagram.Application.Models.Identity;
 using Unitagram.Application.Models.Identity.Jwt;
 using Unitagram.Identity.DbContext;
 using Unitagram.Identity.Models;
+using Unitagram.Identity.Providers;
 using Unitagram.Identity.Services;
 
 namespace Unitagram.Identity;
@@ -32,9 +33,13 @@ public static class IdentityServiceRegistration
                 options.Password.RequiredLength = 8;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
+
+                options.SignIn.RequireConfirmedEmail = true;
+                options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             })
             .AddEntityFrameworkStores<UnitagramIdentityDbContext>()
             .AddDefaultTokenProviders()
+            .AddTokenProvider<SixDigitEmailConfirmationTokenProvider<ApplicationUser>>("emailconfirmation")
             .AddUserStore<UserStore<ApplicationUser, ApplicationRole, UnitagramIdentityDbContext, Guid>>()
             .AddRoleStore<RoleStore<ApplicationRole, UnitagramIdentityDbContext, Guid>>();
 

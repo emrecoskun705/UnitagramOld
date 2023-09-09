@@ -5,16 +5,19 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Serilog;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Contracts.Logging;
+using Unitagram.Application.Contracts.Persistence;
 using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
 using Unitagram.Application.Models.Identity.Register;
+using Unitagram.Identity.DbContext;
 using Unitagram.Identity.Models;
 using Unitagram.Identity.Services;
 
@@ -25,8 +28,11 @@ public class AuthServiceUnitTests
     private readonly Mock<UserManager<ApplicationUser>> _userManager;
     private readonly Mock<SignInManager<ApplicationUser>> _signInManager;
     private readonly Mock<RoleManager<ApplicationRole>> _roleManager;
+    private readonly Mock<UnitagramIdentityDbContext> _dbContext;
     private readonly Mock<IJwtService> _jwtService;
     private readonly Mock<IDiagnosticContext> _diagnosticContextMock;
+    private readonly Mock<IUniversityRepository> _universityRepositoryMock;
+    private readonly Mock<IUniversityUserRepository> _universityUserRepositoryMock;
     private readonly IFixture _fixture;
 
     private const string ValidJwtTokenWithoutTime =
@@ -67,12 +73,21 @@ public class AuthServiceUnitTests
         _roleManager =
             new Mock<RoleManager<ApplicationRole>>(Mock.Of<IRoleStore<ApplicationRole>>(), null!, null!, null!, null!);
         _jwtService = new Mock<IJwtService>();
+        _universityRepositoryMock = new Mock<IUniversityRepository>();
+        _universityUserRepositoryMock = new Mock<IUniversityUserRepository>();
+        _dbContext = new Mock<UnitagramIdentityDbContext>();
     }
     
     private AuthService CreateAuthService()
     {
-        return new AuthService(_userManager.Object, _signInManager.Object, _roleManager.Object,
-            _jwtService.Object, Mock.Of<IAppLogger<AuthService>>(), _diagnosticContextMock.Object);
+        return new AuthService(_userManager.Object, 
+            _signInManager.Object, 
+            _roleManager.Object,
+            _jwtService.Object, 
+            _diagnosticContextMock.Object,
+            _universityRepositoryMock.Object,
+            _universityUserRepositoryMock.Object,
+            _dbContext.Object);
     }
 
     #region Login

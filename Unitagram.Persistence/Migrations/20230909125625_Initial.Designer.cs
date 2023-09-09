@@ -12,8 +12,8 @@ using Unitagram.Persistence.DatabaseContext;
 namespace Unitagram.Persistence.Migrations
 {
     [DbContext(typeof(UnitagramDatabaseContext))]
-    [Migration("20230907175732_AddUniversityUser")]
-    partial class AddUniversityUser
+    [Migration("20230909125625_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
