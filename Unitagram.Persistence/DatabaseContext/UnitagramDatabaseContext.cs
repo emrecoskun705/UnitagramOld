@@ -17,6 +17,7 @@ public class UnitagramDatabaseContext : DbContext
     
     public DbSet<University> University { get; set; }
     public DbSet<UniversityUser> UniversityUser { get; set; }
+    public DbSet<OtpConfirmation> OtpConfirmation { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
