@@ -19,24 +19,24 @@ public class EmailSender : IEmailSender
     }
     
     
-    public Task<bool> SendEmail(EmailMessage emailMessage)
+    public Task<bool> SendEmail(EmailMessage emailMessage, bool isBodyHtml = false)
     {
         try
         {
-            using (SmtpClient smtpClient = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort))
-            {
-                smtpClient.Credentials = new NetworkCredential(_emailSettings.Email, _emailSettings.Password);
-                smtpClient.EnableSsl = true; // Enable SSL encryption
+            using SmtpClient smtpClient = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort);
+            smtpClient.Credentials = new NetworkCredential(_emailSettings.Email, _emailSettings.Password);
+            smtpClient.EnableSsl = true; // Enable SSL encryption
 
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress(_emailSettings.Email);
-                mail.To.Add(emailMessage.To);
-                mail.Subject = emailMessage.Subject;
-                mail.Body = emailMessage.Body;
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(_emailSettings.Email);
+            mail.To.Add(emailMessage.To);
+            mail.Subject = emailMessage.Subject;
+            mail.Body = emailMessage.Body;
 
-                smtpClient.Send(mail);
-                return Task.FromResult(true);
-            }
+            mail.IsBodyHtml = isBodyHtml;
+
+            smtpClient.Send(mail);
+            return Task.FromResult(true);
         }
         catch (Exception ex)
         {
