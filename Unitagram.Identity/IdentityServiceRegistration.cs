@@ -34,6 +34,9 @@ public static class IdentityServiceRegistration
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
 
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3); // Lockout duration (3 minutes)
+                options.Lockout.MaxFailedAccessAttempts = 8; // Maximum failed attempts before lockout (8 attempts)
+                
                 options.SignIn.RequireConfirmedEmail = true;
                 options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             })
