@@ -4,5 +4,5 @@ namespace Unitagram.Application.Contracts.Email;
 
 public interface IEmailSender
 {
-    Task<bool> SendEmail(EmailMessage email);
+    Task<bool> SendEmail(EmailMessage email, bool isBodyHtml = false);
 }
