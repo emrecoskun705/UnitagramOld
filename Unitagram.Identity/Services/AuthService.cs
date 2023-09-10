@@ -62,9 +62,25 @@ public class AuthService : IAuthService
             return new Result<AuthResponse>(notFoundException);
         }
 
+        if (user.LockoutEnabled && user.AccessFailedCount >= _userManager.Options.Lockout.MaxFailedAccessAttempts-1)
+        {
+            var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(user);
+            if (lockoutEndDate >= DateTimeOffset.UtcNow)
+            {
+                var lockoutException = new BadRequestException($"Account locked out. Try again later.");
+                return new Result<AuthResponse>(lockoutException);
+            }
+            else
+            {
+                // If lockout has expired, reset the AccessFailedCount and LockoutEnd
+                await _userManager.ResetAccessFailedCountAsync(user);
+                await _userManager.SetLockoutEndDateAsync(user, null); // Reset lockout end date
+            }
+        }
+        
         if (!user.EmailConfirmed)
         {
-            var badRequestException = new BadRequestException($"Email is not confirmed for '{request.UserName}'.");
+            var badRequestException = new BadRequestException($"Email is not confirmed for '{user.Email}'.");
             return new Result<AuthResponse>(badRequestException);
         }
         
@@ -72,9 +88,19 @@ public class AuthService : IAuthService
 
         if (result.Succeeded == false)
         {
+            await _userManager.AccessFailedAsync(user);
+            if (user.LockoutEnabled && user.AccessFailedCount >= _userManager.Options.Lockout.MaxFailedAccessAttempts-1)
+            {
+                await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.Add(_userManager.Options.Lockout.DefaultLockoutTimeSpan));
+                var lockoutException = new BadRequestException($"Account locked out. Try again later.");
+                return new Result<AuthResponse>(lockoutException);
+            }
+            
             var badRequestException = new BadRequestException($"Credentials for '{request.UserName} aren't valid'.");
             return new Result<AuthResponse>(badRequestException);
         }
+        
+        await _signInManager.SignInAsync(user, false);
 
         JwtResponse jwtResponse = _jwtService.CreateJwtToken(await UserToJwtRequest(user));
         // update user

@@ -26,7 +26,7 @@ public class SixDigitEmailConfirmationTokenProvider<TUser> : DataProtectorTokenP
         {
             throw new ArgumentNullException(nameof(manager));
         }
-
+        
         var code = GenerateRandom6DigitCode(); // Generate a 6-digit code as a string
         return Task.FromResult(code);
     }
