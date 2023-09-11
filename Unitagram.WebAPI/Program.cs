@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context,  services,  loggerConfiguration) =>
 {
   loggerConfiguration
-    .ReadFrom.Configuration(context.Configuration) // Read configuration settings from built-in IConfiguration(appsettings.json)
+    .ReadFrom.Configuration(context.Configuration) // Read configuration settings from built-in IConfiguration (appsettings.json)
     .ReadFrom.Services(services);// reads out current app's services and make them available to serilog
 });
 
