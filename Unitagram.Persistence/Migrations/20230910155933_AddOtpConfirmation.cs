@@ -19,7 +19,7 @@ namespace Unitagram.Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     RetryCount = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0),
-                    RetryDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    RetryDateTimeUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
                 },
                 constraints: table =>
                 {

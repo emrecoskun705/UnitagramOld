@@ -12,7 +12,7 @@ using Unitagram.Persistence.DatabaseContext;
 namespace Unitagram.Persistence.Migrations
 {
     [DbContext(typeof(UnitagramDatabaseContext))]
-    [Migration("20230910144223_AddOtpConfirmation")]
+    [Migration("20230910155933_AddOtpConfirmation")]
     partial class AddOtpConfirmation
     {
         /// <inheritdoc />
@@ -39,8 +39,8 @@ namespace Unitagram.Persistence.Migrations
                         .HasColumnType("tinyint")
                         .HasDefaultValue((byte)0);
 
-                    b.Property<DateTime?>("RetryDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("RetryDateTimeUtc")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Value")
                         .IsRequired()

@@ -20,17 +20,6 @@ public class SixDigitEmailConfirmationTokenProvider<TUser> : DataProtectorTokenP
         
     }
 
-    public override Task<string> GenerateAsync(string purpose, UserManager<TUser> manager, TUser user)
-    {
-        if (manager == null)
-        {
-            throw new ArgumentNullException(nameof(manager));
-        }
-        
-        var code = GenerateRandom6DigitCode(); // Generate a 6-digit code as a string
-        return Task.FromResult(code);
-    }
-
     private string GenerateRandom6DigitCode()
     {
         var token = new byte[3];
