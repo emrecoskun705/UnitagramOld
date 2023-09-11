@@ -48,6 +48,7 @@ public static class IdentityServiceRegistration
 
         services.AddTransient<IJwtService, JwtService>();
         services.AddTransient<IAuthService, AuthService>();
+        services.AddTransient<IEmailVerificationService, EmailVerificationService>();
 
         // Add JWT
         services.AddAuthentication(options =>

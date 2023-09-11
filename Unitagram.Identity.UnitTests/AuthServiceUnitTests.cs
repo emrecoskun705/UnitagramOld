@@ -33,6 +33,7 @@ public class AuthServiceUnitTests
     private readonly Mock<IDiagnosticContext> _diagnosticContextMock;
     private readonly Mock<IUniversityRepository> _universityRepositoryMock;
     private readonly Mock<IUniversityUserRepository> _universityUserRepositoryMock;
+    private readonly Mock<IEmailVerificationService> _verificationServiceMock;
     private readonly IFixture _fixture;
 
     private const string ValidJwtTokenWithoutTime =
@@ -75,6 +76,7 @@ public class AuthServiceUnitTests
         _jwtService = new Mock<IJwtService>();
         _universityRepositoryMock = new Mock<IUniversityRepository>();
         _universityUserRepositoryMock = new Mock<IUniversityUserRepository>();
+        _verificationServiceMock = new Mock<IEmailVerificationService>();
         _dbContext = new Mock<UnitagramIdentityDbContext>();
     }
     
@@ -87,7 +89,8 @@ public class AuthServiceUnitTests
             _diagnosticContextMock.Object,
             _universityRepositoryMock.Object,
             _universityUserRepositoryMock.Object,
-            _dbContext.Object);
+            _dbContext.Object,
+            _verificationServiceMock.Object);
     }
 
     #region Login

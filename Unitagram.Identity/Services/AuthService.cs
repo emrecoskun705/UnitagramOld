@@ -24,6 +24,7 @@ public class AuthService : IAuthService
     private readonly IUniversityRepository _universityRepository;
     private readonly IUniversityUserRepository _universityUserRepository;
     private readonly UnitagramIdentityDbContext _databaseContext;
+    private readonly IEmailVerificationService _verificationService;
 
     public AuthService(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
@@ -32,7 +33,8 @@ public class AuthService : IAuthService
         IDiagnosticContext diagnosticContext,
         IUniversityRepository universityRepository,
         IUniversityUserRepository universityUserRepository,
-        UnitagramIdentityDbContext databaseContext)
+        UnitagramIdentityDbContext databaseContext, 
+        IEmailVerificationService verificationService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -42,6 +44,7 @@ public class AuthService : IAuthService
         _universityRepository = universityRepository;
         _universityUserRepository = universityUserRepository;
         _databaseContext = databaseContext;
+        _verificationService = verificationService;
     }
 
     public async Task<Result<AuthResponse>> Login(AuthRequest request)
@@ -176,7 +179,8 @@ public class AuthService : IAuthService
         user.RefreshTokenExpirationDateTime = jwtResponse.RefreshTokenExpirationDateTime;
         await _userManager.UpdateAsync(user);
 
-
+        await _verificationService.GenerateAsync(user.Id, "emailverification");
+        
         _diagnosticContext.Set("CreatedUser", user.UserName);
         _diagnosticContext.Set("University", getUniversity.Name);
 

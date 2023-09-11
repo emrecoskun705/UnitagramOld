@@ -22,7 +22,7 @@ public class OtpConfirmationConfiguration : IEntityTypeConfiguration<OtpConfirma
             .IsRequired()
             .HasMaxLength(10);
 
-        builder.Property(o => o.RetryDateTime)
+        builder.Property(o => o.RetryDateTimeUtc)
             .IsRequired(false);
     }
 }
