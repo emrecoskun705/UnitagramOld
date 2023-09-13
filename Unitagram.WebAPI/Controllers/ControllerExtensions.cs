@@ -32,9 +32,12 @@ public static class ControllerExtensions
         // Define a dictionary to map exception types to status codes
         var statusCodeMap = new Dictionary<Type, int>
         {
-            { typeof(ValidationException), 400 },
-            { typeof(BadRequestException), 400 },
-            { typeof(NotFoundException), 404 }
+            { typeof(ValidationException), StatusCodes.Status400BadRequest },
+            { typeof(BadRequestException), StatusCodes.Status400BadRequest },
+            { typeof(InvalidAccountCredentialsException), StatusCodes.Status400BadRequest },
+            { typeof(AccountLockoutException), StatusCodes.Status403Forbidden }, 
+            { typeof(NotFoundException), StatusCodes.Status404NotFound },
+            { typeof(UserNotFoundException), StatusCodes.Status404NotFound }
         };
 
         // Get the status code from the dictionary, defaulting to 500 if not found
@@ -48,12 +51,6 @@ public static class ControllerExtensions
             Instance = requestUrl
         };
 
-        // Use a single switch statement to determine the result
-        return exception switch
-        {
-            ValidationException or BadRequestException => new BadRequestObjectResult(problemDetails),
-            NotFoundException => new NotFoundObjectResult(problemDetails),
-            _ => new StatusCodeResult(statusCode)
-        };
+        return new ObjectResult(problemDetails);
     }
 }

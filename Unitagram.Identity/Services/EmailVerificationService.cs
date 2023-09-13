@@ -2,11 +2,13 @@ using System.Security.Cryptography;
 using LanguageExt;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Unitagram.Application.Contracts.Email;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Contracts.Persistence;
 using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Email;
+using Unitagram.Application.Models.Identity.OTP;
 using Unitagram.Domain;
 using Unitagram.Identity.Models;
 
@@ -17,31 +19,49 @@ public class EmailVerificationService : IEmailVerificationService
     private readonly IOtpConfirmationRepository _otpConfirmationRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IEmailSender _emailSender;
+    private readonly EmailOtpSettings _emailOtpSettings;
+
 
     public EmailVerificationService(
         IOtpConfirmationRepository otpConfirmationRepository,
         UserManager<ApplicationUser> userManager, 
-        IEmailSender emailSender)
+        IEmailSender emailSender,
+        IOptions<EmailOtpSettings> emailOtpSettings)
     {
         _otpConfirmationRepository = otpConfirmationRepository;
         _userManager = userManager;
         _emailSender = emailSender;
+        _emailOtpSettings = emailOtpSettings.Value;
     }
 
-    public async Task<Result<Unit>> GenerateAsync(Guid userId, string purpose)
+    public async Task<Result<Unit>> GenerateAsync(Guid userId)
     {
+        var purpose = _emailOtpSettings.Name;
+        
         var otpConfirmation = await _otpConfirmationRepository.GetByUserIdAndName(userId, purpose);
 
-        if (otpConfirmation is null || IsRetryTimeElapsed(otpConfirmation))
+        if (otpConfirmation is null)
         {
             var token = GenerateRandom6DigitCode();
 
-            await CreateOrUpdateOtpConfirmation(userId, purpose, token);
+            await CreateOtpConfirmation(userId, purpose, token);
 
             var user = await _userManager.FindByIdAsync(userId.ToString());
 
             await _emailSender.SendEmail(ConfirmationEmailTemplate.ToEmailMessage(user!.Email!, token), isBodyHtml: true);
             
+            return Unit.Default;
+        }
+        
+        if (IsRetryTimeElapsed(otpConfirmation))
+        {
+            var token = GenerateRandom6DigitCode();
+            
+            await UpdateOtpConfirmation(userId, purpose, token);
+            
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            
+            await _emailSender.SendEmail(ConfirmationEmailTemplate.ToEmailMessage(user!.Email!, token), isBodyHtml: true);
             return Unit.Default;
         }
 
@@ -50,8 +70,11 @@ public class EmailVerificationService : IEmailVerificationService
         return new Result<Unit>(exception);
     }
 
-    public async Task<Result<bool>> ValidateAsync(Guid userId, string purpose, string token, int maxRetryCount)
+    public async Task<Result<bool>> ValidateAsync(Guid userId, string token)
     {
+        var purpose = _emailOtpSettings.Name;
+        var maxRetryCount = _emailOtpSettings.RetryCount;
+        
         // get token using purpose
         var otpConfirmation = await _otpConfirmationRepository.GetByUserIdAndName(userId, purpose);        
         
@@ -93,10 +116,10 @@ public class EmailVerificationService : IEmailVerificationService
     private string GenerateRandom6DigitCode()
     {
         using var rng = RandomNumberGenerator.Create();
-        var bytes = new byte[4]; // Dört bayt uzunluğunda bir dizi oluşturuyoruz.
-        rng.GetBytes(bytes); // Rastgele baytları dolduruyoruz.
-        int code = BitConverter.ToInt32(bytes, 0) % 1000000; // 6 haneli bir sayı üretiyoruz.
-        if (code < 0) code *= -1; // Negatif bir sayıyı pozitife çeviriyoruz.
+        var bytes = new byte[4]; // Create bytes in length 4.
+        rng.GetBytes(bytes); // fill bytes randomly.
+        int code = BitConverter.ToInt32(bytes, 0) % 1000000; // create 6 digit code.
+        if (code < 0) code *= -1; // if it is negative make it positive.
         return code.ToString("D6"); // Format as a 6-digit string
     }
     private bool IsRetryTimeElapsed(OtpConfirmation otpConfirmation)
@@ -112,9 +135,9 @@ public class EmailVerificationService : IEmailVerificationService
         return timeDifference.TotalMinutes + 1;
     }
 
-    private async Task CreateOrUpdateOtpConfirmation(Guid userId, string purpose, string token)
+    private async Task CreateOtpConfirmation(Guid userId, string purpose, string token)
     {
-        var retryDateTime = DateTimeOffset.Now.AddMinutes(15);
+        var retryDateTime = DateTimeOffset.Now.AddMinutes(_emailOtpSettings.OtpRetryMinutes);
         var otpConfirmation = new OtpConfirmation()
         {
             UserId = userId,
@@ -125,6 +148,21 @@ public class EmailVerificationService : IEmailVerificationService
         };
 
         await _otpConfirmationRepository.CreateAsync(otpConfirmation);
+    }
+    
+    private async Task UpdateOtpConfirmation(Guid userId, string purpose, string token)
+    {
+        var retryDateTime = DateTimeOffset.Now.AddMinutes(_emailOtpSettings.OtpRetryMinutes);
+        var otpConfirmation = new OtpConfirmation()
+        {
+            UserId = userId,
+            Name = purpose,
+            RetryDateTimeUtc = retryDateTime,
+            RetryCount = 0,
+            Value = token,
+        };
+
+        await _otpConfirmationRepository.UpdateAsync(otpConfirmation);
     }
     
 

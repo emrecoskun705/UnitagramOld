@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Unitagram.WebAPI.CustomFilters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Unitagram.WebAPI.Controllers;
 
@@ -8,7 +7,6 @@ namespace Unitagram.WebAPI.Controllers;
 /// </summary>
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-[ServiceFilter(typeof(EmailConfirmationFilter))]
-public class CustomControllerBase : ControllerBase
+public class AccountControllerBase : ControllerBase
 {
 }
