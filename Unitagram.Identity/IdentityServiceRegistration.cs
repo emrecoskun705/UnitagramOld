@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Models.Identity;
 using Unitagram.Application.Models.Identity.Jwt;
+using Unitagram.Application.Models.Identity.OTP;
 using Unitagram.Identity.DbContext;
 using Unitagram.Identity.Models;
 using Unitagram.Identity.Providers;
@@ -23,6 +24,7 @@ public static class IdentityServiceRegistration
     public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+        services.Configure<EmailOtpSettings>(configuration.GetSection(nameof(EmailOtpSettings)));
         services.AddDbContext<UnitagramIdentityDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("Default")));
 
@@ -37,12 +39,12 @@ public static class IdentityServiceRegistration
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3); // Lockout duration (3 minutes)
                 options.Lockout.MaxFailedAccessAttempts = 8; // Maximum failed attempts before lockout (8 attempts)
                 
-                options.SignIn.RequireConfirmedEmail = true;
-                options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+                // options.SignIn.RequireConfirmedEmail = true;
+                // options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             })
             .AddEntityFrameworkStores<UnitagramIdentityDbContext>()
             .AddDefaultTokenProviders()
-            .AddTokenProvider<SixDigitEmailConfirmationTokenProvider<ApplicationUser>>("emailconfirmation")
+            // .AddTokenProvider<SixDigitEmailConfirmationTokenProvider<ApplicationUser>>("emailconfirmation")
             .AddUserStore<UserStore<ApplicationUser, ApplicationRole, UnitagramIdentityDbContext, Guid>>()
             .AddRoleStore<RoleStore<ApplicationRole, UnitagramIdentityDbContext, Guid>>();
 

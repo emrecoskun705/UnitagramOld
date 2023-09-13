@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Models.Identity;
 using Unitagram.Application.Models.Identity.Jwt;
+using Unitagram.Identity.Models;
 
 namespace Unitagram.Identity.Services;
 
@@ -21,7 +22,6 @@ public class JwtService : IJwtService
 
     public JwtResponse CreateJwtToken(JwtRequest user)
     {
-        var roleClaims = user.Roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
 
         DateTime expiration = DateTime.UtcNow.AddDays(Convert.ToDouble(_jwtSettings.ExpirationDays));
 
@@ -31,9 +31,8 @@ public class JwtService : IJwtService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), //JWT unique ID
             new Claim(JwtRegisteredClaimNames.Iat,
                 DateTime.UtcNow.ToString()), //Issued at (date and time of token generation)
-        }
-        // .Union(userClaims)
-        .Union(roleClaims);
+            new Claim(JwtCustomClaimNames.EmailVerified, user.IsEmailConfirmed.ToString().ToLower())
+        };
 
         var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
 

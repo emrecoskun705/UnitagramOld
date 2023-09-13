@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
+using Unitagram.Application.Models.Identity.OTP;
 using Unitagram.Application.Models.Identity.Register;
 
 namespace Unitagram.WebAPI.Controllers.v1;
@@ -12,7 +13,7 @@ namespace Unitagram.WebAPI.Controllers.v1;
 /// </summary>
 [AllowAnonymous]
 [ApiVersion("1.0")]
-public class AccountController : CustomControllerBase
+public class AccountController : AccountControllerBase
 {
     private readonly IAuthService _authService;
 
@@ -58,6 +59,30 @@ public class AccountController : CustomControllerBase
     public async Task<ActionResult<AuthResponse>> RefreshToken(RefreshRequest request)
     {
         var result = await _authService.RefreshToken(request);
+        return result.ToOk(HttpContext);
+    }
+    
+    /// <summary>
+    /// Confirm the user's email by processing the provided email verification request.
+    /// </summary>
+    /// <param name="request">The email verification request containing necessary details.</param>
+    /// <returns>An HTTP action result representing the outcome of the confirmation operation.</returns>
+    [HttpPost("confirm-email")]
+    public async Task<ActionResult<EmailVerificationResponse>> ConfirmEmail(EmailVerificationRequest request)
+    {
+        var result = await _authService.ConfirmEmail(request); 
+        return result.ToOk(HttpContext);
+    }
+    
+    /// <summary>
+    /// Generates a one-time password (OTP) for the user via email and returns it as a response.
+    /// </summary>
+    /// <param name="request">The request object containing the information required to generate the OTP.</param>
+    /// <returns>The response containing the result of OTP generation when successful.</returns>
+    [HttpPost("generate-otp-email")]
+    public async Task<ActionResult<GenerateOtpResponse>> GenerateOtpEmail(GenerateOtpRequest request)
+    {
+        var result = await _authService.GenerateOtpEmail(request); 
         return result.ToOk(HttpContext);
     }
 }

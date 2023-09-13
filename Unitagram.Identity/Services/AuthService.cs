@@ -7,6 +7,7 @@ using Unitagram.Application.Contracts.Persistence;
 using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
+using Unitagram.Application.Models.Identity.OTP;
 using Unitagram.Application.Models.Identity.Register;
 using Unitagram.Domain;
 using Unitagram.Identity.DbContext;
@@ -33,7 +34,7 @@ public class AuthService : IAuthService
         IDiagnosticContext diagnosticContext,
         IUniversityRepository universityRepository,
         IUniversityUserRepository universityUserRepository,
-        UnitagramIdentityDbContext databaseContext, 
+        UnitagramIdentityDbContext databaseContext,
         IEmailVerificationService verificationService)
     {
         _userManager = userManager;
@@ -65,7 +66,7 @@ public class AuthService : IAuthService
             return new Result<AuthResponse>(notFoundException);
         }
 
-        if (user.LockoutEnabled && user.AccessFailedCount >= _userManager.Options.Lockout.MaxFailedAccessAttempts-1)
+        if (user.LockoutEnabled && user.AccessFailedCount >= _userManager.Options.Lockout.MaxFailedAccessAttempts - 1)
         {
             var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(user);
             if (lockoutEndDate >= DateTimeOffset.UtcNow)
@@ -80,29 +81,25 @@ public class AuthService : IAuthService
                 await _userManager.SetLockoutEndDateAsync(user, null); // Reset lockout end date
             }
         }
-        
-        if (!user.EmailConfirmed)
-        {
-            var badRequestException = new BadRequestException($"Email is not confirmed for '{user.Email}'.");
-            return new Result<AuthResponse>(badRequestException);
-        }
-        
+
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (result.Succeeded == false)
         {
             await _userManager.AccessFailedAsync(user);
-            if (user.LockoutEnabled && user.AccessFailedCount >= _userManager.Options.Lockout.MaxFailedAccessAttempts-1)
+            if (user.LockoutEnabled &&
+                user.AccessFailedCount >= _userManager.Options.Lockout.MaxFailedAccessAttempts - 1)
             {
-                await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.Add(_userManager.Options.Lockout.DefaultLockoutTimeSpan));
+                await _userManager.SetLockoutEndDateAsync(user,
+                    DateTimeOffset.UtcNow.Add(_userManager.Options.Lockout.DefaultLockoutTimeSpan));
                 var lockoutException = new BadRequestException($"Account locked out. Try again later.");
                 return new Result<AuthResponse>(lockoutException);
             }
-            
+
             var badRequestException = new BadRequestException($"Credentials for '{request.UserName} aren't valid'.");
             return new Result<AuthResponse>(badRequestException);
         }
-        
+
         await _signInManager.SignInAsync(user, false);
 
         JwtResponse jwtResponse = _jwtService.CreateJwtToken(await UserToJwtRequest(user));
@@ -143,7 +140,7 @@ public class AuthService : IAuthService
             PhoneNumber = request.PhoneNumber,
             UserName = request.UserName,
         };
-        
+
         IdentityResult result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
@@ -179,12 +176,68 @@ public class AuthService : IAuthService
         user.RefreshTokenExpirationDateTime = jwtResponse.RefreshTokenExpirationDateTime;
         await _userManager.UpdateAsync(user);
 
-        await _verificationService.GenerateAsync(user.Id, "emailverification");
-        
+        await _verificationService.GenerateAsync(user.Id);
+
         _diagnosticContext.Set("CreatedUser", user.UserName);
         _diagnosticContext.Set("University", getUniversity.Name);
 
         return jwtResponse.ToRegisterResponse();
+    }
+
+    public async Task<Result<EmailVerificationResponse>> ConfirmEmail(EmailVerificationRequest request)
+    {
+        var claimsPrincipal = _jwtService.GetPrincipleFromJwtToken(request.JwtToken);
+        var username = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (username == null)
+        {
+            var exception = new NotFoundException("Username", "token");
+            return new Result<EmailVerificationResponse>(exception);
+        }
+
+        var user = await _userManager.FindByNameAsync(username);
+        if (user == null)
+        {
+            var exception = new NotFoundException("User", username);
+            return new Result<EmailVerificationResponse>(exception);
+        }
+
+        var verificationResult = await _verificationService.ValidateAsync(user.Id, request.EmailToken);
+
+        var result = verificationResult.Match<Result<EmailVerificationResponse>>(
+            _ => new EmailVerificationResponse(),
+            exception => new Result<EmailVerificationResponse>(exception)
+        );
+
+        return result;
+    }
+
+    public async Task<Result<GenerateOtpResponse>> GenerateOtpEmail(GenerateOtpRequest request)
+    {
+        var claimsPrincipal = _jwtService.GetPrincipleFromJwtToken(request.JwtToken);
+        var username = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (username == null)
+        {
+            var exception = new NotFoundException("Username", "token");
+            return new Result<GenerateOtpResponse>(exception);
+        }
+
+        var user = await _userManager.FindByNameAsync(username);
+        if (user == null)
+        {
+            var exception = new NotFoundException("User", username);
+            return new Result<GenerateOtpResponse>(exception);
+        }
+
+        var generateOtpResult = await _verificationService.GenerateAsync(user.Id);
+
+        var result = generateOtpResult.Match<Result<GenerateOtpResponse>>(
+            _ => new GenerateOtpResponse(),
+            exception => new Result<GenerateOtpResponse>(exception)
+        );
+
+        return result;
     }
 
     private static string GetEmailDomain(RegisterRequest request)
@@ -285,6 +338,7 @@ public class AuthService : IAuthService
         var jwtRequest = new JwtRequest()
         {
             Id = user.Id,
+            IsEmailConfirmed = user.EmailConfirmed,
             UserName = user.UserName!,
             Roles = roles,
         };

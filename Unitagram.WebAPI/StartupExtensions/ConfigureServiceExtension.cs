@@ -9,6 +9,7 @@ using Unitagram.Application;
 using Unitagram.Identity;
 using Unitagram.Infrastructure;
 using Unitagram.Persistence;
+using Unitagram.WebAPI.CustomFilters;
 
 namespace Unitagram.WebAPI.StartupExtensions;
 
@@ -36,6 +37,9 @@ public static class ConfigureServiceExtension
                 .Build();
             options.Filters.Add(new AuthorizeFilter(policy));
         });
+        
+        // Add Filters
+        services.AddScoped<EmailConfirmationFilter>();
 
         // Enable API versioning
         services.AddApiVersioning(config =>
