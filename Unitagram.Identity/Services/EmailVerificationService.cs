@@ -116,10 +116,10 @@ public class EmailVerificationService : IEmailVerificationService
     private string GenerateRandom6DigitCode()
     {
         using var rng = RandomNumberGenerator.Create();
-        var bytes = new byte[4]; // Dört bayt uzunluğunda bir dizi oluşturuyoruz.
-        rng.GetBytes(bytes); // Rastgele baytları dolduruyoruz.
-        int code = BitConverter.ToInt32(bytes, 0) % 1000000; // 6 haneli bir sayı üretiyoruz.
-        if (code < 0) code *= -1; // Negatif bir sayıyı pozitife çeviriyoruz.
+        var bytes = new byte[4]; // Create bytes in length 4.
+        rng.GetBytes(bytes); // fill bytes randomly.
+        int code = BitConverter.ToInt32(bytes, 0) % 1000000; // create 6 digit code.
+        if (code < 0) code *= -1; // if it is negative make it positive.
         return code.ToString("D6"); // Format as a 6-digit string
     }
     private bool IsRetryTimeElapsed(OtpConfirmation otpConfirmation)
@@ -137,7 +137,7 @@ public class EmailVerificationService : IEmailVerificationService
 
     private async Task CreateOtpConfirmation(Guid userId, string purpose, string token)
     {
-        var retryDateTime = DateTimeOffset.Now.AddMinutes(15);
+        var retryDateTime = DateTimeOffset.Now.AddMinutes(_emailOtpSettings.OtpRetryMinutes);
         var otpConfirmation = new OtpConfirmation()
         {
             UserId = userId,
@@ -152,7 +152,7 @@ public class EmailVerificationService : IEmailVerificationService
     
     private async Task UpdateOtpConfirmation(Guid userId, string purpose, string token)
     {
-        var retryDateTime = DateTimeOffset.Now.AddMinutes(15);
+        var retryDateTime = DateTimeOffset.Now.AddMinutes(_emailOtpSettings.OtpRetryMinutes);
         var otpConfirmation = new OtpConfirmation()
         {
             UserId = userId,
