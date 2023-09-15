@@ -151,7 +151,7 @@ public class AuthServiceUnitTests
 
         // Assert
         result.IsFaulted.Should().BeTrue();
-        result.IfFail(e => e.Should().BeOfType<BadRequestException>());
+        result.IfFail(e => e.Should().BeOfType<InvalidAccountCredentialsException>());
     }
 
     [Fact]
@@ -191,7 +191,7 @@ public class AuthServiceUnitTests
 
         // Assert
         result.IsFaulted.Should().BeTrue();
-        result.IfFail(e => e.Should().BeOfType<NotFoundException>());
+        result.IfFail(e => e.Should().BeOfType<UserNotFoundException>());
     }
 
     #endregion
@@ -392,7 +392,7 @@ public class AuthServiceUnitTests
         
         // Assert
         result.IsFaulted.Should().BeTrue();
-        result.IfFail(e => e.Should().BeOfType<BadRequestException>());
+        result.IfFail(e => e.Should().BeOfType<JwtTokenException>());
     }
     
     [Fact]
@@ -424,7 +424,7 @@ public class AuthServiceUnitTests
         
         // Assert
         result.IsFaulted.Should().BeTrue();
-        result.IfFail(e => e.Should().BeOfType<NotFoundException>());
+        result.IfFail(e => e.Should().BeOfType<UserNotFoundException>());
     }
     
     [Fact]
@@ -462,7 +462,7 @@ public class AuthServiceUnitTests
         
         // Assert
         result.IsFaulted.Should().BeTrue();
-        result.IfFail(e => e.Should().BeOfType<BadRequestException>());
+        result.IfFail(e => e.Should().BeOfType<JwtTokenException>());
         result.IfFail(e => e.Message.Should().Be("Invalid refresh token"));
     }
     
