@@ -1,11 +1,16 @@
 using System.Globalization;
 using System.Security.Claims;
 using AutoFixture;
+using AutoFixture.Kernel;
 using FluentAssertions;
+using LanguageExt;
+using LanguageExt.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -17,6 +22,7 @@ using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity.Authentication;
 using Unitagram.Application.Models.Identity.Jwt;
 using Unitagram.Application.Models.Identity.Register;
+using Unitagram.Domain;
 using Unitagram.Identity.DbContext;
 using Unitagram.Identity.Models;
 using Unitagram.Identity.Services;
@@ -207,13 +213,42 @@ public class AuthServiceUnitTests
         };   
 
         // Set up mock behavior
-        var successIdentityResult = IdentityResult.Success;
+        
+        _universityRepositoryMock
+            .Setup(u => u.GetByDomainAsync(It.IsAny<string>()))
+            .ReturnsAsync(_fixture.Build<University>().Create());
+        
+        var databaseMock = new Mock<DatabaseFacade>(_dbContext.Object);
+        var transactionMock = new Mock<IDbContextTransaction>();
+        
+        _fixture.Inject(_dbContext.Object);
+        _dbContext.SetupGet((c => c.Database)).Returns(databaseMock.Object);
+        
+        databaseMock
+            .Setup(d => d.BeginTransactionAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(transactionMock.Object);
+        
+        transactionMock.Setup(t => t.CommitAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+        transactionMock.Setup(t => t.DisposeAsync()).Returns(ValueTask.CompletedTask);
         
         _userManager
             .Setup(u => u.CreateAsync(It.IsAny<ApplicationUser>(), validRegisterRequest.Password))
-            .ReturnsAsync(successIdentityResult);
+            .ReturnsAsync(IdentityResult.Success);
+        
         _userManager
             .Setup(u => u.UpdateAsync(It.IsAny<ApplicationUser>()));
+
+        _roleManager
+            .Setup(u => u.RoleExistsAsync(It.IsAny<string>()))
+            .ReturnsAsync(true);
+
+        _userManager
+            .Setup(u => u.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Success);
+
+        _universityUserRepositoryMock
+            .Setup(u => u.CreateAsync(It.IsAny<UniversityUser>()))
+            .Returns(Task.CompletedTask);
         
         _jwtService
             .Setup(u => u.CreateJwtToken(It.IsAny<JwtRequest>()));
@@ -221,6 +256,10 @@ public class AuthServiceUnitTests
         // just return some JWT response values for test to work
         _jwtService.Setup(x => x.CreateJwtToken(It.IsAny<JwtRequest>()))
             .Returns(_fixture.Build<JwtResponse>().Create());
+
+        _verificationServiceMock
+            .Setup(u => u.GenerateAsync(It.IsAny<Guid>()))
+            .ReturnsAsync(Result<Unit>.Bottom);
         
 
         // Act
@@ -280,12 +319,29 @@ public class AuthServiceUnitTests
             .Setup(u => u.CreateAsync(It.IsAny<ApplicationUser>(), validRegisterRequest.Password))
             .ReturnsAsync(failedIdentityResult);
         
+        _universityRepositoryMock
+            .Setup(u => u.GetByDomainAsync(It.IsAny<string>()))
+            .ReturnsAsync(_fixture.Build<University>().Create());
+
+        var databaseMock = new Mock<DatabaseFacade>(_dbContext.Object);
+        var transactionMock = new Mock<IDbContextTransaction>();
+        
+        _fixture.Inject(_dbContext.Object);
+        _dbContext.SetupGet((c => c.Database)).Returns(databaseMock.Object);
+        
+        databaseMock.Setup(d => d.BeginTransactionAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(transactionMock.Object);
+        
+        _dbContext
+            .Setup(u => u.Database.BeginTransactionAsync(default(CancellationToken)))
+            .ReturnsAsync(It.IsAny<IDbContextTransaction>());
+        
         // Act
         var result = await authService.Register(validRegisterRequest);
         
         // Assert
         result.IsFaulted.Should().BeTrue();
-        result.IfFail(e => e.Should().BeOfType<BadRequestException>());
+        result.IfFail(e => e.Should().BeOfType<ValidationException>());
     }
 
     #endregion

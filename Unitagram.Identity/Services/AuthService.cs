@@ -148,8 +148,6 @@ public class AuthService : IAuthService
             return new Result<RegisterResponse>(exception);
         }
 
-        
-
         try
         {
             // Add the user to the "UniversityUser" role
