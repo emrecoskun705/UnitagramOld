@@ -37,7 +37,8 @@ public static class ControllerExtensions
             { typeof(InvalidAccountCredentialsException), StatusCodes.Status400BadRequest },
             { typeof(AccountLockoutException), StatusCodes.Status403Forbidden }, 
             { typeof(NotFoundException), StatusCodes.Status404NotFound },
-            { typeof(UserNotFoundException), StatusCodes.Status404NotFound }
+            { typeof(UserNotFoundException), StatusCodes.Status404NotFound },
+            { typeof(EmailAlreadyConfirmedException), StatusCodes.Status400BadRequest },
         };
 
         // Get the status code from the dictionary, defaulting to 500 if not found

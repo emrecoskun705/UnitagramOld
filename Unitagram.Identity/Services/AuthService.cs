@@ -228,6 +228,12 @@ public class AuthService : IAuthService
             return new Result<GenerateOtpResponse>(exception);
         }
 
+        if (user.EmailConfirmed)
+        {
+            var exception = new EmailAlreadyConfirmedException();
+            return new Result<GenerateOtpResponse>(exception);
+        }
+
         var generateOtpResult = await _verificationService.GenerateAsync(user.Id);
 
         var result = generateOtpResult.Match<Result<GenerateOtpResponse>>(
