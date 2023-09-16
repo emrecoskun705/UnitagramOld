@@ -20,7 +20,7 @@ public class GetUniversityByDomainQueryHandler : IRequestHandler<GetUniversityBy
         
         // verify if university exists
         if (university is null)
-            throw new NotFoundException(nameof(University), request.Domain);
+            throw new NotFoundException(request.Domain);
 
         return university.ToUniversityByDomainDto();
     }

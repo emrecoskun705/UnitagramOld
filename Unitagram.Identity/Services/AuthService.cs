@@ -125,7 +125,7 @@ public class AuthService : IAuthService
         var getUniversity = await _universityRepository.GetByDomainAsync(getEmailDomain);
         if (getUniversity is null)
         {
-            var exception = new NotFoundException("University", getEmailDomain);
+            var exception = new NotFoundException(getEmailDomain);
             return new Result<RegisterResponse>(exception);
         }
 
