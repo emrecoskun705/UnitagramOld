@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using Unitagram.Application.Contracts.Email;
 using Unitagram.Application.Contracts.Identity;
 using Unitagram.Application.Contracts.Persistence;
-using Unitagram.Application.Exceptions;
+using Unitagram.Application.Exceptions.EmailVerification;
 using Unitagram.Application.Models.Email;
 using Unitagram.Application.Models.Identity.OTP;
 using Unitagram.Domain;
@@ -66,7 +66,7 @@ public class EmailVerificationService : IEmailVerificationService
         }
 
         var minutesDifference = CalculateMinutesDifference(otpConfirmation.RetryDateTimeUtc!.Value);
-        var exception = new BadRequestException($"Please try again after {minutesDifference} minutes later");
+        var exception = new OtpCodeTryAgainLaterException(minutesDifference);
         return new Result<Unit>(exception);
     }
 
@@ -80,14 +80,14 @@ public class EmailVerificationService : IEmailVerificationService
         
         if (otpConfirmation is null || IsRetryTimeElapsed(otpConfirmation))
         {
-            var exception = new BadRequestException("Please create new confirmation code");
+            var exception = new CreateNewConfirmationCodeException();
             return new Result<bool>(exception);
         }
         
         // check max retry count is passed
         if (otpConfirmation.RetryCount > maxRetryCount)
         {
-            var exception = new BadRequestException("You've exceeded the maximum code usage");
+            var exception = new ReachedMaximumCodeUsageException();
             return new Result<bool>(exception);
         }        
         
@@ -96,7 +96,7 @@ public class EmailVerificationService : IEmailVerificationService
         {
             otpConfirmation.RetryCount++;
             await _otpConfirmationRepository.UpdateAsync(otpConfirmation);
-            var exception = new BadRequestException("Invalid code");
+            var exception = new InvalidCodeException();
             return new Result<bool>(exception);
         }
         
@@ -128,11 +128,11 @@ public class EmailVerificationService : IEmailVerificationService
         return (otpConfirmation.RetryDateTimeUtc.HasValue && now >= otpConfirmation.RetryDateTimeUtc.Value);
     }
 
-    private double CalculateMinutesDifference(DateTimeOffset retryDateTime)
+    private int CalculateMinutesDifference(DateTimeOffset retryDateTime)
     {
         var now = DateTimeOffset.UtcNow;
         var timeDifference = retryDateTime - now;
-        return timeDifference.TotalMinutes + 1;
+        return (int)(timeDifference.TotalMinutes) + 1;
     }
 
     private async Task CreateOtpConfirmation(Guid userId, string purpose, string token)

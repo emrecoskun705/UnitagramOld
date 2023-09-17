@@ -35,14 +35,14 @@ public static class ControllerExtensions
             { typeof(ValidationException), StatusCodes.Status400BadRequest },
             { typeof(BadRequestException), StatusCodes.Status400BadRequest },
             { typeof(InvalidAccountCredentialsException), StatusCodes.Status400BadRequest },
+            { typeof(EmailAlreadyConfirmedException), StatusCodes.Status400BadRequest },
             { typeof(AccountLockoutException), StatusCodes.Status403Forbidden }, 
             { typeof(NotFoundException), StatusCodes.Status404NotFound },
             { typeof(UserNotFoundException), StatusCodes.Status404NotFound },
-            { typeof(EmailAlreadyConfirmedException), StatusCodes.Status400BadRequest },
         };
 
-        // Get the status code from the dictionary, defaulting to 500 if not found
-        var statusCode = statusCodeMap.TryGetValue(exception.GetType(), out var code) ? code : 500;
+        // Get the status code from the dictionary, defaulting to 400 if not found
+        var statusCode = statusCodeMap.TryGetValue(exception.GetType(), out var code) ? code : 400;
 
         var problemDetails = new ProblemDetails
         {
