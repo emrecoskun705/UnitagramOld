@@ -80,7 +80,7 @@ public class EmailVerificationService : IEmailVerificationService
         
         if (otpConfirmation is null || IsRetryTimeElapsed(otpConfirmation))
         {
-            var exception = new CreateNewConfirmationCodeException();
+            var exception = new EmailOtpNotFoundException();
             return new Result<bool>(exception);
         }
         

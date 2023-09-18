@@ -62,7 +62,7 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            var notFoundException = new UserNotFoundException(request.UserName);
+            var notFoundException = new UserNotFoundException();
             return new Result<AuthResponse>(notFoundException);
         }
 
@@ -71,7 +71,7 @@ public class AuthService : IAuthService
             var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(user);
             if (lockoutEndDate >= DateTimeOffset.UtcNow)
             {
-                var lockoutException = new AccountLockoutException("Account locked out. Try again later.");
+                var lockoutException = new AccountLockoutException();
                 return new Result<AuthResponse>(lockoutException);
             }
 
@@ -90,11 +90,11 @@ public class AuthService : IAuthService
             {
                 await _userManager.SetLockoutEndDateAsync(user,
                     DateTimeOffset.UtcNow.Add(_userManager.Options.Lockout.DefaultLockoutTimeSpan));
-                var lockoutException = new AccountLockoutException("Account locked out. Try again later.");
+                var lockoutException = new AccountLockoutException();
                 return new Result<AuthResponse>(lockoutException);
             }
 
-            var badRequestException = new InvalidAccountCredentialsException($"Credentials for '{request.UserName} aren't valid'.");
+            var badRequestException = new InvalidAccountCredentialsException();
             return new Result<AuthResponse>(badRequestException);
         }
 
@@ -189,7 +189,7 @@ public class AuthService : IAuthService
 
         if (username == null)
         {
-            var exception = new UserNotFoundException("token");
+            var exception = new UserNotFoundException();
             return new Result<EmailVerificationResponse>(exception);
         }
 
@@ -217,14 +217,14 @@ public class AuthService : IAuthService
 
         if (username == null)
         {
-            var exception = new UserNotFoundException("token");
+            var exception = new UserNotFoundException();
             return new Result<GenerateOtpResponse>(exception);
         }
 
         var user = await _userManager.FindByNameAsync(username);
         if (user == null)
         {
-            var exception = new UserNotFoundException(username);
+            var exception = new UserNotFoundException();
             return new Result<GenerateOtpResponse>(exception);
         }
 
@@ -266,7 +266,7 @@ public class AuthService : IAuthService
         string? username = principal.FindFirstValue(ClaimTypes.NameIdentifier);
         if (username == null)
         {
-            var exception = new JwtTokenException("Invalid access token");
+            var exception = new JwtTokenException();
             return new Result<AuthResponse>(exception);
         }
 
@@ -274,7 +274,7 @@ public class AuthService : IAuthService
 
         if (user is null)
         {
-            var exception = new UserNotFoundException(username);
+            var exception = new UserNotFoundException();
             return new Result<AuthResponse>(exception);
         }
 
@@ -282,7 +282,7 @@ public class AuthService : IAuthService
                                    user.RefreshTokenExpirationDateTime <= DateTime.Now;
         if (isValidRefreshToken)
         {
-            var exception = new JwtTokenException("Invalid refresh token");
+            var exception = new JwtTokenException();
             return new Result<AuthResponse>(exception);
         }
 
