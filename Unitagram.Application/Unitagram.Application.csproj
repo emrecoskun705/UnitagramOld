@@ -1,85 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <UserSecretsId>33D56772-14E9-426F-9754-5334A96CF6D3</UserSecretsId>
     </PropertyGroup>
-
-
     <ItemGroup>
-      <ProjectReference Include="..\Unitagram.Domain\Unitagram.Domain.csproj" />
+        <ProjectReference Include="..\Unitagram.Domain\Unitagram.Domain.csproj"/>
     </ItemGroup>
-
-
-
-
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="11.7.1" />
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
-      <PackageReference Include="LanguageExt.Core" Version="4.4.3" />
-
-
-
-
-
-
-
-
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <PackageReference Include="FluentValidation" Version="11.7.1"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1"/>
+        <PackageReference Include="LanguageExt.Core" Version="4.4.3"/>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0"/>
     </ItemGroup>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </Project>

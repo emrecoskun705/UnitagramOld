@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unitagram.Persistence.DatabaseContext;
 
@@ -11,9 +12,11 @@ using Unitagram.Persistence.DatabaseContext;
 namespace Unitagram.Persistence.Migrations
 {
     [DbContext(typeof(UnitagramDatabaseContext))]
-    partial class UnitagramDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230919180923_AddLanguageResource")]
+    partial class AddLanguageResource
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
