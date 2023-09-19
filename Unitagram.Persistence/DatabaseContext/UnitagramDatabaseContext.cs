@@ -18,6 +18,7 @@ public class UnitagramDatabaseContext : DbContext
     public DbSet<UniversityUser> UniversityUser { get; set; }
     public DbSet<OtpConfirmation> OtpConfirmation { get; set; }
     public DbSet<LanguageResource> LanguageResource { get; set; }
+    public DbSet<Language> Language { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -24,8 +24,7 @@
   </ItemGroup>
 
 
-  <ItemGroup>
-    <Folder Include="LocalizationCache\" />
-  </ItemGroup>
+
+
 
 </Project>

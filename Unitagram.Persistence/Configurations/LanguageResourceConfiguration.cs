@@ -8,10 +8,7 @@ public class LanguageResourceConfiguration : IEntityTypeConfiguration<LanguageRe
 {
     public void Configure(EntityTypeBuilder<LanguageResource> builder)
     {
-        builder.HasKey(u => new {u.Id, u.Language, u.Source, u.SourceKey});
-
-        builder.Property(u => u.Language)
-            .HasMaxLength(5);
+        builder.HasKey(u => new {u.Id, u.Source, u.SourceKey});
 
         builder.Property(u => u.Source)
             .HasMaxLength(20);
@@ -24,5 +21,10 @@ public class LanguageResourceConfiguration : IEntityTypeConfiguration<LanguageRe
         
         builder.Property(u => u.CreatedBy)
             .HasMaxLength(15);
+        
+       builder
+            .HasOne(lr => lr.Language)
+            .WithMany(l => l.LanguageResources)
+            .HasForeignKey(lr => lr.LanguageId);
     }
 }
