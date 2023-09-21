@@ -11,29 +11,29 @@ public class RegisterRequestValidator  : AbstractValidator<RegisterRequest>
     {
         RuleFor(a => a.Email)
             .EmailAddress().WithMessage(localization["EmailInvalidFormat"])
-            .NotEmpty().WithMessage("{PropertyName} can't be blank")
+            .NotEmpty().WithMessage(localization["EmailCantBlank"])
             .NotNull();
 
         RuleFor(a => a.UserName)
-            .NotEmpty().WithMessage("{PropertyName} can't be blank")
+            .NotEmpty().WithMessage(localization["UsernameShouldntEmpty"])
             .NotNull()
-            .MinimumLength(4).WithMessage("{PropertyName} should be minimum 4 characters long")
-            .MaximumLength(15).WithMessage("{PropertyName} should be maximum of 15 characters long")
-            .Must(ValidUsername).WithMessage("Invalid {PropertyName} please change your {PropertyName}");
+            .MinimumLength(4).WithMessage(localization["UsernameMinLength"])
+            .MaximumLength(15).WithMessage(localization["UsernameMaxLength"])
+            .Must(ValidUsername).WithMessage(localization["InvalidUsername"]);
 
         RuleFor(a => a.PhoneNumber)
-            .Must(OnlyDigits).WithMessage("{PropertyName} should contain only digits");
+            .Must(OnlyDigits).WithMessage(localization["PhoneNumberOnlyDigit"]);
 
         RuleFor(a => a.Password)
-            .NotEmpty().WithMessage("{PropertyName} can't be blank")
-            .MinimumLength(8).WithMessage("{PropertyName} should be minimum 8 characters long")
-            .MaximumLength(50).WithMessage("{PropertyName} should be maximum of 50 characters long")
-            .Must(RequireUppercase).WithMessage("{PropertyName} must contain at least one uppercase letter.")
-            .Must(RequireLowercase).WithMessage("{PropertyName} must contain at least one lowercase letter.");
+            .NotEmpty().WithMessage(localization["PasswordShouldntEmpty"])
+            .MinimumLength(8).WithMessage(localization["PasswordMinLength"])
+            .MaximumLength(50).WithMessage(localization["PasswordMaxLength"])
+            .Must(RequireUppercase).WithMessage(localization["PasswordContainUppercase"])
+            .Must(RequireLowercase).WithMessage(localization["PasswordContainLowercase"]);
 
         RuleFor(a => a.ConfirmPassword)
-            .NotEmpty().WithMessage("{PropertyName} can't be blank")
-            .Equal(a => a.Password).WithMessage("{PropertyName} and {ComparisonProperty} do not match");
+            .NotEmpty().WithMessage(localization["ConfirmPasswordCantBlank"])
+            .Equal(a => a.Password).WithMessage(localization["PasswordNotEquals"]);
         
     }
 

@@ -134,11 +134,17 @@ public class AuthService : IAuthService
         var getUniversity = await _universityRepository.GetByDomainAsync(getEmailDomain);
         if (getUniversity is null)
         {
-            var exception = new NotFoundException(getEmailDomain);
+            var exception = new NotFoundException(_localization["UniversityDomainNotFound"]);
             return new Result<RegisterResponse>(exception);
         }
 
         await using var transaction = await _databaseContext.Database.BeginTransactionAsync();
+
+        if ((await _userManager.FindByNameAsync(request.UserName)) is not null)
+        {
+            var exception = new ValidationException(_localization["UsernameExists"]);
+            return new Result<RegisterResponse>(exception);
+        }
 
         //Create user
         ApplicationUser user = new ApplicationUser()

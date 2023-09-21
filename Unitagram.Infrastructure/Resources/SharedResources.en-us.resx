@@ -35,4 +35,43 @@
     <data name="EmailInvalidFormat" xml:space="preserve">
         <value>Email should be in a proper email address format</value>
     </data>
+    <data name="EmailCantBlank" xml:space="preserve">
+        <value>Email can not be blank.</value>
+    </data>
+    <data name="UsernameMinLength" xml:space="preserve">
+        <value>Username should be minimum 4 characters long</value>
+    </data>
+    <data name="UsernameMaxLength" xml:space="preserve">
+        <value>Username should be maximum of 15 characters long</value>
+    </data>
+    <data name="InvalidUsername" xml:space="preserve">
+        <value>Invalid username, please change your username.</value>
+    </data>
+    <data name="PhoneNumberOnlyDigit" xml:space="preserve">
+        <value>Phone number should contain only digits.</value>
+    </data>
+    <data name="PasswordMinLength" xml:space="preserve">
+        <value>Password should be minimum 8 characters long</value>
+    </data>
+    <data name="PasswordMaxLength" xml:space="preserve">
+        <value>Password should be maximum of 50 characters long</value>
+    </data>
+    <data name="PasswordContainUppercase" xml:space="preserve">
+        <value>Password must contain at least one uppercase letter.</value>
+    </data>
+    <data name="PasswordContainLowercase" xml:space="preserve">
+        <value>Password must contain at least one lowercase letter.</value>
+    </data>
+    <data name="ConfirmPasswordCantBlank" xml:space="preserve">
+        <value>Confirm password can't be blank</value>
+    </data>
+    <data name="PasswordNotEquals" xml:space="preserve">
+        <value>Şifre ve şifreyi onayla eşleşmiyor.</value>
+    </data>
+    <data name="UniversityDomainNotFound" xml:space="preserve">
+        <value>There is no university for given domain.</value>
+    </data>
+    <data name="UsernameExists" xml:space="preserve">
+        <value>Username already exists.</value>
+    </data>
 </root>

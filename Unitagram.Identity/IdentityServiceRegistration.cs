@@ -31,7 +31,6 @@ public static class IdentityServiceRegistration
         //add identity
         services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
-                options.User.RequireUniqueEmail = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
@@ -39,7 +38,7 @@ public static class IdentityServiceRegistration
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3); // Lockout duration (3 minutes)
                 options.Lockout.MaxFailedAccessAttempts = 8; // Maximum failed attempts before lockout (8 attempts)
                 
-                // options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
                 // options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             })
             .AddEntityFrameworkStores<UnitagramIdentityDbContext>()
