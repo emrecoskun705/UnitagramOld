@@ -1,6 +1,7 @@
-using Unitagram.Domain;
 using Unitagram.Domain.Common;
 using Unitagram.Domain.Primitives;
+
+namespace Unitagram.Domain;
 
 public class LanguageResource : BaseEntity, IAuditableEntity
 {
