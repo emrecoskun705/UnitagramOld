@@ -3,6 +3,7 @@ using LanguageExt.Common;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 using Unitagram.Application.Contracts.Identity;
+using Unitagram.Application.Contracts.Localization;
 using Unitagram.Application.Contracts.Persistence;
 using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity.Authentication;
@@ -26,6 +27,7 @@ public class AuthService : IAuthService
     private readonly IUniversityUserRepository _universityUserRepository;
     private readonly UnitagramIdentityDbContext _databaseContext;
     private readonly IEmailVerificationService _verificationService;
+    private readonly ILocalizationService _localization;
 
     public AuthService(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
@@ -35,7 +37,7 @@ public class AuthService : IAuthService
         IUniversityRepository universityRepository,
         IUniversityUserRepository universityUserRepository,
         UnitagramIdentityDbContext databaseContext,
-        IEmailVerificationService verificationService)
+        IEmailVerificationService verificationService, ILocalizationService localization)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -46,6 +48,7 @@ public class AuthService : IAuthService
         _universityUserRepository = universityUserRepository;
         _databaseContext = databaseContext;
         _verificationService = verificationService;
+        _localization = localization;
     }
 
     public async Task<Result<AuthResponse>> Login(AuthRequest request)

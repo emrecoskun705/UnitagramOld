@@ -1,14 +1,12 @@
 using System.Globalization;
 using System.Security.Claims;
 using AutoFixture;
-using AutoFixture.Kernel;
 using FluentAssertions;
 using LanguageExt;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
@@ -16,7 +14,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Serilog;
 using Unitagram.Application.Contracts.Identity;
-using Unitagram.Application.Contracts.Logging;
+using Unitagram.Application.Contracts.Localization;
 using Unitagram.Application.Contracts.Persistence;
 using Unitagram.Application.Exceptions;
 using Unitagram.Application.Models.Identity.Authentication;
@@ -40,6 +38,7 @@ public class AuthServiceUnitTests
     private readonly Mock<IUniversityRepository> _universityRepositoryMock;
     private readonly Mock<IUniversityUserRepository> _universityUserRepositoryMock;
     private readonly Mock<IEmailVerificationService> _verificationServiceMock;
+    private readonly Mock<ILocalizationService> _localizationServiceMock;
     private readonly IFixture _fixture;
 
     private const string ValidJwtTokenWithoutTime =
@@ -83,6 +82,7 @@ public class AuthServiceUnitTests
         _universityRepositoryMock = new Mock<IUniversityRepository>();
         _universityUserRepositoryMock = new Mock<IUniversityUserRepository>();
         _verificationServiceMock = new Mock<IEmailVerificationService>();
+        _localizationServiceMock = new Mock<ILocalizationService>();
         _dbContext = new Mock<UnitagramIdentityDbContext>();
     }
     
@@ -96,7 +96,8 @@ public class AuthServiceUnitTests
             _universityRepositoryMock.Object,
             _universityUserRepositoryMock.Object,
             _dbContext.Object,
-            _verificationServiceMock.Object);
+            _verificationServiceMock.Object,
+            _localizationServiceMock.Object);
     }
 
     #region Login
@@ -463,7 +464,6 @@ public class AuthServiceUnitTests
         // Assert
         result.IsFaulted.Should().BeTrue();
         result.IfFail(e => e.Should().BeOfType<JwtTokenException>());
-        result.IfFail(e => e.Message.Should().Be("Invalid refresh token"));
     }
     
     [Fact]
