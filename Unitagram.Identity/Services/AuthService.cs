@@ -37,7 +37,8 @@ public class AuthService : IAuthService
         IUniversityRepository universityRepository,
         IUniversityUserRepository universityUserRepository,
         UnitagramIdentityDbContext databaseContext,
-        IEmailVerificationService verificationService, ILocalizationService localization)
+        IEmailVerificationService verificationService, 
+        ILocalizationService localization)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -53,7 +54,7 @@ public class AuthService : IAuthService
 
     public async Task<Result<AuthResponse>> Login(AuthRequest request)
     {
-        var validator = new AuthRequestValidator();
+        var validator = new AuthRequestValidator(_localization);
         var validationResult = await validator.ValidateAsync(request);
         if (validationResult.Errors.Any())
         {
@@ -65,7 +66,7 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            var notFoundException = new UserNotFoundException();
+            var notFoundException = new UserNotFoundException(_localization["UserNotFound"]);
             return new Result<AuthResponse>(notFoundException);
         }
 
@@ -74,7 +75,9 @@ public class AuthService : IAuthService
             var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(user);
             if (lockoutEndDate >= DateTimeOffset.UtcNow)
             {
-                var lockoutException = new AccountLockoutException();
+                TimeSpan timeDifference = lockoutEndDate.Value - DateTimeOffset.UtcNow;
+                int minutesDifference = (int)timeDifference.TotalMinutes + 1;
+                var lockoutException = new AccountLockoutException(string.Format(_localization["AccountLockout"], minutesDifference));
                 return new Result<AuthResponse>(lockoutException);
             }
 
@@ -93,11 +96,14 @@ public class AuthService : IAuthService
             {
                 await _userManager.SetLockoutEndDateAsync(user,
                     DateTimeOffset.UtcNow.Add(_userManager.Options.Lockout.DefaultLockoutTimeSpan));
-                var lockoutException = new AccountLockoutException();
+                var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(user);
+                TimeSpan timeDifference = lockoutEndDate!.Value - DateTimeOffset.UtcNow;
+                int minutesDifference = (int)timeDifference.TotalMinutes + 1;
+                var lockoutException = new AccountLockoutException(string.Format(_localization["AccountLockout"], minutesDifference));
                 return new Result<AuthResponse>(lockoutException);
             }
 
-            var badRequestException = new InvalidAccountCredentialsException();
+            var badRequestException = new InvalidAccountCredentialsException(_localization["InvalidAccountCredentials"]);
             return new Result<AuthResponse>(badRequestException);
         }
 
@@ -114,7 +120,7 @@ public class AuthService : IAuthService
 
     public async Task<Result<RegisterResponse>> Register(RegisterRequest request)
     {
-        var validator = new RegisterRequestValidator();
+        var validator = new RegisterRequestValidator(_localization);
         var validationResult = await validator.ValidateAsync(request);
 
         if (validationResult.Errors.Any())

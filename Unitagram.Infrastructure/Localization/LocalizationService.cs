@@ -18,6 +18,9 @@ public class LocalizationService : ILocalizationService
         _localizer = factory.Create("SharedResources", assemblyName.Name!);
     }
 
+    public string this[string key] => _localizer[key];
+
+
     public string GetLocalizedString(string key)
     {
         return _localizer[key];

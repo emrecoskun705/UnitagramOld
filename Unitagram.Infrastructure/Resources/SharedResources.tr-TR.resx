@@ -18,7 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="PropertyNameRequired" xml:space="preserve">
-        <value>{PropertyName} gereklidir.</value>
+    <data name="UsernameShouldntEmpty" xml:space="preserve">
+        <value>Kullanıcı adı boş olmamalı.</value>
+    </data>
+    <data name="UsernameMaxChar" xml:space="preserve">
+        <value>Kullanıcı adı en fazla 100 karakter olmalıdır.</value>
+    </data>
+    <data name="PasswordShouldntEmpty" xml:space="preserve">
+        <value>Şifre boş olmamalı.</value>
+    </data>
+    <data name="PasswordMaxChar" xml:space="preserve">
+        <value>Şifre en fazla 50 karakter olmalıdır.</value>
+    </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>Kullanıcı bulunamadı.</value>
+    </data>
+    <data name="AccountLockout" xml:space="preserve">
+        <value>Lütfen {0} dakika sonra tekrar deneyiniz.</value>
+    </data>
+    <data name="InvalidAccountCredentials" xml:space="preserve">
+        <value>Hesap giriş bilgileri geçersiz.</value>
+    </data>
+    <data name="EmailInvalidFormat" xml:space="preserve">
+        <value>Mail adresi düzgün bir formatta olmalıdır.</value>
     </data>
 </root>

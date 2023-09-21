@@ -1,20 +1,21 @@
 using FluentValidation;
+using Unitagram.Application.Contracts.Localization;
 
 namespace Unitagram.Application.Models.Identity.Authentication;
 
 public class AuthRequestValidator : AbstractValidator<AuthRequest>
 {
-    public AuthRequestValidator()
+    public AuthRequestValidator(ILocalizationService localization)
     {
         RuleFor(a => a.UserName)
-            .NotEmpty().WithMessage("{PropertyName} shouldn't be empty")
+            .NotEmpty().WithMessage(localization["UsernameShouldntEmpty"])
             .NotNull()
-            .MaximumLength(100).WithMessage("{PropertyName} should maximum of 100 characters");
+            .MaximumLength(100).WithMessage(localization["UsernameMaxChar"]);
 
         RuleFor(a => a.Password)
-            .NotEmpty().WithMessage("{PropertyName} shouldn't be empty")
+            .NotEmpty().WithMessage(localization["PasswordShouldntEmpty"])
             .NotNull()
-            .MaximumLength(50).WithMessage("{PropertyName} should maximum of 50 characters");;
+            .MaximumLength(50).WithMessage(localization["PasswordMaxChar"]);;
     }
     
 }

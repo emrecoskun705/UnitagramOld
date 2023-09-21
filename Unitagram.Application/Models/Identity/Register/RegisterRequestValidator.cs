@@ -1,15 +1,16 @@
 using System.Text.RegularExpressions;
 using FluentValidation;
+using Unitagram.Application.Contracts.Localization;
 using Unitagram.Application.Models.Identity.Authentication;
 
 namespace Unitagram.Application.Models.Identity.Register;
 
 public class RegisterRequestValidator  : AbstractValidator<RegisterRequest>
 {
-    public RegisterRequestValidator()
+    public RegisterRequestValidator(ILocalizationService localization)
     {
         RuleFor(a => a.Email)
-            .EmailAddress().WithMessage("{PropertyName} should be in a proper email address format")
+            .EmailAddress().WithMessage(localization["EmailInvalidFormat"])
             .NotEmpty().WithMessage("{PropertyName} can't be blank")
             .NotNull();
 

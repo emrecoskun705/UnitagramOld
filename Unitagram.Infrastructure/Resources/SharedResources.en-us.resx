@@ -11,7 +11,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="PropertyNameRequired" xml:space="preserve">
-        <value>{PropertyName} is required.</value>
+    <data name="UsernameShouldntEmpty" xml:space="preserve">
+        <value>Username shouldn't be empty.</value>
+    </data>
+    <data name="UsernameMaxChar" xml:space="preserve">
+        <value>Username should be maximum of 100 characters.</value>
+    </data>
+    <data name="PasswordShouldntEmpty" xml:space="preserve">
+        <value>Password shouldn't be empty.</value>
+    </data>
+    <data name="PasswordMaxChar" xml:space="preserve">
+        <value>Password should be maximum of 50 characters.</value>
+    </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>User not found.</value>
+    </data>
+    <data name="AccountLockout" xml:space="preserve">
+        <value>Please try again in {0} minutes later.</value>
+    </data>
+    <data name="InvalidAccountCredentials" xml:space="preserve">
+        <value>Account login information is invalid.</value>
+    </data>
+    <data name="EmailInvalidFormat" xml:space="preserve">
+        <value>Email should be in a proper email address format</value>
     </data>
 </root>
