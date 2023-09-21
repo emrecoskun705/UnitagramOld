@@ -66,7 +66,7 @@ public class EmailVerificationService : IEmailVerificationService
         }
 
         var minutesDifference = CalculateMinutesDifference(otpConfirmation.RetryDateTimeUtc!.Value);
-        var exception = new OtpCodeTryAgainLaterException(minutesDifference);
+        var exception = new OtpCodeTryAgainLaterException();
         return new Result<Unit>(exception);
     }
 
