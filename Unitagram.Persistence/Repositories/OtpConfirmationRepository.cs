@@ -16,6 +16,7 @@ public class OtpConfirmationRepository : GenericRepository<OtpConfirmation>, IOt
     {
         var otpConfirmation = await _context.OtpConfirmation
             .Where(o => o.UserId == userId && o.Name == name)
+            .AsNoTracking()
             .FirstOrDefaultAsync();
         
         return otpConfirmation;
