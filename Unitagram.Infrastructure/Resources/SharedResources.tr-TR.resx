@@ -81,4 +81,25 @@
     <data name="UsernameExists" xml:space="preserve">
         <value>Kullanıcı adı kullanılıyor.</value>
     </data>
+    <data name="UsernameNotFound" xml:space="preserve">
+        <value>Kullanıcı adı bulunamadı.</value>
+    </data>
+    <data name="OtpCodeTryAgainLaterException" xml:space="preserve">
+        <value>Yeni kod oluşturmak için lütfen tekrar {0} dakika sonra deneyin.</value>
+    </data>
+    <data name="EmailOtpNotFoundException" xml:space="preserve">
+        <value>Kod bulunamadı. Lütfen kodu tekrar gönderiniz.</value>
+    </data>
+    <data name="ReachedMaximumCodeUsageException" xml:space="preserve">
+        <value>Maksimum tekrar sayısına ulaştınız. Lütfen kodu tekrar gönderiniz.</value>
+    </data>
+    <data name="EmailInvalidCodeException" xml:space="preserve">
+        <value>Kod doğru değil. {0} hakkınız kaldı.</value>
+    </data>
+    <data name="EmailAlreadyConfirmedException" xml:space="preserve">
+        <value>E-postanız daha önce onaylanmıştır.</value>
+    </data>
+    <data name="TokenNotEmpty" xml:space="preserve">
+        <value>Giriş anahtarın boş olmamalıdır. Lütfen tekrar giriş yapmayı deneyiniz.</value>
+    </data>
 </root>

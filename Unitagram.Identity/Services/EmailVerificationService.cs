@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Unitagram.Application.Contracts.Email;
 using Unitagram.Application.Contracts.Identity;
+using Unitagram.Application.Contracts.Localization;
 using Unitagram.Application.Contracts.Persistence;
 using Unitagram.Application.Exceptions.EmailVerification;
 using Unitagram.Application.Models.Email;
@@ -20,36 +21,36 @@ public class EmailVerificationService : IEmailVerificationService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IEmailSender _emailSender;
     private readonly EmailOtpSettings _emailOtpSettings;
+    private readonly ILocalizationService _localization;
 
 
     public EmailVerificationService(
         IOtpConfirmationRepository otpConfirmationRepository,
         UserManager<ApplicationUser> userManager, 
         IEmailSender emailSender,
-        IOptions<EmailOtpSettings> emailOtpSettings)
+        IOptions<EmailOtpSettings> emailOtpSettings,
+        ILocalizationService localization)
     {
         _otpConfirmationRepository = otpConfirmationRepository;
         _userManager = userManager;
         _emailSender = emailSender;
         _emailOtpSettings = emailOtpSettings.Value;
+        _localization = localization;
     }
 
-    public async Task<Result<Unit>> GenerateAsync(Guid userId)
+    public async Task<Result<Unit>> GenerateAsync(Guid userId, string email)
     {
         var purpose = _emailOtpSettings.Name;
         
         var otpConfirmation = await _otpConfirmationRepository.GetByUserIdAndName(userId, purpose);
-
+        
         if (otpConfirmation is null)
         {
             var token = GenerateRandom6DigitCode();
 
             await CreateOtpConfirmation(userId, purpose, token);
 
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-
-            await _emailSender.SendEmail(ConfirmationEmailTemplate.ToEmailMessage(user!.Email!, token), isBodyHtml: true);
-            
+            await _emailSender.SendEmail(ConfirmationEmailTemplate.ToEmailMessage(email, token), isBodyHtml: true);
             return Unit.Default;
         }
         
@@ -59,18 +60,16 @@ public class EmailVerificationService : IEmailVerificationService
             
             await UpdateOtpConfirmation(userId, purpose, token);
             
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            
-            await _emailSender.SendEmail(ConfirmationEmailTemplate.ToEmailMessage(user!.Email!, token), isBodyHtml: true);
+            await _emailSender.SendEmail(ConfirmationEmailTemplate.ToEmailMessage(email, token), isBodyHtml: true);
             return Unit.Default;
         }
 
         var minutesDifference = CalculateMinutesDifference(otpConfirmation.RetryDateTimeUtc!.Value);
-        var exception = new OtpCodeTryAgainLaterException();
+        var exception = new OtpCodeTryAgainLaterException(string.Format(_localization["OtpCodeTryAgainLaterException"], minutesDifference));
         return new Result<Unit>(exception);
     }
 
-    public async Task<Result<bool>> ValidateAsync(Guid userId, string token)
+    public async Task<Result<Unit>> ValidateAsync(Guid userId, string token)
     {
         var purpose = _emailOtpSettings.Name;
         var maxRetryCount = _emailOtpSettings.RetryCount;
@@ -80,15 +79,15 @@ public class EmailVerificationService : IEmailVerificationService
         
         if (otpConfirmation is null || IsRetryTimeElapsed(otpConfirmation))
         {
-            var exception = new EmailOtpNotFoundException();
-            return new Result<bool>(exception);
+            var exception = new EmailOtpNotFoundException(_localization["EmailOtpNotFoundException"]);
+            return new Result<Unit>(exception);
         }
         
         // check max retry count is passed
-        if (otpConfirmation.RetryCount > maxRetryCount)
+        if (otpConfirmation.RetryCount >= maxRetryCount)
         {
-            var exception = new ReachedMaximumCodeUsageException();
-            return new Result<bool>(exception);
+            var exception = new ReachedMaximumCodeUsageException(_localization["ReachedMaximumCodeUsageException"]);
+            return new Result<Unit>(exception);
         }        
         
         // if invalid token then increment maxRetryCount
@@ -96,8 +95,9 @@ public class EmailVerificationService : IEmailVerificationService
         {
             otpConfirmation.RetryCount++;
             await _otpConfirmationRepository.UpdateAsync(otpConfirmation);
-            var exception = new InvalidCodeException();
-            return new Result<bool>(exception);
+            var count = _emailOtpSettings.RetryCount - otpConfirmation.RetryCount;
+            var exception = new InvalidCodeException(string.Format(_localization["EmailInvalidCodeException"], count));
+            return new Result<Unit>(exception);
         }
         
         // if code reaches this part everything is ok and email can be confirmed
@@ -110,7 +110,7 @@ public class EmailVerificationService : IEmailVerificationService
         // remove otpConfirmation
         await _otpConfirmationRepository.DeleteAsync(otpConfirmation);
         
-        return true;
+        return Unit.Default;
     }
     
     private string GenerateRandom6DigitCode()

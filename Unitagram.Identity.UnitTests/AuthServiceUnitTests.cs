@@ -259,7 +259,7 @@ public class AuthServiceUnitTests
             .Returns(_fixture.Build<JwtResponse>().Create());
 
         _verificationServiceMock
-            .Setup(u => u.GenerateAsync(It.IsAny<Guid>()))
+            .Setup(u => u.GenerateAsync(It.IsAny<Guid>(), It.IsAny<string>()))
             .ReturnsAsync(Result<Unit>.Bottom);
         
 

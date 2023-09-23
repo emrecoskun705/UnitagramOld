@@ -189,7 +189,7 @@ public class AuthService : IAuthService
         user.RefreshTokenExpirationDateTime = jwtResponse.RefreshTokenExpirationDateTime;
         await _userManager.UpdateAsync(user);
 
-        await _verificationService.GenerateAsync(user.Id);
+        await _verificationService.GenerateAsync(user.Id, user.Email);
 
         _diagnosticContext.Set("CreatedUser", user.UserName);
         _diagnosticContext.Set("University", getUniversity.Name);
@@ -204,14 +204,14 @@ public class AuthService : IAuthService
 
         if (username == null)
         {
-            var exception = new UserNotFoundException();
+            var exception = new UserNotFoundException(_localization["UserNotFound"]);
             return new Result<EmailVerificationResponse>(exception);
         }
 
         var user = await _userManager.FindByNameAsync(username);
         if (user == null)
         {
-            var exception = new UserNotFoundException();
+            var exception = new UserNotFoundException(_localization["UsernameNotFound"]);
             return new Result<EmailVerificationResponse>(exception);
         }
 
@@ -232,24 +232,24 @@ public class AuthService : IAuthService
 
         if (username == null)
         {
-            var exception = new UserNotFoundException();
+            var exception = new UserNotFoundException(_localization["UsernameNotFound"]);
             return new Result<GenerateOtpResponse>(exception);
         }
 
         var user = await _userManager.FindByNameAsync(username);
         if (user == null)
         {
-            var exception = new UserNotFoundException();
+            var exception = new UserNotFoundException(_localization["UserNotFound"]);
             return new Result<GenerateOtpResponse>(exception);
         }
 
         if (user.EmailConfirmed)
         {
-            var exception = new EmailAlreadyConfirmedException();
+            var exception = new EmailAlreadyConfirmedException(_localization["EmailAlreadyConfirmedException"]);
             return new Result<GenerateOtpResponse>(exception);
         }
 
-        var generateOtpResult = await _verificationService.GenerateAsync(user.Id);
+        var generateOtpResult = await _verificationService.GenerateAsync(user.Id, user.Email!);
 
         var result = generateOtpResult.Match<Result<GenerateOtpResponse>>(
             _ => new GenerateOtpResponse(),
@@ -266,7 +266,7 @@ public class AuthService : IAuthService
 
     public async Task<Result<AuthResponse>> RefreshToken(RefreshRequest request)
     {
-        var validator = new RefreshRequestValidator();
+        var validator = new RefreshRequestValidator(_localization);
         var validationResult = await validator.ValidateAsync(request);
         if (validationResult.Errors.Any())
         {
@@ -281,7 +281,7 @@ public class AuthService : IAuthService
         string? username = principal.FindFirstValue(ClaimTypes.NameIdentifier);
         if (username == null)
         {
-            var exception = new JwtTokenException();
+            var exception = new JwtTokenException(_localization["UserNotFound"]);
             return new Result<AuthResponse>(exception);
         }
 
@@ -289,7 +289,7 @@ public class AuthService : IAuthService
 
         if (user is null)
         {
-            var exception = new UserNotFoundException();
+            var exception = new UserNotFoundException(_localization["UserNotFound"]);
             return new Result<AuthResponse>(exception);
         }
 
